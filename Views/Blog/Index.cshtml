@@ -12,85 +12,70 @@
     </div>
 </section>
 
-<!-- BLOG KARTLARI (ÖRNEK TASARIM) -->
+<!-- BLOG KARTLARI -->
 <section class="home-section product-groups-section">
     <div class="container-xl">
         <div class="home-section-header">
             <span class="home-section-kicker">Blog Yazıları</span>
-            <h2 class="home-section-title">Örnek blog kartları ile liste görünümü</h2>
+            <h2 class="home-section-title">Veritabanından gelen yazılar</h2>
             <p class="home-section-text">
-                Aşağıdaki kartlar tasarım amacıyla statik olarak eklenmiştir. Veritabanı bağlandığında
-                teknik ve sektörel yazılar burada listelenecek.
+                Aşağıdaki liste MySQL veritabanındaki blog yazıları üzerinden oluşturulmaktadır. Yeni yazılar eklendikçe
+                burada otomatik olarak görünecek.
             </p>
         </div>
 
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6">
-                <article class="card h-100 border-0 shadow-sm blog-card">
-                    <div class="home-card-media">
-                        <img src="https://images.pexels.com/photos/5854193/pexels-photo-5854193.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                             alt="Drenaj kanalı seçimi" />
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var post in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <article class="card h-100 border-0 shadow-sm blog-card">
+                            <div class="home-card-media">
+                                @if (!string.IsNullOrEmpty(post.ImagePath))
+                                {
+                                    <img src="~/@post.ImagePath"
+                                         alt="@post.Title" />
+                                }
+                                else if (!string.IsNullOrEmpty(post.ImageUrl))
+                                {
+                                    <img src="@post.ImageUrl"
+                                         alt="@post.Title" />
+                                }
+                                else
+                                {
+                                    <div class="home-card-placeholder">
+                                        <i class="fas fa-newspaper"></i>
+                                    </div>
+                                }
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <small class="home-card-date">
+                                    <i class="fas fa-calendar-alt me-1"></i>
+                                    @(post.PublishedDate?.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR")) ?? post.CreatedDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR")))
+                                </small>
+                                <h5 class="card-title fw-bold text-dark mb-2">@post.Title</h5>
+                                <p class="card-text text-muted flex-grow-1">
+                                    @(post.Summary != null && post.Summary.Length > 120 ? post.Summary.Substring(0, 120) + "..." : post.Summary)
+                                </p>
+                                <div class="mt-auto">
+                                    <a href="@Url.Action("Details", "Blog", new { id = post.Id })" class="btn btn-danger btn-sm">
+                                        Devamını Oku
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
                     </div>
-                    <div class="card-body d-flex flex-column">
-                        <small class="home-card-date">
-                            <i class="fas fa-calendar-alt me-1"></i> 01 Mart 2025
-                        </small>
-                        <h5 class="card-title fw-bold text-dark mb-2">Doğru drenaj kanalı nasıl seçilir?</h5>
-                        <p class="card-text text-muted flex-grow-1">
-                            Yük sınıfı, montaj alanı ve debi hesaplarıyla drenaj kanalı seçiminde dikkat edilmesi gerekenler...
-                        </p>
-                        <div class="mt-auto">
-                            <a href="#" class="btn btn-danger btn-sm">
-                                Devamını Oku
-                            </a>
-                        </div>
-                    </div>
-                </article>
+                }
             </div>
-            <div class="col-lg-4 col-md-6">
-                <article class="card h-100 border-0 shadow-sm blog-card">
-                    <div class="home-card-media">
-                        <img src="https://images.pexels.com/photos/6001862/pexels-photo-6001862.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                             alt="Rögar çözümleri" />
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <small class="home-card-date">
-                            <i class="fas fa-calendar-alt me-1"></i> 15 Şubat 2025
-                        </small>
-                        <h5 class="card-title fw-bold text-dark mb-2">Rögar menhol kutularında plastik avantajı</h5>
-                        <p class="card-text text-muted flex-grow-1">
-                            Beton ve dökme demir alternatiflerine göre plastik rögarların montaj, ağırlık ve dayanım avantajları...
-                        </p>
-                        <div class="mt-auto">
-                            <a href="#" class="btn btn-danger btn-sm">
-                                Devamını Oku
-                            </a>
-                        </div>
-                    </div>
-                </article>
+        }
+        else
+        {
+            <div class="text-center text-muted py-5">
+                <i class="fas fa-newspaper fa-3x mb-3"></i>
+                <h4>Henüz blog yazısı eklenmemiş</h4>
+                <p>Admin panel üzerinden blog yazıları eklediğinizde burada listelenecektir.</p>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <article class="card h-100 border-0 shadow-sm blog-card">
-                    <div class="home-card-media">
-                        <img src="https://images.pexels.com/photos/7511770/pexels-photo-7511770.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                             alt="Islak zemin detayları" />
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <small class="home-card-date">
-                            <i class="fas fa-calendar-alt me-1"></i> 05 Ocak 2025
-                        </small>
-                        <h5 class="card-title fw-bold text-dark mb-2">Islak zeminlerde doğru süzgeç kullanımı</h5>
-                        <p class="card-text text-muted flex-grow-1">
-                            Banyo ve ıslak hacimlerde su yalıtımı, süzgeç yerleşimi ve bakım önerileri...
-                        </p>
-                        <div class="mt-auto">
-                            <a href="#" class="btn btn-danger btn-sm">
-                                Devamını Oku
-                            </a>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
+        }
     </div>
 </section>
