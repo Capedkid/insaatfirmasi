@@ -1053,6 +1053,72 @@ body {
   margin: 0;
 }
 
+/* Contact section */
+.contact-section {
+  background: radial-gradient(circle at top, #020617, #020617 60%, #000000);
+}
+
+.contact-section .home-card {
+  background: rgba(15, 23, 42, 0.96);
+  border-color: #1f2937;
+  color: #e5e7eb;
+}
+
+.contact-section .home-section-title {
+  color: #f9fafb;
+}
+
+.contact-section .home-section-text {
+  color: #e5e7eb;
+}
+
+.contact-section .form-label {
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.contact-section .form-control,
+.contact-section .form-select,
+.contact-section textarea {
+  background-color: #020617;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+.contact-section .form-control::placeholder,
+.contact-section textarea::placeholder {
+  color: #6b7280;
+}
+
+.contact-section .form-control:focus,
+.contact-section .form-select:focus,
+.contact-section textarea:focus {
+  background-color: #020617;
+  border-color: #f97373;
+  box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.5);
+  color: #f9fafb;
+}
+
+.contact-section .btn-danger {
+  border-radius: 999px;
+}
+
+.contact-map-card .home-section-title {
+  color: #f9fafb;
+}
+
+.contact-map-card .home-section-text {
+  color: #e5e7eb;
+}
+
+.contact-map-box {
+  height: 300px;
+  border-radius: 1.2rem;
+  background: radial-gradient(circle at top, #020617, #111827);
+  border: 1px dashed #374151;
+  color: #9ca3af;
+}
+
 /* =======================
    Site Layout: Header / Footer
    ======================= */
