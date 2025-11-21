@@ -1,0 +1,84 @@
+@model IEnumerable<InsaatFirmasi.Models.Product>
+@{
+    ViewData["Title"] = "Ürünler";
+    ViewData["Description"] = "Plastik drenaj kanalları, rögar menhol kutuları ve ıslak zemin ürünleri için modern ürün gamı.";
+    ViewData["Keywords"] = "ürünler, drenaj, rögar, ıslak zemin, plastik inşaat ürünleri";
+}
+
+<!-- SAYFA HERO -->
+<section class="page-hero page-hero-simple">
+    <div class="container-xl text-center">
+        <h1 class="page-hero-title">Ürünler</h1>
+    </div>
+</section>
+
+<!-- ÜRÜN KARTLARI (ÖRNEK TASARIM) -->
+<section class="home-section product-list-section">
+    <div class="container-xl">
+        <div class="home-section-header">
+            <span class="home-section-kicker">Ürün Grupları</span>
+            <h2 class="home-section-title">Örnek ürün kartları ile liste görünümü</h2>
+            <p class="home-section-text">
+                Aşağıdaki kartlar tasarım amacıyla statik olarak eklenmiştir. Veritabanı ve admin panel hazır olduğunda
+                bu alan dinamik ürün verisi ile doldurulacaktır.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="product-group-card">
+                    <div class="product-group-image">
+                        <img src="https://images.pexels.com/photos/696417/pexels-photo-696417.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                             alt="Plastik Drenaj Kanalı" />
+                    </div>
+                    <h3>Plastik Drenaj Kanalı</h3>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="product-group-card">
+                    <div class="product-group-image">
+                        <img src="https://images.pexels.com/photos/6001862/pexels-photo-6001862.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                             alt="Rögar Menhol Kutusu" />
+                    </div>
+                    <h3>Rögar Menhol Kutusu</h3>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="product-group-card">
+                    <div class="product-group-image">
+                        <img src="https://images.pexels.com/photos/7511770/pexels-photo-7511770.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                             alt="Islak Zemin Süzgeci" />
+                    </div>
+                    <h3>Islak Zemin Süzgeci</h3>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="product-group-card">
+                    <div class="product-group-image">
+                        <img src="https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                             alt="Banyo Aksesuarları" />
+                    </div>
+                    <h3>Banyo Aksesuarları</h3>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="product-group-card">
+                    <div class="product-group-image">
+                        <img src="https://images.pexels.com/photos/4484078/pexels-photo-4484078.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                             alt="Endüstriyel Uygulamalar" />
+                    </div>
+                    <h3>Endüstriyel Uygulamalar</h3>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="product-group-card">
+                    <div class="product-group-image">
+                        <img src="https://images.pexels.com/photos/37347/construction-site-build-construction-work-37347.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                             alt="Özel Üretim Çözümler" />
+                    </div>
+                    <h3>Özel Üretim Çözümler</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

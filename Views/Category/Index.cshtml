@@ -1,0 +1,239 @@
+@model IEnumerable<InsaatFirmasi.Models.Category>
+@{
+    ViewData["Title"] = "Kategoriler";
+    ViewData["Description"] = "İnşaat malzemeleri kategorileri. Drenaj kanalları, rögar menhol kutuları, ıslak zemin ürünleri ve daha fazlası.";
+    ViewData["Keywords"] = "kategoriler, drenaj kanalları, rögar menhol, ıslak zemin ürünleri, inşaat malzemeleri kategorileri";
+}
+
+<!-- Page Header -->
+<section class="bg-danger text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Ürün Kategorileri</h1>
+                <p class="lead mb-0">Kaliteli inşaat malzemeleri kategorilerimizi keşfedin</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Kategori Listesi -->
+<section class="py-5">
+    <div class="container">
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var category in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 border-0 shadow-sm category-card">
+                            <div class="position-relative">
+                                @if (!string.IsNullOrEmpty(category.ImageUrl))
+                                {
+                                    <img src="~/uploads/categories/@category.ImageUrl" 
+                                         class="card-img-top" 
+                                         alt="@category.Name"
+                                         style="height: 250px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                         style="height: 250px;">
+                                        <i class="fas fa-th-large fa-4x text-muted"></i>
+                                    </div>
+                                }
+                                
+                                <div class="position-absolute top-0 end-0 p-3">
+                                    <span class="badge bg-danger fs-6">
+                                        @category.Products?.Count() Ürün
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title fw-bold text-dark mb-3">@category.Name</h5>
+                                
+                                <p class="card-text text-muted flex-grow-1">
+                                    @(category.Description?.Length > 120 ? category.Description.Substring(0, 120) + "..." : category.Description)
+                                </p>
+                                
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="text-muted small">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            @category.CreatedDate.ToString("dd.MM.yyyy")
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fas fa-eye me-1"></i>
+                                            @category.Products?.Count() Ürün
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2">
+                                        <a href="@Url.Action("Details", "Category", new { id = category.Id })" 
+                                           class="btn btn-danger">
+                                            <i class="fas fa-eye me-2"></i>Kategoriyi İncele
+                                        </a>
+                                        <a href="@Url.Action("Index", "Product", new { categoryId = category.Id })" 
+                                           class="btn btn-outline-danger">
+                                            <i class="fas fa-list me-2"></i>Ürünleri Görüntüle
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="fas fa-th-large fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">Kategori bulunamadı</h4>
+                <p class="text-muted">Henüz kategori eklenmemiş.</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Kategori Özellikleri -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-dark">Kategori Özellikleri</h2>
+            <p class="text-muted">Ürün kategorilerimizin öne çıkan özellikleri</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center p-4">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-cogs fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-3">Yüksek Kalite</h5>
+                    <p class="text-muted">Tüm ürünlerimiz yüksek kalite standartlarında üretilmektedir.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center p-4">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-shield-alt fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-3">Garanti</h5>
+                    <p class="text-muted">Tüm ürünlerimiz 2 yıl garanti kapsamındadır.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center p-4">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-truck fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-3">Hızlı Teslimat</h5>
+                    <p class="text-muted">3-7 iş günü içinde teslimat yapılmaktadır.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center p-4">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-headset fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-3">Teknik Destek</h5>
+                    <p class="text-muted">Uzman ekibimizden 7/24 teknik destek alabilirsiniz.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Popüler Kategoriler -->
+@if (ViewBag.PopularCategories != null)
+{
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-dark">Popüler Kategoriler</h2>
+                <p class="text-muted">En çok tercih edilen ürün kategorileri</p>
+            </div>
+            
+            <div class="row g-4">
+                @foreach (var category in ViewBag.PopularCategories as IEnumerable<InsaatFirmasi.Models.Category>)
+                {
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="position-relative">
+                                @if (!string.IsNullOrEmpty(category.ImageUrl))
+                                {
+                                    <img src="~/uploads/categories/@category.ImageUrl" 
+                                         class="card-img-top" 
+                                         alt="@category.Name"
+                                         style="height: 200px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                         style="height: 200px;">
+                                        <i class="fas fa-th-large fa-3x text-muted"></i>
+                                    </div>
+                                }
+                                
+                                <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                                    <i class="fas fa-fire me-1"></i>Popüler
+                                </span>
+                            </div>
+                            
+                            <div class="card-body text-center">
+                                <h6 class="card-title fw-bold">@category.Name</h6>
+                                <p class="card-text text-muted small">
+                                    @(category.Description?.Length > 80 ? category.Description.Substring(0, 80) + "..." : category.Description)
+                                </p>
+                                <a href="@Url.Action("Details", "Category", new { id = category.Id })" 
+                                   class="btn btn-danger btn-sm">
+                                    İncele
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- İletişim CTA -->
+<section class="py-5 bg-danger text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h2 class="display-6 fw-bold mb-3">Özel Kategori Talebi</h2>
+                <p class="lead mb-0">
+                    Aradığınız kategoriyi bulamadınız mı? Size özel kategori geliştirme hizmeti sunuyoruz.
+                </p>
+            </div>
+            <div class="col-lg-4 text-end">
+                <a href="@Url.Action("Index", "Contact")" class="btn btn-light btn-lg px-4">
+                    <i class="fas fa-phone me-2"></i>İletişime Geçin
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Kategori kartlarına hover efekti
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+}

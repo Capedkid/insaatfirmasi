@@ -1,0 +1,332 @@
+@{
+    ViewData["Title"] = "Teknik Destek";
+    ViewData["Description"] = "İnşaat malzemeleri ürünleri için teknik destek, montaj kılavuzları ve bakım bilgileri.";
+    ViewData["Keywords"] = "teknik destek, montaj kılavuzu, bakım, ürün desteği, inşaat malzemeleri";
+}
+
+<!-- Page Header -->
+<section class="bg-danger text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Teknik Destek</h1>
+                <p class="lead mb-0">Ürünlerimiz için kapsamlı teknik destek hizmeti</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Destek Hizmetleri -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-dark">Destek Hizmetlerimiz</h2>
+            <p class="text-muted">Size en iyi hizmeti sunmak için çeşitli destek kanalları</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-phone fa-2x"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-3">Telefon Desteği</h5>
+                        <p class="text-muted mb-3">Uzman ekibimizden telefon ile teknik destek alın</p>
+                        <a href="tel:+903321234567" class="btn btn-danger">Hemen Ara</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-envelope fa-2x"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-3">E-posta Desteği</h5>
+                        <p class="text-muted mb-3">Detaylı sorularınızı e-posta ile gönderin</p>
+                        <a href="mailto:teknik@insaatfirmasi.com" class="btn btn-danger">E-posta Gönder</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-video fa-2x"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-3">Video Destek</h5>
+                        <p class="text-muted mb-3">Görüntülü görüşme ile anında destek</p>
+                        <button class="btn btn-danger" onclick="startVideoSupport()">Video Başlat</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fas fa-tools fa-2x"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-3">Saha Desteği</h5>
+                        <p class="text-muted mb-3">Büyük projeler için saha ziyareti</p>
+                        <button class="btn btn-danger" onclick="requestSiteVisit()">Saha Talebi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Montaj Kılavuzları -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-dark">Montaj Kılavuzları</h2>
+            <p class="text-muted">Ürünlerimizin montajı için detaylı kılavuzlar</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                            <h5 class="fw-bold text-dark">Drenaj Kanalları</h5>
+                        </div>
+                        <p class="text-muted mb-3">Plastik drenaj kanallarının montajı için detaylı kılavuz</p>
+                        <div class="d-grid gap-2">
+                            <a href="#" class="btn btn-danger btn-sm">PDF İndir</a>
+                            <a href="#" class="btn btn-outline-danger btn-sm">Video İzle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                            <h5 class="fw-bold text-dark">Rögar Menhol</h5>
+                        </div>
+                        <p class="text-muted mb-3">Rögar menhol kutularının montajı için kılavuz</p>
+                        <div class="d-grid gap-2">
+                            <a href="#" class="btn btn-danger btn-sm">PDF İndir</a>
+                            <a href="#" class="btn btn-outline-danger btn-sm">Video İzle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                            <h5 class="fw-bold text-dark">Islak Zemin Ürünleri</h5>
+                        </div>
+                        <p class="text-muted mb-3">Islak zemin ürünlerinin montaj kılavuzu</p>
+                        <div class="d-grid gap-2">
+                            <a href="#" class="btn btn-danger btn-sm">PDF İndir</a>
+                            <a href="#" class="btn btn-outline-danger btn-sm">Video İzle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Teknik Destek Formu -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-dark">Teknik Destek Talebi</h2>
+            <p class="text-muted">Detaylı teknik destek için formu doldurun</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <form id="supportForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Ad Soyad *</label>
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">E-posta *</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Telefon *</label>
+                                    <input type="tel" class="form-control" name="phone" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Şirket</label>
+                                    <input type="text" class="form-control" name="company">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Ürün Kategorisi *</label>
+                                    <select class="form-select" name="productCategory" required>
+                                        <option value="">Kategori seçiniz</option>
+                                        <option value="Drenaj Kanalları">Drenaj Kanalları</option>
+                                        <option value="Rögar Menhol">Rögar Menhol</option>
+                                        <option value="Islak Zemin Ürünleri">Islak Zemin Ürünleri</option>
+                                        <option value="Diğer">Diğer</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Destek Türü *</label>
+                                    <select class="form-select" name="supportType" required>
+                                        <option value="">Destek türü seçiniz</option>
+                                        <option value="Montaj Desteği">Montaj Desteği</option>
+                                        <option value="Teknik Sorun">Teknik Sorun</option>
+                                        <option value="Bakım Bilgisi">Bakım Bilgisi</option>
+                                        <option value="Ürün Bilgisi">Ürün Bilgisi</option>
+                                        <option value="Diğer">Diğer</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Sorun Açıklaması *</label>
+                                    <textarea class="form-control" name="description" rows="5" placeholder="Sorununuzu detaylı olarak açıklayın..." required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Dosya Ekle</label>
+                                    <input type="file" class="form-control" name="attachment" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+                                    <small class="text-muted">Resim, PDF veya Word dosyası yükleyebilirsiniz (Max: 10MB)</small>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="urgent" name="urgent">
+                                        <label class="form-check-label" for="urgent">
+                                            Acil durum - Hızlı yanıt gerekiyor
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-danger btn-lg px-5">
+                                        <i class="fas fa-paper-plane me-2"></i>Destek Talebi Gönder
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sık Sorulan Teknik Sorular -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-dark">Sık Sorulan Teknik Sorular</h2>
+            <p class="text-muted">En çok sorulan teknik sorular ve cevapları</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="accordion" id="technicalFaqAccordion">
+                    <div class="accordion-item border-0 shadow-sm mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#tech1">
+                                Drenaj kanallarının montajında dikkat edilmesi gerekenler nelerdir?
+                            </button>
+                        </h2>
+                        <div id="tech1" class="accordion-collapse collapse show" data-bs-parent="#technicalFaqAccordion">
+                            <div class="accordion-body text-muted">
+                                Drenaj kanallarının montajında eğim, derinlik ve bağlantı noktalarına dikkat edilmelidir. 
+                                Detaylı bilgi için montaj kılavuzumuzu inceleyebilirsiniz.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border-0 shadow-sm mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#tech2">
+                                Rögar menhol kutularının bakımı nasıl yapılır?
+                            </button>
+                        </h2>
+                        <div id="tech2" class="accordion-collapse collapse" data-bs-parent="#technicalFaqAccordion">
+                            <div class="accordion-body text-muted">
+                                Düzenli temizlik, kapak kontrolü ve sızdırmazlık testleri yapılmalıdır. 
+                                Yılda en az iki kez profesyonel bakım önerilir.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border-0 shadow-sm mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#tech3">
+                                Ürünlerin kimyasal direnci nasıldır?
+                            </button>
+                        </h2>
+                        <div id="tech3" class="accordion-collapse collapse" data-bs-parent="#technicalFaqAccordion">
+                            <div class="accordion-body text-muted">
+                                Ürünlerimiz asit, baz ve çoğu kimyasal maddeye karşı yüksek direnç gösterir. 
+                                Detaylı kimyasal direnç tablosu için teknik dokümanlarımızı inceleyebilirsiniz.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- İletişim CTA -->
+<section class="py-5 bg-danger text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h2 class="display-6 fw-bold mb-3">Acil Teknik Destek</h2>
+                <p class="lead mb-0">
+                    Acil durumlar için 7/24 teknik destek hattımızı arayabilirsiniz.
+                </p>
+            </div>
+            <div class="col-lg-4 text-end">
+                <a href="tel:+903321234569" class="btn btn-light btn-lg px-4">
+                    <i class="fas fa-phone me-2"></i>Acil Destek: +90 (332) 123 45 69
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function startVideoSupport() {
+            alert('Video destek özelliği yakında aktif olacak!');
+        }
+        
+        function requestSiteVisit() {
+            alert('Saha ziyareti talebi için lütfen iletişim formunu doldurun.');
+        }
+        
+        // Teknik destek formu
+        document.getElementById('supportForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('@Url.Action("Support", "Contact")', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Teknik destek talebiniz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+                    this.reset();
+                } else {
+                    alert('Talep gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Talep gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+            });
+        });
+    </script>
+}

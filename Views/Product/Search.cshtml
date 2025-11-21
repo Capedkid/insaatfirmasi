@@ -1,0 +1,310 @@
+@model IEnumerable<InsaatFirmasi.Models.Product>
+@{
+    ViewData["Title"] = "Ürün Arama";
+    ViewData["Description"] = "İnşaat malzemeleri ve enjeksiyon imalatları arama sonuçları.";
+    ViewData["Keywords"] = "ürün arama, inşaat malzemeleri arama, drenaj kanalları, rögar menhol";
+}
+
+<!-- Page Header -->
+<section class="bg-danger text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Ürün Arama</h1>
+                <p class="lead mb-0">Aradığınız ürünü bulun</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Arama Formu -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form method="get" class="row g-3">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="text" 
+                                   name="q" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="Ürün adı, kategori veya özellik ara..." 
+                                   value="@ViewBag.SearchQuery">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="categoryId" class="form-select form-select-lg">
+                            <option value="">Tüm Kategoriler</option>
+                            @foreach (var category in ViewBag.Categories as IEnumerable<InsaatFirmasi.Models.Category>)
+                            {
+                                <option value="@category.Id" selected="@(ViewBag.SelectedCategoryId?.ToString() == category.Id.ToString())">
+                                    @category.Name
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Arama Sonuçları -->
+<section class="py-5">
+    <div class="container">
+        @if (!string.IsNullOrEmpty(ViewBag.SearchQuery as string))
+        {
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="fw-bold text-dark mb-1">
+                                "@ViewBag.SearchQuery" için arama sonuçları
+                            </h4>
+                            <p class="text-muted mb-0">
+                                @(Model?.Count() ?? 0) ürün bulundu
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="me-3 text-muted">Sırala:</span>
+                            <select name="sort" class="form-select" style="width: auto;" onchange="this.form.submit()">
+                                <option value="relevance">En İlgili</option>
+                                <option value="name">İsim A-Z</option>
+                                <option value="name_desc">İsim Z-A</option>
+                                <option value="date">En Yeni</option>
+                                <option value="price">Fiyat (Düşük-Yüksek)</option>
+                                <option value="price_desc">Fiyat (Yüksek-Düşük)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var product in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 border-0 shadow-sm product-card">
+                            <div class="position-relative">
+                                @if (product.ProductImages != null && product.ProductImages.Any())
+                                {
+                                    <img src="~/uploads/products/@product.ProductImages.First().ImageUrl" 
+                                         class="card-img-top" 
+                                         alt="@product.Name"
+                                         style="height: 250px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                         style="height: 250px;">
+                                        <i class="fas fa-image fa-3x text-muted"></i>
+                                    </div>
+                                }
+                                
+                                @if (product.IsFeatured)
+                                {
+                                    <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                                        <i class="fas fa-star me-1"></i>Öne Çıkan
+                                    </span>
+                                }
+                            </div>
+                            
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <span class="badge bg-secondary">@product.Category?.Name</span>
+                                </div>
+                                
+                                <h5 class="card-title fw-bold text-dark mb-2">@product.Name</h5>
+                                
+                                <p class="card-text text-muted flex-grow-1">
+                                    @(product.Description?.Length > 100 ? product.Description.Substring(0, 100) + "..." : product.Description)
+                                </p>
+                                
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            @if (product.Price.HasValue)
+                                            {
+                                                <span class="h5 text-danger fw-bold">@product.Price.Value.ToString("C")</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Fiyat için iletişime geçin</span>
+                                            }
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fas fa-eye me-1"></i>@product.ViewCount
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2">
+                                        <a href="@Url.Action("Details", "Product", new { id = product.Id })" 
+                                           class="btn btn-danger">
+                                            <i class="fas fa-eye me-2"></i>Detayları Gör
+                                        </a>
+                                        <button class="btn btn-outline-danger" 
+                                                onclick="requestQuote(@product.Id)">
+                                            <i class="fas fa-calculator me-2"></i>Teklif İste
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            
+            <!-- Sayfalama -->
+            @if (ViewBag.TotalPages > 1)
+            {
+                <nav aria-label="Arama sonuçları sayfalama" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="?q=@ViewBag.SearchQuery&page=@(ViewBag.CurrentPage - 1)&categoryId=@ViewBag.SelectedCategoryId">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                        }
+                        
+                        @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
+                        {
+                            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                <a class="page-link" href="?q=@ViewBag.SearchQuery&page=@i&categoryId=@ViewBag.SelectedCategoryId">@i</a>
+                            </li>
+                        }
+                        
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="?q=@ViewBag.SearchQuery&page=@(ViewBag.CurrentPage + 1)&categoryId=@ViewBag.SelectedCategoryId">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        }
+        else
+        {
+            <div class="text-center py-5">
+                @if (!string.IsNullOrEmpty(ViewBag.SearchQuery as string))
+                {
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">Arama sonucu bulunamadı</h4>
+                    <p class="text-muted">
+                        "@ViewBag.SearchQuery" için arama sonucu bulunamadı. 
+                        Farklı anahtar kelimeler deneyebilir veya kategorileri inceleyebilirsiniz.
+                    </p>
+                }
+                else
+                {
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">Arama yapın</h4>
+                    <p class="text-muted">Ürün aramak için yukarıdaki arama kutusunu kullanın.</p>
+                }
+                
+                <div class="mt-4">
+                    <a href="@Url.Action("Index", "Product")" class="btn btn-danger me-2">
+                        <i class="fas fa-list me-2"></i>Tüm Ürünleri Görüntüle
+                    </a>
+                    <a href="@Url.Action("Index", "Category")" class="btn btn-outline-danger">
+                        <i class="fas fa-th-large me-2"></i>Kategorileri İncele
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Popüler Aramalar -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold text-dark">Popüler Aramalar</h3>
+            <p class="text-muted">En çok aranan ürün kategorileri</p>
+        </div>
+        
+        <div class="row g-3">
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Product", new { q = "drenaj kanalı" })" 
+                   class="btn btn-outline-danger w-100">
+                    Drenaj Kanalları
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Product", new { q = "rögar menhol" })" 
+                   class="btn btn-outline-danger w-100">
+                    Rögar Menhol
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Product", new { q = "ıslak zemin" })" 
+                   class="btn btn-outline-danger w-100">
+                    Islak Zemin
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Product", new { q = "banyo ürünleri" })" 
+                   class="btn btn-outline-danger w-100">
+                    Banyo Ürünleri
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Product", new { q = "plastik" })" 
+                   class="btn btn-outline-danger w-100">
+                    Plastik Ürünler
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Product", new { q = "enjeksiyon" })" 
+                   class="btn btn-outline-danger w-100">
+                    Enjeksiyon
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- İletişim CTA -->
+<section class="py-5 bg-danger text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h2 class="display-6 fw-bold mb-3">Aradığınız Ürünü Bulamadınız mı?</h2>
+                <p class="lead mb-0">
+                    Özel ürün talepleriniz için bizimle iletişime geçin. Size özel çözümler geliştirebiliriz.
+                </p>
+            </div>
+            <div class="col-lg-4 text-end">
+                <a href="@Url.Action("Index", "Contact")" class="btn btn-light btn-lg px-4">
+                    <i class="fas fa-phone me-2"></i>İletişime Geçin
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function requestQuote(productId) {
+            window.location.href = '@Url.Action("Index", "Contact")?productId=' + productId;
+        }
+        
+        // Arama kutusuna odaklan
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('input[name="q"]');
+            if (searchInput && !searchInput.value) {
+                searchInput.focus();
+            }
+        });
+    </script>
+}

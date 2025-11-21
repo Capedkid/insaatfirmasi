@@ -1,0 +1,262 @@
+@model IEnumerable<InsaatFirmasi.Models.Catalog>
+@{
+    ViewData["Title"] = "Online Katalog";
+    ViewData["Description"] = "İnşaat malzemeleri ve enjeksiyon imalatları online katalogları. Ürün kataloglarını indirin ve inceleyin.";
+    ViewData["Keywords"] = "online katalog, ürün katalogları, inşaat malzemeleri katalog, drenaj kanalları katalog";
+}
+
+<!-- Page Header -->
+<section class="bg-danger text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Online Katalog</h1>
+                <p class="lead mb-0">Ürün kataloglarımızı indirin ve inceleyin</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Katalog Listesi -->
+<section class="py-5">
+    <div class="container">
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var catalog in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 border-0 shadow-sm catalog-card">
+                            <div class="position-relative">
+                                @if (!string.IsNullOrEmpty(catalog.CoverImageUrl))
+                                {
+                                    <img src="~/uploads/catalogs/@catalog.CoverImageUrl" 
+                                         class="card-img-top" 
+                                         alt="@catalog.Title"
+                                         style="height: 300px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                         style="height: 300px;">
+                                        <i class="fas fa-file-pdf fa-4x text-danger"></i>
+                                    </div>
+                                }
+                                
+                                <div class="position-absolute top-0 end-0 p-3">
+                                    <span class="badge bg-danger fs-6">
+                                        <i class="fas fa-download me-1"></i>@catalog.DownloadCount
+                                    </span>
+                                </div>
+                                
+                                <div class="position-absolute bottom-0 start-0 end-0 p-3 bg-dark bg-opacity-75 text-white">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="small">
+                                            <i class="fas fa-file me-1"></i>@catalog.FileExtension.ToUpper()
+                                        </span>
+                                        <span class="small">
+                                            <i class="fas fa-weight me-1"></i>@catalog.FileSize
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title fw-bold text-dark mb-3">@catalog.Title</h5>
+                                
+                                <p class="card-text text-muted flex-grow-1">
+                                    @(catalog.Description?.Length > 120 ? catalog.Description.Substring(0, 120) + "..." : catalog.Description)
+                                </p>
+                                
+                                <div class="mt-auto">
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-6">
+                                            <div class="text-center p-2 bg-light rounded">
+                                                <i class="fas fa-download text-danger mb-1"></i>
+                                                <div class="small fw-bold">@catalog.DownloadCount</div>
+                                                <div class="small text-muted">İndirme</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center p-2 bg-light rounded">
+                                                <i class="fas fa-calendar text-danger mb-1"></i>
+                                                <div class="small fw-bold">@catalog.CreatedDate.ToString("dd.MM.yy")</div>
+                                                <div class="small text-muted">Tarih</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2">
+                                        <a href="@Url.Action("Details", "Catalog", new { id = catalog.Id })" 
+                                           class="btn btn-danger">
+                                            <i class="fas fa-eye me-2"></i>Katalogu İncele
+                                        </a>
+                                        <a href="@Url.Action("Download", "Catalog", new { id = catalog.Id })" 
+                                           class="btn btn-outline-danger">
+                                            <i class="fas fa-download me-2"></i>İndir
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="fas fa-file-pdf fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">Katalog bulunamadı</h4>
+                <p class="text-muted">Henüz katalog eklenmemiş.</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Katalog Özellikleri -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-dark">Katalog Özellikleri</h2>
+            <p class="text-muted">Online kataloglarımızın avantajları</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center p-4">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-download fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-3">Ücretsiz İndirme</h5>
+                    <p class="text-muted">Tüm kataloglarımızı ücretsiz olarak indirebilirsiniz.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center p-4">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-mobile-alt fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-3">Mobil Uyumlu</h5>
+                    <p class="text-muted">Kataloglarımız tüm cihazlarda mükemmel görünür.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center p-4">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-sync-alt fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-3">Güncel İçerik</h5>
+                    <p class="text-muted">Kataloglarımız sürekli güncellenir ve yenilenir.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center p-4">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-search fa-2x"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-3">Arama Özelliği</h5>
+                    <p class="text-muted">Kataloglarda hızlı arama yapabilirsiniz.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Popüler Kataloglar -->
+@if (ViewBag.PopularCatalogs != null)
+{
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-dark">Popüler Kataloglar</h2>
+                <p class="text-muted">En çok indirilen kataloglarımız</p>
+            </div>
+            
+            <div class="row g-4">
+                @foreach (var catalog in ViewBag.PopularCatalogs as IEnumerable<InsaatFirmasi.Models.Catalog>)
+                {
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="position-relative">
+                                @if (!string.IsNullOrEmpty(catalog.CoverImageUrl))
+                                {
+                                    <img src="~/uploads/catalogs/@catalog.CoverImageUrl" 
+                                         class="card-img-top" 
+                                         alt="@catalog.Title"
+                                         style="height: 200px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                         style="height: 200px;">
+                                        <i class="fas fa-file-pdf fa-3x text-danger"></i>
+                                    </div>
+                                }
+                                
+                                <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                                    <i class="fas fa-fire me-1"></i>Popüler
+                                </span>
+                            </div>
+                            
+                            <div class="card-body text-center">
+                                <h6 class="card-title fw-bold">@catalog.Title</h6>
+                                <p class="card-text text-muted small">
+                                    @(catalog.Description?.Length > 80 ? catalog.Description.Substring(0, 80) + "..." : catalog.Description)
+                                </p>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="@Url.Action("Details", "Catalog", new { id = catalog.Id })" 
+                                       class="btn btn-danger btn-sm">
+                                        İncele
+                                    </a>
+                                    <a href="@Url.Action("Download", "Catalog", new { id = catalog.Id })" 
+                                       class="btn btn-outline-danger btn-sm">
+                                        İndir
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- İletişim CTA -->
+<section class="py-5 bg-danger text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h2 class="display-6 fw-bold mb-3">Özel Katalog Talebi</h2>
+                <p class="lead mb-0">
+                    Aradığınız katalogu bulamadınız mı? Size özel katalog hazırlama hizmeti sunuyoruz.
+                </p>
+            </div>
+            <div class="col-lg-4 text-end">
+                <a href="@Url.Action("Index", "Contact")" class="btn btn-light btn-lg px-4">
+                    <i class="fas fa-phone me-2"></i>İletişime Geçin
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Katalog kartlarına hover efekti
+        document.addEventListener('DOMContentLoaded', function() {
+            const catalogCards = document.querySelectorAll('.catalog-card');
+            catalogCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+}

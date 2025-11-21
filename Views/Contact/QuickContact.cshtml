@@ -1,0 +1,82 @@
+@{
+    ViewData["Title"] = "Hızlı İletişim";
+}
+
+<div class="quick-contact-form">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-danger text-white py-3">
+            <h5 class="fw-bold mb-0">
+                <i class="fas fa-bolt me-2"></i>Hızlı İletişim
+            </h5>
+        </div>
+        <div class="card-body p-4">
+            <form id="quickContactForm">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <input type="text" class="form-control" id="quickName" name="name" placeholder="Ad Soyad" required>
+                    </div>
+                    <div class="col-12">
+                        <input type="email" class="form-control" id="quickEmail" name="email" placeholder="E-posta" required>
+                    </div>
+                    <div class="col-12">
+                        <input type="tel" class="form-control" id="quickPhone" name="phone" placeholder="Telefon">
+                    </div>
+                    <div class="col-12">
+                        <select class="form-select" id="quickSubject" name="subject" required>
+                            <option value="">Konu seçiniz</option>
+                            <option value="Ürün Bilgisi">Ürün Bilgisi</option>
+                            <option value="Fiyat Teklifi">Fiyat Teklifi</option>
+                            <option value="Teknik Destek">Teknik Destek</option>
+                            <option value="Satış">Satış</option>
+                            <option value="Diğer">Diğer</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <textarea class="form-control" id="quickMessage" name="message" rows="3" placeholder="Mesajınız..." required></textarea>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="quickPrivacy" name="privacy" required>
+                            <label class="form-check-label small" for="quickPrivacy">
+                                <a href="#" class="text-danger">Gizlilik Politikası</a>'nı kabul ediyorum.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-danger w-100">
+                            <i class="fas fa-paper-plane me-2"></i>Gönder
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('quickContactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Form verilerini al
+        const formData = new FormData(this);
+        
+        // AJAX ile form gönder
+        fetch('@Url.Action("QuickContact", "Contact")', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+                this.reset();
+            } else {
+                alert('Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+        });
+    });
+</script>

@@ -1,0 +1,432 @@
+@{
+    ViewData["Title"] = "Sıkça Sorulan Sorular";
+    ViewData["Description"] = "İnşaat malzemeleri, ürünler, fiyatlar, teslimat ve teknik destek hakkında sıkça sorulan sorular.";
+    ViewData["Keywords"] = "SSS, sıkça sorulan sorular, FAQ, inşaat malzemeleri, ürün bilgileri";
+}
+
+<!-- Page Header -->
+<section class="bg-danger text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Sıkça Sorulan Sorular</h1>
+                <p class="lead mb-0">En çok merak edilen konular hakkında bilgi alın</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SSS Kategorileri -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-lg-2 col-md-4 col-6">
+                <button class="btn btn-outline-danger w-100 category-btn" data-category="urunler">
+                    <i class="fas fa-box me-2"></i>Ürünler
+                </button>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <button class="btn btn-outline-danger w-100 category-btn" data-category="fiyatlar">
+                    <i class="fas fa-tag me-2"></i>Fiyatlar
+                </button>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <button class="btn btn-outline-danger w-100 category-btn" data-category="teslimat">
+                    <i class="fas fa-truck me-2"></i>Teslimat
+                </button>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <button class="btn btn-outline-danger w-100 category-btn" data-category="teknik">
+                    <i class="fas fa-cogs me-2"></i>Teknik
+                </button>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <button class="btn btn-outline-danger w-100 category-btn" data-category="garanti">
+                    <i class="fas fa-shield-alt me-2"></i>Garanti
+                </button>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <button class="btn btn-danger w-100 category-btn active" data-category="tumu">
+                    <i class="fas fa-list me-2"></i>Tümü
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SSS İçeriği -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Ürünler Kategorisi -->
+                <div class="faq-category" data-category="urunler">
+                    <h3 class="fw-bold text-dark mb-4">
+                        <i class="fas fa-box me-2 text-danger"></i>Ürünler Hakkında
+                    </h3>
+                    
+                    <div class="accordion mb-5" id="urunlerAccordion">
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#urun1">
+                                    Hangi ürünleri üretiyorsunuz?
+                                </button>
+                            </h2>
+                            <div id="urun1" class="accordion-collapse collapse show" data-bs-parent="#urunlerAccordion">
+                                <div class="accordion-body text-muted">
+                                    Plastik drenaj kanalları, rögar menhol kutuları, ıslak zemin ürünleri ve çeşitli plastik enjeksiyon ürünleri üretiyoruz. 
+                                    Tüm ürünlerimiz yüksek kalite standartlarında ve TS EN standartlarına uygun olarak üretilmektedir.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#urun2">
+                                    Ürünleriniz hangi malzemelerden üretiliyor?
+                                </button>
+                            </h2>
+                            <div id="urun2" class="accordion-collapse collapse" data-bs-parent="#urunlerAccordion">
+                                <div class="accordion-body text-muted">
+                                    Ürünlerimiz yüksek kaliteli plastik malzemelerden üretilmektedir. UV dayanımlı, kimyasal dirençli ve 
+                                    uzun ömürlü malzemeler kullanarak üretim yapıyoruz.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#urun3">
+                                    Özel ürün talebinde bulunabilir miyim?
+                                </button>
+                            </h2>
+                            <div id="urun3" class="accordion-collapse collapse" data-bs-parent="#urunlerAccordion">
+                                <div class="accordion-body text-muted">
+                                    Evet, müşterilerimizin özel ihtiyaçlarına göre özel ürün geliştirme hizmeti sunuyoruz. 
+                                    Teknik ekibimizle görüşerek size özel çözümler geliştirebiliriz.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fiyatlar Kategorisi -->
+                <div class="faq-category" data-category="fiyatlar">
+                    <h3 class="fw-bold text-dark mb-4">
+                        <i class="fas fa-tag me-2 text-danger"></i>Fiyatlar Hakkında
+                    </h3>
+                    
+                    <div class="accordion mb-5" id="fiyatlarAccordion">
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#fiyat1">
+                                    Fiyat teklifi nasıl alabilirim?
+                                </button>
+                            </h2>
+                            <div id="fiyat1" class="accordion-collapse collapse show" data-bs-parent="#fiyatlarAccordion">
+                                <div class="accordion-body text-muted">
+                                    Fiyat teklifi almak için iletişim formumuzu doldurarak veya doğrudan telefon ile bizimle iletişime geçebilirsiniz. 
+                                    Projenizin detaylarına göre size özel teklif hazırlarız.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#fiyat2">
+                                    Toplu alım indirimi var mı?
+                                </button>
+                            </h2>
+                            <div id="fiyat2" class="accordion-collapse collapse" data-bs-parent="#fiyatlarAccordion">
+                                <div class="accordion-body text-muted">
+                                    Evet, büyük miktarlı siparişler için özel indirimler sunuyoruz. 
+                                    Sipariş miktarınıza göre indirim oranları değişiklik göstermektedir.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#fiyat3">
+                                    Ödeme koşulları nelerdir?
+                                </button>
+                            </h2>
+                            <div id="fiyat3" class="accordion-collapse collapse" data-bs-parent="#fiyatlarAccordion">
+                                <div class="accordion-body text-muted">
+                                    Nakit, kredi kartı, banka havalesi ve çek ile ödeme kabul ediyoruz. 
+                                    Kurumsal müşterilerimiz için vadeli ödeme seçenekleri de mevcuttur.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Teslimat Kategorisi -->
+                <div class="faq-category" data-category="teslimat">
+                    <h3 class="fw-bold text-dark mb-4">
+                        <i class="fas fa-truck me-2 text-danger"></i>Teslimat Hakkında
+                    </h3>
+                    
+                    <div class="accordion mb-5" id="teslimatAccordion">
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#teslimat1">
+                                    Teslimat süreleri ne kadar?
+                                </button>
+                            </h2>
+                            <div id="teslimat1" class="accordion-collapse collapse show" data-bs-parent="#teslimatAccordion">
+                                <div class="accordion-body text-muted">
+                                    Teslimat süreleri sipariş miktarına ve ürün türüne göre değişiklik gösterir. 
+                                    Genellikle 3-7 iş günü içinde teslimat yapılmaktadır. Detaylı bilgi için iletişime geçin.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#teslimat2">
+                                    Hangi bölgelere teslimat yapıyorsunuz?
+                                </button>
+                            </h2>
+                            <div id="teslimat2" class="accordion-collapse collapse" data-bs-parent="#teslimatAccordion">
+                                <div class="accordion-body text-muted">
+                                    Türkiye genelinde teslimat yapıyoruz. Konya ve çevre illere aynı gün teslimat imkanımız bulunmaktadır. 
+                                    Diğer illere kargo ile gönderim yapıyoruz.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#teslimat3">
+                                    Teslimat ücreti var mı?
+                                </button>
+                            </h2>
+                            <div id="teslimat3" class="accordion-collapse collapse" data-bs-parent="#teslimatAccordion">
+                                <div class="accordion-body text-muted">
+                                    Belirli bir tutarın üzerindeki siparişlerde teslimat ücretsizdir. 
+                                    Alt tutarlı siparişlerde teslimat ücreti sipariş tutarına eklenir.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Teknik Kategorisi -->
+                <div class="faq-category" data-category="teknik">
+                    <h3 class="fw-bold text-dark mb-4">
+                        <i class="fas fa-cogs me-2 text-danger"></i>Teknik Destek
+                    </h3>
+                    
+                    <div class="accordion mb-5" id="teknikAccordion">
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#teknik1">
+                                    Teknik destek alabilir miyim?
+                                </button>
+                            </h2>
+                            <div id="teknik1" class="accordion-collapse collapse show" data-bs-parent="#teknikAccordion">
+                                <div class="accordion-body text-muted">
+                                    Evet, uzman teknik ekibimiz size ürünlerimiz hakkında detaylı teknik destek sağlar. 
+                                    Montaj, kullanım ve bakım konularında yardımcı oluruz.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#teknik2">
+                                    Montaj kılavuzu sağlıyor musunuz?
+                                </button>
+                            </h2>
+                            <div id="teknik2" class="accordion-collapse collapse" data-bs-parent="#teknikAccordion">
+                                <div class="accordion-body text-muted">
+                                    Evet, tüm ürünlerimiz için detaylı montaj kılavuzları sağlıyoruz. 
+                                    Ayrıca video kılavuzlar da mevcuttur.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#teknik3">
+                                    Sahada montaj desteği veriyor musunuz?
+                                </button>
+                            </h2>
+                            <div id="teknik3" class="accordion-collapse collapse" data-bs-parent="#teknikAccordion">
+                                <div class="accordion-body text-muted">
+                                    Büyük projeler için saha montaj desteği sağlıyoruz. 
+                                    Montaj ekibimiz projenizin başarıyla tamamlanması için gerekli desteği verir.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Garanti Kategorisi -->
+                <div class="faq-category" data-category="garanti">
+                    <h3 class="fw-bold text-dark mb-4">
+                        <i class="fas fa-shield-alt me-2 text-danger"></i>Garanti ve Kalite
+                    </h3>
+                    
+                    <div class="accordion mb-5" id="garantiAccordion">
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#garanti1">
+                                    Garanti süresi ne kadar?
+                                </button>
+                            </h2>
+                            <div id="garanti1" class="accordion-collapse collapse show" data-bs-parent="#garantiAccordion">
+                                <div class="accordion-body text-muted">
+                                    Tüm ürünlerimiz 2 yıl garanti kapsamındadır. 
+                                    Garanti kapsamında malzeme ve işçilik hataları karşılanır.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#garanti2">
+                                    Kalite sertifikalarınız var mı?
+                                </button>
+                            </h2>
+                            <div id="garanti2" class="accordion-collapse collapse" data-bs-parent="#garantiAccordion">
+                                <div class="accordion-body text-muted">
+                                    Evet, ISO 9001:2015 Kalite Yönetim Sistemi sertifikamız bulunmaktadır. 
+                                    Ayrıca ürünlerimiz TS EN standartlarına uygun olarak üretilmektedir.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#garanti3">
+                                    Garanti kapsamı dışında kalan durumlar nelerdir?
+                                </button>
+                            </h2>
+                            <div id="garanti3" class="accordion-collapse collapse" data-bs-parent="#garantiAccordion">
+                                <div class="accordion-body text-muted">
+                                    Yanlış kullanım, doğal afetler, normal aşınma ve yıpranma garanti kapsamı dışındadır. 
+                                    Detaylı bilgi için garanti belgelerimizi inceleyebilirsiniz.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Soru Sorma Formu -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-dark">Sorunuz mu Var?</h2>
+            <p class="text-muted">Aradığınız cevabı bulamadınız mı? Bizimle iletişime geçin</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <form id="faqContactForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="name" placeholder="Ad Soyad" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email" placeholder="E-posta" required>
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" name="subject" placeholder="Konu" required>
+                                </div>
+                                <div class="col-12">
+                                    <textarea class="form-control" name="message" rows="4" placeholder="Sorunuzu buraya yazın..." required></textarea>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-danger btn-lg px-5">
+                                        <i class="fas fa-paper-plane me-2"></i>Soru Gönder
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- İletişim CTA -->
+<section class="py-5 bg-danger text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h2 class="display-6 fw-bold mb-3">Hala Sorularınız mı Var?</h2>
+                <p class="lead mb-0">
+                    Uzman ekibimiz size yardımcı olmaya hazır. Hemen iletişime geçin.
+                </p>
+            </div>
+            <div class="col-lg-4 text-end">
+                <a href="@Url.Action("Index", "Contact")" class="btn btn-light btn-lg px-4">
+                    <i class="fas fa-phone me-2"></i>İletişime Geçin
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Kategori filtreleme
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const faqCategories = document.querySelectorAll('.faq-category');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // Aktif buton güncelle
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Kategorileri göster/gizle
+                    faqCategories.forEach(cat => {
+                        if (category === 'tumu' || cat.getAttribute('data-category') === category) {
+                            cat.style.display = 'block';
+                        } else {
+                            cat.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+        
+        // SSS formu
+        document.getElementById('faqContactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('@Url.Action("Index", "Contact")', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Sorunuz başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+                    this.reset();
+                } else {
+                    alert('Sorunuz gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Sorunuz gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+            });
+        });
+    </script>
+}

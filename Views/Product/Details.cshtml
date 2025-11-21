@@ -1,0 +1,369 @@
+@model InsaatFirmasi.Models.Product
+@{
+    ViewData["Title"] = Model.Name;
+    ViewData["Description"] = Model.Description?.Length > 160 ? Model.Description.Substring(0, 160) + "..." : Model.Description;
+    ViewData["Keywords"] = $"{Model.Name}, {Model.Category?.Name}, inşaat malzemeleri, {Model.Tags}";
+}
+
+<!-- Breadcrumb -->
+<section class="bg-light py-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Anasayfa</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Product")">Ürünler</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("Details", "Category", new { id = Model.CategoryId })">@Model.Category?.Name</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Ürün Detayları -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Ürün Görselleri -->
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <!-- Ana Görsel -->
+                    <div class="col-12">
+                        <div class="position-relative">
+                            @if (Model.ProductImages != null && Model.ProductImages.Any())
+                            {
+                                <img id="mainImage" 
+                                     src="~/uploads/products/@Model.ProductImages.First().ImageUrl" 
+                                     class="img-fluid rounded shadow-sm" 
+                                     alt="@Model.Name"
+                                     style="height: 400px; width: 100%; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="bg-light d-flex align-items-center justify-content-center rounded shadow-sm" 
+                                     style="height: 400px;">
+                                    <i class="fas fa-image fa-4x text-muted"></i>
+                                </div>
+                            }
+                            
+                            @if (Model.IsFeatured)
+                            {
+                                <span class="position-absolute top-0 start-0 bg-danger text-white px-3 py-2">
+                                    <i class="fas fa-star me-1"></i>Öne Çıkan Ürün
+                                </span>
+                            }
+                        </div>
+                    </div>
+                    
+                    <!-- Küçük Görseller -->
+                    @if (Model.ProductImages != null && Model.ProductImages.Count > 1)
+                    {
+                        <div class="col-12">
+                            <div class="row g-2">
+                                @foreach (var image in Model.ProductImages.Take(4))
+                                {
+                                    <div class="col-3">
+                                        <img src="~/uploads/products/@image.ImageUrl" 
+                                             class="img-fluid rounded shadow-sm cursor-pointer" 
+                                             alt="@Model.Name"
+                                             style="height: 80px; width: 100%; object-fit: cover;"
+                                             onclick="changeMainImage(this.src)">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <!-- Ürün Bilgileri -->
+            <div class="col-lg-6">
+                <div class="product-info">
+                    <!-- Kategori -->
+                    <div class="mb-3">
+                        <span class="badge bg-secondary fs-6">@Model.Category?.Name</span>
+                    </div>
+                    
+                    <!-- Ürün Adı -->
+                    <h1 class="display-5 fw-bold text-dark mb-3">@Model.Name</h1>
+                    
+                    <!-- Fiyat -->
+                    <div class="mb-4">
+                        @if (Model.Price.HasValue)
+                        {
+                            <span class="display-6 text-danger fw-bold">@Model.Price.Value.ToString("C")</span>
+                        }
+                        else
+                        {
+                            <span class="h4 text-muted">Fiyat için iletişime geçin</span>
+                        }
+                    </div>
+                    
+                    <!-- Açıklama -->
+                    <div class="mb-4">
+                        <p class="lead text-muted">@Model.Description</p>
+                    </div>
+                    
+                    <!-- Özellikler -->
+                    @if (!string.IsNullOrEmpty(Model.Features))
+                    {
+                        <div class="mb-4">
+                            <h5 class="fw-bold text-dark mb-3">Ürün Özellikleri</h5>
+                            <div class="row g-2">
+                                @foreach (var feature in Model.Features.Split('\n').Where(f => !string.IsNullOrWhiteSpace(f)))
+                                {
+                                    <div class="col-12">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-check text-danger me-2"></i>
+                                            <span>@feature.Trim()</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    
+                    <!-- Etiketler -->
+                    @if (!string.IsNullOrEmpty(Model.Tags))
+                    {
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-dark mb-2">Etiketler</h6>
+                            <div class="d-flex flex-wrap gap-2">
+                                @foreach (var tag in Model.Tags.Split(',').Where(t => !string.IsNullOrWhiteSpace(t)))
+                                {
+                                    <span class="badge bg-light text-dark border">@tag.Trim()</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                    
+                    <!-- İstatistikler -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-4">
+                            <div class="text-center p-3 bg-light rounded">
+                                <i class="fas fa-eye fa-2x text-danger mb-2"></i>
+                                <div class="fw-bold">@Model.ViewCount</div>
+                                <small class="text-muted">Görüntülenme</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center p-3 bg-light rounded">
+                                <i class="fas fa-calendar fa-2x text-danger mb-2"></i>
+                                <div class="fw-bold">@Model.CreatedDate.ToString("dd.MM.yyyy")</div>
+                                <small class="text-muted">Eklenme Tarihi</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center p-3 bg-light rounded">
+                                <i class="fas fa-star fa-2x text-danger mb-2"></i>
+                                <div class="fw-bold">@Model.SortOrder</div>
+                                <small class="text-muted">Sıralama</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Aksiyon Butonları -->
+                    <div class="d-grid gap-3">
+                        <button class="btn btn-danger btn-lg" onclick="requestQuote(@Model.Id)">
+                            <i class="fas fa-calculator me-2"></i>Teklif İste
+                        </button>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button class="btn btn-outline-danger w-100" onclick="addToFavorites(@Model.Id)">
+                                    <i class="far fa-heart me-2"></i>Favorilere Ekle
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-outline-danger w-100" onclick="shareProduct()">
+                                    <i class="fas fa-share me-2"></i>Paylaş
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Detaylı Bilgiler -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0">
+                        <ul class="nav nav-tabs nav-fill" id="productTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active fw-semibold" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab">
+                                    <i class="fas fa-info-circle me-2"></i>Açıklama
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link fw-semibold" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications" type="button" role="tab">
+                                    <i class="fas fa-cogs me-2"></i>Teknik Özellikler
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link fw-semibold" id="installation-tab" data-bs-toggle="tab" data-bs-target="#installation" type="button" role="tab">
+                                    <i class="fas fa-tools me-2"></i>Montaj Bilgileri
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="tab-content" id="productTabsContent">
+                            <div class="tab-pane fade show active" id="description" role="tabpanel">
+                                <h5 class="fw-bold text-dark mb-3">Ürün Açıklaması</h5>
+                                <div class="text-muted">
+                                    @Html.Raw(Model.Description?.Replace("\n", "<br>"))
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="specifications" role="tabpanel">
+                                <h5 class="fw-bold text-dark mb-3">Teknik Özellikler</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="d-flex justify-content-between border-bottom py-2">
+                                            <span class="fw-semibold">Malzeme:</span>
+                                            <span class="text-muted">Yüksek Kalite Plastik</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex justify-content-between border-bottom py-2">
+                                            <span class="fw-semibold">Renk:</span>
+                                            <span class="text-muted">Beyaz / Gri</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex justify-content-between border-bottom py-2">
+                                            <span class="fw-semibold">Garanti:</span>
+                                            <span class="text-muted">2 Yıl</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex justify-content-between border-bottom py-2">
+                                            <span class="fw-semibold">Standart:</span>
+                                            <span class="text-muted">TS EN</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="installation" role="tabpanel">
+                                <h5 class="fw-bold text-dark mb-3">Montaj Bilgileri</h5>
+                                <div class="text-muted">
+                                    <p>Bu ürünün montajı için aşağıdaki adımları takip ediniz:</p>
+                                    <ol>
+                                        <li>Montaj alanını hazırlayın</li>
+                                        <li>Ürünü yerleştirin</li>
+                                        <li>Bağlantıları yapın</li>
+                                        <li>Test edin</li>
+                                    </ol>
+                                    <p><strong>Not:</strong> Detaylı montaj bilgileri için teknik destek ekibimizle iletişime geçiniz.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- İlgili Ürünler -->
+@if (ViewBag.RelatedProducts != null)
+{
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-dark">İlgili Ürünler</h2>
+                <p class="text-muted">Bu kategoriye ait diğer ürünler</p>
+            </div>
+            
+            <div class="row g-4">
+                @foreach (var product in ViewBag.RelatedProducts as IEnumerable<InsaatFirmasi.Models.Product>)
+                {
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="position-relative">
+                                @if (product.ProductImages != null && product.ProductImages.Any())
+                                {
+                                    <img src="~/uploads/products/@product.ProductImages.First().ImageUrl" 
+                                         class="card-img-top" 
+                                         alt="@product.Name"
+                                         style="height: 200px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                         style="height: 200px;">
+                                        <i class="fas fa-image fa-2x text-muted"></i>
+                                    </div>
+                                }
+                            </div>
+                            
+                            <div class="card-body text-center">
+                                <h6 class="card-title fw-bold">@product.Name</h6>
+                                <p class="card-text text-muted small">
+                                    @(product.Description?.Length > 80 ? product.Description.Substring(0, 80) + "..." : product.Description)
+                                </p>
+                                <a href="@Url.Action("Details", "Product", new { id = product.Id })" 
+                                   class="btn btn-danger btn-sm">
+                                    Detayları Gör
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- İletişim CTA -->
+<section class="py-5 bg-danger text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h2 class="display-6 fw-bold mb-3">Bu Ürün Hakkında Sorularınız mı Var?</h2>
+                <p class="lead mb-0">
+                    Teknik destek, fiyat bilgisi veya özel talepleriniz için bizimle iletişime geçin.
+                </p>
+            </div>
+            <div class="col-lg-4 text-end">
+                <a href="@Url.Action("Index", "Contact")" class="btn btn-light btn-lg px-4">
+                    <i class="fas fa-phone me-2"></i>İletişime Geçin
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function changeMainImage(imageSrc) {
+            document.getElementById('mainImage').src = imageSrc;
+        }
+        
+        function addToFavorites(productId) {
+            console.log('Favorilere eklendi:', productId);
+            // AJAX çağrısı yapılabilir
+        }
+        
+        function requestQuote(productId) {
+            window.location.href = '@Url.Action("Index", "Contact")?productId=' + productId;
+        }
+        
+        function shareProduct() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '@Model.Name',
+                    text: '@Model.Description',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: URL'yi kopyala
+                navigator.clipboard.writeText(window.location.href);
+                alert('Ürün linki kopyalandı!');
+            }
+        }
+    </script>
+}

@@ -1,0 +1,95 @@
+@model IEnumerable<InsaatFirmasi.Models.Category>
+
+@if (Model != null && Model.Any())
+{
+    <div class="category-menu">
+        <div class="row g-3">
+            @foreach (var category in Model.Take(6))
+            {
+                <div class="col-lg-2 col-md-4 col-6">
+                    <div class="category-item text-center">
+                        <div class="category-icon mb-2">
+                            @if (!string.IsNullOrEmpty(category.ImageUrl))
+                            {
+                                <img src="~/uploads/categories/@category.ImageUrl" 
+                                     class="img-fluid rounded-circle" 
+                                     alt="@category.Name"
+                                     style="width: 60px; height: 60px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                     style="width: 60px; height: 60px;">
+                                    <i class="fas fa-th-large fa-lg"></i>
+                                </div>
+                            }
+                        </div>
+                        <h6 class="category-name fw-semibold mb-1">@category.Name</h6>
+                        <small class="text-muted">@category.Products?.Count() Ürün</small>
+                        <div class="mt-2">
+                            <a href="@Url.Action("Details", "Category", new { id = category.Id })" 
+                               class="btn btn-outline-danger btn-sm">
+                                İncele
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+        @if (Model.Count() > 6)
+        {
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index", "Category")" class="btn btn-danger">
+                    <i class="fas fa-th-large me-2"></i>Tüm Kategorileri Görüntüle
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="text-center py-4">
+        <i class="fas fa-th-large fa-3x text-muted mb-3"></i>
+        <p class="text-muted">Henüz kategori eklenmemiş.</p>
+    </div>
+}
+
+<style>
+    .category-menu {
+        padding: 2rem 0;
+    }
+    
+    .category-item {
+        padding: 1rem;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        background: #fff;
+        border: 1px solid #f0f0f0;
+    }
+    
+    .category-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border-color: #dc3545;
+    }
+    
+    .category-name {
+        color: #333;
+        font-size: 0.9rem;
+        line-height: 1.2;
+    }
+    
+    .category-icon img {
+        border: 2px solid #f0f0f0;
+        transition: border-color 0.3s ease;
+    }
+    
+    .category-item:hover .category-icon img {
+        border-color: #dc3545;
+    }
+    
+    .category-item:hover .category-icon .bg-danger {
+        background-color: #c82333 !important;
+    }
+</style>

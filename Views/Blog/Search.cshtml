@@ -1,0 +1,318 @@
+@model IEnumerable<InsaatFirmasi.Models.BlogPost>
+@{
+    ViewData["Title"] = "Blog Arama";
+    ViewData["Description"] = "İnşaat malzemeleri blog yazılarında arama yapın.";
+    ViewData["Keywords"] = "blog arama, inşaat malzemeleri blog, teknik yazılar";
+}
+
+<!-- Page Header -->
+<section class="bg-danger text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Blog Arama</h1>
+                <p class="lead mb-0">Blog yazılarımızda arama yapın</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Arama Formu -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form method="get" class="row g-3">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="text" 
+                                   name="q" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="Blog yazısı ara..." 
+                                   value="@ViewBag.SearchQuery">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="category" class="form-select form-select-lg">
+                            <option value="">Tüm Kategoriler</option>
+                            <option value="Teknik" selected="@(ViewBag.SelectedCategory == "Teknik")">Teknik</option>
+                            <option value="Ürün" selected="@(ViewBag.SelectedCategory == "Ürün")">Ürün</option>
+                            <option value="Montaj" selected="@(ViewBag.SelectedCategory == "Montaj")">Montaj</option>
+                            <option value="Bakım" selected="@(ViewBag.SelectedCategory == "Bakım")">Bakım</option>
+                            <option value="Genel" selected="@(ViewBag.SelectedCategory == "Genel")">Genel</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Arama Sonuçları -->
+<section class="py-5">
+    <div class="container">
+        @if (!string.IsNullOrEmpty(ViewBag.SearchQuery as string))
+        {
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="fw-bold text-dark mb-1">
+                                "@ViewBag.SearchQuery" için arama sonuçları
+                            </h4>
+                            <p class="text-muted mb-0">
+                                @(Model?.Count() ?? 0) blog yazısı bulundu
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="me-3 text-muted">Sırala:</span>
+                            <select name="sort" class="form-select" style="width: auto;" onchange="this.form.submit()">
+                                <option value="relevance">En İlgili</option>
+                                <option value="date_desc">En Yeni</option>
+                                <option value="date">En Eski</option>
+                                <option value="title">Başlık A-Z</option>
+                                <option value="title_desc">Başlık Z-A</option>
+                                <option value="views">En Çok Okunan</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var post in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 border-0 shadow-sm blog-card">
+                            <div class="position-relative">
+                                @if (!string.IsNullOrEmpty(post.ImageUrl))
+                                {
+                                    <img src="~/uploads/blog/@post.ImageUrl" 
+                                         class="card-img-top" 
+                                         alt="@post.Title"
+                                         style="height: 250px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                         style="height: 250px;">
+                                        <i class="fas fa-newspaper fa-3x text-muted"></i>
+                                    </div>
+                                }
+                                
+                                @if (post.IsFeatured)
+                                {
+                                    <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 small">
+                                        <i class="fas fa-star me-1"></i>Öne Çıkan
+                                    </span>
+                                }
+                                
+                                <div class="position-absolute top-0 end-0 p-2">
+                                    <span class="badge bg-dark bg-opacity-75 text-white">
+                                        @post.Category
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>
+                                        @post.CreatedDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"))
+                                    </small>
+                                </div>
+                                
+                                <h5 class="card-title fw-bold text-dark mb-3">@post.Title</h5>
+                                
+                                <p class="card-text text-muted flex-grow-1">
+                                    @(post.Summary?.Length > 120 ? post.Summary.Substring(0, 120) + "..." : post.Summary)
+                                </p>
+                                
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="text-muted small">
+                                            <i class="fas fa-eye me-1"></i>@post.ViewCount
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fas fa-clock me-1"></i>@post.ReadTime dk
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-grid">
+                                        <a href="@Url.Action("Details", "Blog", new { id = post.Id })" 
+                                           class="btn btn-danger">
+                                            <i class="fas fa-arrow-right me-2"></i>Devamını Oku
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            
+            <!-- Sayfalama -->
+            @if (ViewBag.TotalPages > 1)
+            {
+                <nav aria-label="Blog arama sonuçları sayfalama" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="?q=@ViewBag.SearchQuery&page=@(ViewBag.CurrentPage - 1)&category=@ViewBag.SelectedCategory">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                        }
+                        
+                        @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
+                        {
+                            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                <a class="page-link" href="?q=@ViewBag.SearchQuery&page=@i&category=@ViewBag.SelectedCategory">@i</a>
+                            </li>
+                        }
+                        
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="?q=@ViewBag.SearchQuery&page=@(ViewBag.CurrentPage + 1)&category=@ViewBag.SelectedCategory">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        }
+        else
+        {
+            <div class="text-center py-5">
+                @if (!string.IsNullOrEmpty(ViewBag.SearchQuery as string))
+                {
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">Arama sonucu bulunamadı</h4>
+                    <p class="text-muted">
+                        "@ViewBag.SearchQuery" için arama sonucu bulunamadı. 
+                        Farklı anahtar kelimeler deneyebilir veya kategorileri inceleyebilirsiniz.
+                    </p>
+                }
+                else
+                {
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">Arama yapın</h4>
+                    <p class="text-muted">Blog yazılarında arama yapmak için yukarıdaki arama kutusunu kullanın.</p>
+                }
+                
+                <div class="mt-4">
+                    <a href="@Url.Action("Index", "Blog")" class="btn btn-danger me-2">
+                        <i class="fas fa-list me-2"></i>Tüm Blog Yazıları
+                    </a>
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-danger">
+                        <i class="fas fa-home me-2"></i>Anasayfa
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Popüler Aramalar -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold text-dark">Popüler Aramalar</h3>
+            <p class="text-muted">En çok aranan blog konuları</p>
+        </div>
+        
+        <div class="row g-3">
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Blog", new { q = "drenaj kanalı montajı" })" 
+                   class="btn btn-outline-danger w-100">
+                    Drenaj Montajı
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Blog", new { q = "rögar menhol bakım" })" 
+                   class="btn btn-outline-danger w-100">
+                    Rögar Bakımı
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Blog", new { q = "ıslak zemin ürünleri" })" 
+                   class="btn btn-outline-danger w-100">
+                    Islak Zemin
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Blog", new { q = "plastik malzeme özellikleri" })" 
+                   class="btn btn-outline-danger w-100">
+                    Plastik Özellikler
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Blog", new { q = "enjeksiyon teknolojisi" })" 
+                   class="btn btn-outline-danger w-100">
+                    Enjeksiyon
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <a href="@Url.Action("Search", "Blog", new { q = "kalite kontrol" })" 
+                   class="btn btn-outline-danger w-100">
+                    Kalite Kontrol
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- İletişim CTA -->
+<section class="py-5 bg-danger text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h2 class="display-6 fw-bold mb-3">Aradığınız Konuyu Bulamadınız mı?</h2>
+                <p class="lead mb-0">
+                    Hangi konularda blog yazısı görmek istiyorsunuz? Önerilerinizi bizimle paylaşın.
+                </p>
+            </div>
+            <div class="col-lg-4 text-end">
+                <a href="@Url.Action("Index", "Contact")" class="btn btn-light btn-lg px-4">
+                    <i class="fas fa-phone me-2"></i>İletişime Geçin
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Blog kartlarına hover efekti
+        document.addEventListener('DOMContentLoaded', function() {
+            const blogCards = document.querySelectorAll('.blog-card');
+            blogCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+        
+        // Arama kutusuna odaklan
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('input[name="q"]');
+            if (searchInput && !searchInput.value) {
+                searchInput.focus();
+            }
+        });
+    </script>
+}

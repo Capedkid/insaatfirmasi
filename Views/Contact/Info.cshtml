@@ -1,0 +1,251 @@
+@{
+    ViewData["Title"] = "İletişim Bilgileri";
+    ViewData["Description"] = "İnşaat malzemeleri firmamızın iletişim bilgileri, adres, telefon ve e-posta adresleri.";
+    ViewData["Keywords"] = "iletişim bilgileri, adres, telefon, e-posta, firma bilgileri";
+}
+
+<!-- Page Header -->
+<section class="bg-danger text-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">İletişim Bilgileri</h1>
+                <p class="lead mb-0">Firmamızın detaylı iletişim bilgileri</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- İletişim Bilgileri Detay -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Ana İletişim Bilgileri -->
+            <div class="col-lg-8">
+                <div class="row g-4">
+                    <!-- Telefon -->
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-phone fa-2x"></i>
+                                </div>
+                                <h5 class="fw-bold text-dark mb-3">Telefon</h5>
+                                <div class="mb-3">
+                                    <p class="text-muted mb-1">Ana Hat</p>
+                                    <a href="tel:+903321234567" class="h5 text-danger fw-bold text-decoration-none">+90 (332) 123 45 67</a>
+                                </div>
+                                <div class="mb-3">
+                                    <p class="text-muted mb-1">Satış</p>
+                                    <a href="tel:+903321234568" class="h6 text-danger fw-bold text-decoration-none">+90 (332) 123 45 68</a>
+                                </div>
+                                <div class="mb-3">
+                                    <p class="text-muted mb-1">Acil Hat</p>
+                                    <a href="tel:+903321234569" class="h6 text-danger fw-bold text-decoration-none">+90 (332) 123 45 69</a>
+                                </div>
+                                <small class="text-muted">Pazartesi - Cuma: 08:00 - 18:00</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- E-posta -->
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4 text-center">
+                                <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-envelope fa-2x"></i>
+                                </div>
+                                <h5 class="fw-bold text-dark mb-3">E-posta</h5>
+                                <div class="mb-3">
+                                    <p class="text-muted mb-1">Genel Bilgi</p>
+                                    <a href="mailto:info@insaatfirmasi.com" class="h6 text-danger fw-bold text-decoration-none">info@insaatfirmasi.com</a>
+                                </div>
+                                <div class="mb-3">
+                                    <p class="text-muted mb-1">Satış</p>
+                                    <a href="mailto:satis@insaatfirmasi.com" class="h6 text-danger fw-bold text-decoration-none">satis@insaatfirmasi.com</a>
+                                </div>
+                                <div class="mb-3">
+                                    <p class="text-muted mb-1">Teknik Destek</p>
+                                    <a href="mailto:teknik@insaatfirmasi.com" class="h6 text-danger fw-bold text-decoration-none">teknik@insaatfirmasi.com</a>
+                                </div>
+                                <small class="text-muted">24 saat içinde yanıt</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Adres -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2 text-center">
+                                        <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                            <i class="fas fa-map-marker-alt fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h5 class="fw-bold text-dark mb-3">Adres</h5>
+                                        <p class="text-muted mb-2">
+                                            <strong>İnşaat Malzemeleri A.Ş.</strong><br>
+                                            Organize Sanayi Bölgesi<br>
+                                            No: 123, Konya, Türkiye
+                                        </p>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-industry me-1"></i>
+                                                    50.000 m² Fabrika Alanı
+                                                </small>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-calendar me-1"></i>
+                                                    1995'ten Beri Hizmet
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Yan Panel -->
+            <div class="col-lg-4">
+                <!-- Çalışma Saatleri -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h5 class="fw-bold text-dark mb-0">
+                            <i class="fas fa-clock me-2 text-danger"></i>Çalışma Saatleri
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span class="fw-semibold">Pazartesi - Cuma:</span>
+                                    <span class="text-muted">08:00 - 18:00</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span class="fw-semibold">Cumartesi:</span>
+                                    <span class="text-muted">09:00 - 15:00</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between border-bottom py-2">
+                                    <span class="fw-semibold">Pazar:</span>
+                                    <span class="text-muted">Kapalı</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between py-2">
+                                    <span class="fw-semibold">Acil Durum:</span>
+                                    <span class="text-danger fw-semibold">7/24</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hızlı İletişim -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h5 class="fw-bold text-dark mb-0">
+                            <i class="fas fa-bolt me-2 text-danger"></i>Hızlı İletişim
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-grid gap-2">
+                            <a href="tel:+903321234567" class="btn btn-danger">
+                                <i class="fas fa-phone me-2"></i>Hemen Ara
+                            </a>
+                            <a href="mailto:info@insaatfirmasi.com" class="btn btn-outline-danger">
+                                <i class="fas fa-envelope me-2"></i>E-posta Gönder
+                            </a>
+                            <a href="https://wa.me/903321234567" class="btn btn-success" target="_blank">
+                                <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sosyal Medya -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h5 class="fw-bold text-dark mb-0">
+                            <i class="fas fa-share-alt me-2 text-danger"></i>Sosyal Medya
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="#" class="btn btn-outline-primary btn-sm">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-info btn-sm">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-danger btn-sm">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-primary btn-sm">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Harita -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-dark">Konumumuz</h2>
+            <p class="text-muted">Firmamızın konumunu haritada görüntüleyin</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                            <div class="text-center text-muted">
+                                <i class="fas fa-map fa-4x mb-3"></i>
+                                <h4>Google Maps Entegrasyonu</h4>
+                                <p>Organize Sanayi Bölgesi, Konya</p>
+                                <a href="https://maps.google.com" target="_blank" class="btn btn-danger">
+                                    <i class="fas fa-external-link-alt me-2"></i>Haritada Görüntüle
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- İletişim CTA -->
+<section class="py-5 bg-danger text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h2 class="display-6 fw-bold mb-3">Bizimle İletişime Geçin</h2>
+                <p class="lead mb-0">
+                    Kaliteli inşaat malzemeleri ve profesyonel hizmet için hemen iletişime geçin.
+                </p>
+            </div>
+            <div class="col-lg-4 text-end">
+                <a href="@Url.Action("Index", "Contact")" class="btn btn-light btn-lg px-4">
+                    <i class="fas fa-phone me-2"></i>İletişim Formu
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

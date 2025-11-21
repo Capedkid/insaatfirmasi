@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - İnşaat Firması</title>
+    <meta name="description" content="@ViewData["Description"]" />
+    <meta name="keywords" content="@ViewData["Keywords"]" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/InsaatFirmasi.styles.css" asp-append-version="true" />
+</head>
+<body class="site-body">
+    <!-- HEADER -->
+    <header class="main-header">
+        <div class="container-xl header-inner">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-title">İNŞAAT</span>
+                    <span class="brand-subtitle">PLASTİK ÇÖZÜMLER</span>
+                </span>
+            </a>
+
+            <nav class="main-nav">
+                <ul class="main-nav-list">
+                    <li><a class="main-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                    <li><a class="main-nav-link" asp-route="kurumsal">Kurumsal</a></li>
+                    <li class="nav-item-products">
+                        <a class="main-nav-link" asp-route="urunler">Ürünler</a>
+                        <div class="nav-dropdown">
+                            <a asp-area="" asp-controller="Category" asp-action="Index">
+                                <i class="fas fa-water me-1"></i>
+                                <span>Drenaj Kanalları</span>
+                            </a>
+                            <a asp-area="" asp-controller="Category" asp-action="Index">
+                                <i class="fas fa-cubes me-1"></i>
+                                <span>Rögar Menhol Kutuları</span>
+                            </a>
+                            <a asp-area="" asp-controller="Category" asp-action="Index">
+                                <i class="fas fa-shower me-1"></i>
+                                <span>Islak Zemin Ürünleri</span>
+                            </a>
+                            <a asp-area="" asp-controller="Category" asp-action="Index">
+                                <i class="fas fa-toolbox me-1"></i>
+                                <span>Aksesuar ve Diğer Ürünler</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li><a class="main-nav-link" asp-route="blog">Blog</a></li>
+                    <li><a class="main-nav-link" asp-route="iletisim">İletişim</a></li>
+                </ul>
+
+                <div class="main-nav-right">
+                    <div class="lang-switch" aria-label="Dil seçimi">
+                        <button type="button" class="lang-btn active">TR</button>
+                        <button type="button" class="lang-btn">EN</button>
+                    </div>
+                    <button type="button" class="nav-icon-btn" aria-label="Ürün ara">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="site-main">
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container-xl">
+            <div class="row gy-4 align-items-start">
+                <div class="col-md-4">
+                    <div class="footer-brand">
+                        <span class="brand-mark small"></span>
+                        <div>
+                            <div class="footer-brand-title">İnşaat Plastik Çözümler</div>
+                            <div class="footer-brand-subtitle">Drenaj, rögar ve ıslak zemin ürünleri</div>
+                        </div>
+                    </div>
+                    <p class="footer-text">
+                        Modern plastik inşaat malzemeleri ile altyapı ve üstyapı projelerinize uzun ömürlü çözümler sunuyoruz.
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="footer-heading">Site Haritası</h6>
+                    <ul class="footer-links">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                        <li><a asp-route="kurumsal">Hakkımızda</a></li>
+                        <li><a asp-route="urunler">Ürünler</a></li>
+                        <li><a asp-route="blog">Blog</a></li>
+                        <li><a asp-route="iletisim">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="footer-heading">İletişim</h6>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-phone-alt me-2"></i> +90 (332) 123 45 67</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@insaatfirmasi.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Konya, Türkiye</li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h6 class="footer-heading">Sosyal</h6>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© @DateTime.Now.Year İnşaat Plastik Çözümler</span>
+                <span class="footer-bottom-right">
+                    Tasarım & Geliştirme <span class="text-accent">InsaatFirmasi</span>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
