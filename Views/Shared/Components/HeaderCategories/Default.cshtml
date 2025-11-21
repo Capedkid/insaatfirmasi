@@ -1,0 +1,37 @@
+@using InsaatFirmasi.Models
+@model IEnumerable<Category>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var category in Model)
+    {
+        <a asp-controller="Product"
+           asp-action="Category"
+           asp-route-id="@category.Id"
+           class="nav-category-link">
+            <div class="nav-category-image">
+                @if (!string.IsNullOrEmpty(category.ImagePath))
+                {
+                    <img src="~/@category.ImagePath" alt="@category.Name" />
+                }
+                else if (!string.IsNullOrEmpty(category.ImageUrl))
+                {
+                    <img src="@category.ImageUrl" alt="@category.Name" />
+                }
+                else
+                {
+                    <i class="fas fa-layer-group"></i>
+                }
+            </div>
+            <span class="nav-category-name">@category.Name</span>
+        </a>
+    }
+}
+else
+{
+    <div class="px-2 py-1 text-muted small">
+        Henüz kategori eklenmemiş.
+    </div>
+}
+
+

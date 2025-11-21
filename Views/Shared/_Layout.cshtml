@@ -30,22 +30,7 @@
                     <li class="nav-item-products">
                         <a class="main-nav-link" asp-route="urunler">Ürünler</a>
                         <div class="nav-dropdown">
-                            <a asp-area="" asp-controller="Category" asp-action="Index">
-                                <i class="fas fa-water me-1"></i>
-                                <span>Drenaj Kanalları</span>
-                            </a>
-                            <a asp-area="" asp-controller="Category" asp-action="Index">
-                                <i class="fas fa-cubes me-1"></i>
-                                <span>Rögar Menhol Kutuları</span>
-                            </a>
-                            <a asp-area="" asp-controller="Category" asp-action="Index">
-                                <i class="fas fa-shower me-1"></i>
-                                <span>Islak Zemin Ürünleri</span>
-                            </a>
-                            <a asp-area="" asp-controller="Category" asp-action="Index">
-                                <i class="fas fa-toolbox me-1"></i>
-                                <span>Aksesuar ve Diğer Ürünler</span>
-                            </a>
+                            @await Component.InvokeAsync("HeaderCategories")
                         </div>
                     </li>
                     <li><a class="main-nav-link" asp-route="blog">Blog</a></li>

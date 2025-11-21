@@ -1,51 +1,59 @@
-@model IEnumerable<InsaatFirmasi.Models.Product>
+@using InsaatFirmasi.Models
+@model IEnumerable<Product>
 @{
-    ViewData["Title"] = "Ürünler";
-    ViewData["Description"] = "Plastik drenaj kanalları, rögar menhol kutuları ve ıslak zemin ürünleri için modern ürün gamı.";
-    ViewData["Keywords"] = "ürünler, drenaj, rögar, ıslak zemin, plastik inşaat ürünleri";
+    ViewData["Title"] = "Ürün Gruplarımız";
+    ViewData["Description"] = "Plastik drenaj kanalları, rögar menhol kutuları ve ıslak zemin ürünleri için modern ürün grupları.";
+    ViewData["Keywords"] = "ürün grupları, drenaj, rögar, ıslak zemin, plastik inşaat ürünleri";
+
+    var categories = ViewBag.Categories as List<Category> ?? new List<Category>();
 }
 
 <!-- SAYFA HERO -->
 <section class="page-hero page-hero-simple">
     <div class="container-xl text-center">
-        <h1 class="page-hero-title">Ürünler</h1>
+        <h1 class="page-hero-title">Ürün Gruplarımız</h1>
     </div>
 </section>
 
-<!-- ÜRÜN KARTLARI -->
+<!-- ÜRÜN GRUPLARI KARTLARI -->
 <section class="home-section product-list-section">
     <div class="container-xl">
         <div class="home-section-header">
-            <span class="home-section-kicker">Ürünler</span>
-            <h2 class="home-section-title">Veritabanından gelen ürünler</h2>
+            <span class="home-section-kicker">Ürün Gruplarımız</span>
+            <h2 class="home-section-title">Veritabanından gelen ürün grupları</h2>
             <p class="home-section-text">
-                Aşağıdaki liste MySQL veritabanındaki ürün kayıtları üzerinden oluşturulmaktadır. Admin panel tamamlandığında
-                bu alanı yönetim ekranlarından güncelleyebileceksiniz.
+                Aşağıdaki kartlar MySQL veritabanındaki aktif kategoriler üzerinden oluşturulmaktadır. Admin panelde yeni kategori
+                eklediğinizde burada otomatik olarak görünecektir.
             </p>
         </div>
 
-        @if (Model != null && Model.Any())
+        @if (categories.Any())
         {
             <div class="row g-4">
-                @foreach (var product in Model)
+                @foreach (var category in categories)
                 {
                     <div class="col-lg-4 col-md-6">
-                        <div class="product-group-card">
-                            <div class="product-group-image">
-                                @if (!string.IsNullOrEmpty(product.MainImagePath))
-                                {
-                                    <img src="~/@product.MainImagePath"
-                                         alt="@product.Name" />
-                                }
-                                else
-                                {
-                                    <div class="d-flex align-items-center justify-content-center h-100 text-muted">
-                                        <i class="fas fa-box-open fa-2x"></i>
-                                    </div>
-                                }
+                        <a asp-controller="Product" asp-action="Category" asp-route-id="@category.Id" class="text-decoration-none text-reset">
+                            <div class="product-group-card">
+                                <div class="product-group-image">
+                                    @if (!string.IsNullOrEmpty(category.ImagePath))
+                                    {
+                                        <img src="~/@category.ImagePath" alt="@category.Name" />
+                                    }
+                                    else if (!string.IsNullOrEmpty(category.ImageUrl))
+                                    {
+                                        <img src="@category.ImageUrl" alt="@category.Name" />
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                                            <i class="fas fa-layer-group fa-2x"></i>
+                                        </div>
+                                    }
+                                </div>
+                                <h3>@category.Name</h3>
                             </div>
-                            <h3>@product.Name</h3>
-                        </div>
+                        </a>
                     </div>
                 }
             </div>
@@ -53,9 +61,9 @@
         else
         {
             <div class="text-center text-muted py-5">
-                <i class="fas fa-box-open fa-3x mb-3"></i>
-                <h4>Henüz ürün eklenmemiş</h4>
-                <p>Admin panel üzerinden ürün eklediğinizde bu alanda listelenecektir.</p>
+                <i class="fas fa-layer-group fa-3x mb-3"></i>
+                <h4>Henüz kategori eklenmemiş</h4>
+                <p>Admin panel üzerinden yeni kategori eklediğinizde ürün gruplarınız burada listelenecektir.</p>
             </div>
         }
     </div>

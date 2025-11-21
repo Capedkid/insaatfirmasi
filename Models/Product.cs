@@ -63,11 +63,10 @@ namespace InsaatFirmasi.Models
         public string? SeoKeywords { get; set; }
 
         // Foreign Key
-        [Required]
         public int CategoryId { get; set; }
 
         // Navigation Properties
-        public virtual Category Category { get; set; } = null!;
+        public virtual Category? Category { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
     }
 }

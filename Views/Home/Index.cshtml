@@ -170,6 +170,11 @@
     </div>
 </section>
 
+@using InsaatFirmasi.Models
+@{
+    var homeCategories = ViewBag.Categories as List<Category> ?? new List<Category>();
+}
+
 <!-- ÜRÜN GRUPLARIMIZ -->
 <section class="home-section product-groups-section">
     <div class="container-xl">
@@ -177,67 +182,49 @@
             <span class="home-section-kicker">Ürün Gruplarımız</span>
             <h2 class="home-section-title">Farklı proje tipleri için geniş ürün grupları</h2>
             <p class="home-section-text">
-                Drenajdan ıslak zemine, endüstriyel alanlardan özel üretime kadar farklı ihtiyaçlara yönelik ürün gruplarımızı örnek olarak aşağıda görebilirsiniz.
+                Drenajdan ıslak zemine, endüstriyel alanlardan özel üretime kadar farklı ihtiyaçlara yönelik ürün gruplarımızı
+                veritabanından dinamik olarak görüntüleyebilirsiniz.
             </p>
         </div>
 
-        <div class="row g-4 product-groups-grid">
-            <div class="col-md-4">
-                <div class="product-group-card">
-                    <div class="product-group-image">
-                        <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80"
-                             alt="Drenaj Kanalları" />
+        @if (homeCategories.Any())
+        {
+            <div class="row g-4 product-groups-grid">
+                @foreach (var category in homeCategories.Take(6))
+                {
+                    <div class="col-md-4">
+                        <a asp-controller="Product" asp-action="Category" asp-route-id="@category.Id" class="text-decoration-none text-reset">
+                            <div class="product-group-card">
+                                <div class="product-group-image">
+                                    @if (!string.IsNullOrEmpty(category.ImagePath))
+                                    {
+                                        <img src="~/@category.ImagePath" alt="@category.Name" />
+                                    }
+                                    else if (!string.IsNullOrEmpty(category.ImageUrl))
+                                    {
+                                        <img src="@category.ImageUrl" alt="@category.Name" />
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                                            <i class="fas fa-layer-group fa-2x"></i>
+                                        </div>
+                                    }
+                                </div>
+                                <h3>@category.Name</h3>
+                            </div>
+                        </a>
                     </div>
-                    <h3>Drenaj Kanalları</h3>
-                </div>
+                }
             </div>
-            <div class="col-md-4">
-                <div class="product-group-card">
-                    <div class="product-group-image">
-                        <img src="https://images.pexels.com/photos/6001862/pexels-photo-6001862.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                             alt="Rögar Menhol Kutuları" />
-                    </div>
-                    <h3>Rögar Menhol Kutuları</h3>
-                </div>
+        }
+        else
+        {
+            <div class="text-center text-muted py-4">
+                <i class="fas fa-layer-group fa-2x mb-2"></i>
+                <p>Henüz ürün grubu eklenmemiş. Admin panelden kategori eklediğinizde burada görünecektir.</p>
             </div>
-            <div class="col-md-4">
-                <div class="product-group-card">
-                    <div class="product-group-image">
-                        <img src="https://images.pexels.com/photos/7511770/pexels-photo-7511770.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                             alt="Islak Zemin Ürünleri" />
-                    </div>
-                    <h3>Islak Zemin Ürünleri</h3>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="product-group-card">
-                    <div class="product-group-image">
-                        <img src="https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                             alt="Banyo Aksesuarları" />
-                    </div>
-                    <h3>Banyo Aksesuarları</h3>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="product-group-card">
-                    <div class="product-group-image">
-                        <img src="https://images.pexels.com/photos/4484078/pexels-photo-4484078.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                             alt="Endüstriyel Çözümler" />
-                    </div>
-                    <h3>Endüstriyel Çözümler</h3>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="product-group-card">
-                    <div class="product-group-image">
-                        <img src="https://images.unsplash.com/photo-1581092335294-0f09a996f5a2?auto=format&fit=crop&w=1200&q=80"
-                             alt="Özel Üretim" />
-                    </div>
-                    <h3>Özel Üretim</h3>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </section>
 

@@ -1,0 +1,62 @@
+@using InsaatFirmasi.Models
+@model IEnumerable<Product>
+@{
+    var category = ViewBag.Category as Category;
+    ViewData["Title"] = category != null ? category.Name + " Ürünleri" : "Ürünler";
+}
+
+<!-- SAYFA HERO -->
+<section class="page-hero page-hero-simple">
+    <div class="container-xl text-center">
+        <h1 class="page-hero-title">
+            @(category != null ? category.Name + " Ürünleri" : "Ürünler")
+        </h1>
+    </div>
+</section>
+
+<section class="home-section product-list-section">
+    <div class="container-xl">
+        <div class="home-section-header">
+            <span class="home-section-kicker">Ürünler</span>
+            <h2 class="home-section-title">
+                @(category != null ? category.Name + " kategorisindeki ürünler" : "Seçili kategorideki ürünler")
+            </h2>
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var product in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="product-group-card">
+                            <div class="product-group-image">
+                                @if (!string.IsNullOrEmpty(product.MainImagePath))
+                                {
+                                    <img src="~/@product.MainImagePath" alt="@product.Name" />
+                                }
+                                else
+                                {
+                                    <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                                        <i class="fas fa-box-open fa-2x"></i>
+                                    </div>
+                                }
+                            </div>
+                            <h3>@product.Name</h3>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center text-muted py-5">
+                <i class="fas fa-box-open fa-3x mb-3"></i>
+                <h4>Bu kategoride henüz ürün yok</h4>
+                <p>Admin panelinden bu kategoriye ürün eklediğinizde burada listelenecektir.</p>
+            </div>
+        }
+    </div>
+</section>
+
+
