@@ -16,7 +16,6 @@ namespace InsaatFirmasi.Models
         [StringLength(500, ErrorMessage = "Açıklama en fazla 500 karakter olabilir")]
         public string? Description { get; set; }
 
-        [Required(ErrorMessage = "Dosya yolu zorunludur")]
         [StringLength(200, ErrorMessage = "Dosya yolu en fazla 200 karakter olabilir")]
         public string FilePath { get; set; } = string.Empty;
 

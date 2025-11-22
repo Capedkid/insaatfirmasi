@@ -12,8 +12,7 @@
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Anasayfa</a></li>
                 <li class="breadcrumb-item"><a href="@Url.Action("Index", "Catalog")">Online Katalog</a></li>
-                <li class="breadcrumb-item"><a href="@Url.Action("Details", "Catalog", new { id = Model.Id })">@Model.Title</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Online Görüntüle</li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
             </ol>
         </nav>
     </div>
@@ -36,9 +35,9 @@
                        class="btn btn-danger">
                         <i class="fas fa-download me-2"></i>İndir
                     </a>
-                    <a href="@Url.Action("Details", "Catalog", new { id = Model.Id })" 
+                    <a href="@Url.Action("Index", "Catalog")" 
                        class="btn btn-outline-danger">
-                        <i class="fas fa-arrow-left me-2"></i>Geri
+                        <i class="fas fa-arrow-left me-2"></i>Kataloglara Dön
                     </a>
                 </div>
             </div>

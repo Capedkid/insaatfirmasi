@@ -27,25 +27,6 @@ public class CatalogController : Controller
         return View(catalogs);
     }
 
-    // Katalog detayı
-    public async Task<IActionResult> Details(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var catalog = await _context.Catalogs
-            .FirstOrDefaultAsync(c => c.Id == id && c.IsActive);
-
-        if (catalog == null)
-        {
-            return NotFound();
-        }
-
-        return View(catalog);
-    }
-
     // Katalog indirme
     public async Task<IActionResult> Download(int? id)
     {

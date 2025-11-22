@@ -701,6 +701,62 @@ body {
   font-size: 0.7rem;
 }
 
+/* Catalog cards (use product-group-card base) */
+.catalog-card .catalog-card-body {
+  padding: 1rem 1.25rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 190px;
+}
+
+.catalog-card .catalog-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+  margin-bottom: 0.3rem;
+}
+
+.catalog-card .catalog-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f9fafb;
+  margin: 0 0 0.4rem 0;
+}
+
+.catalog-card .catalog-card-excerpt {
+  font-size: 0.9rem;
+  color: #e5e7eb;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.catalog-card .catalog-card-footer {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: #9ca3af;
+  gap: 0.5rem;
+}
+
+.catalog-card .catalog-card-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.catalog-card .catalog-card-button {
+  border-radius: 999px;
+  padding-inline: 0.9rem;
+  padding-block: 0.3rem;
+  font-size: 0.78rem;
+}
+
 .home-card {
   height: 100%;
   border-radius: 1.2rem;

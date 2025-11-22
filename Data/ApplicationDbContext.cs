@@ -17,6 +17,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
     public DbSet<ContactMessage> ContactMessages => Set<ContactMessage>();
     public DbSet<User> Users => Set<User>();
+    public DbSet<Slider> Sliders => Set<Slider>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
