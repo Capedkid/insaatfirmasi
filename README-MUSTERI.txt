@@ -60,7 +60,8 @@ Bu dosya, projeyi kendi sunucunuzda / bilgisayarınızda çalıştırmanız içi
 
    - Bu komut, MySQL içinde gerekli tüm tabloları otomatik olarak oluşturur:
      Products, Categories, BlogPosts, Catalogs, Sliders, AboutImages, ContactInfos,
-     SiteLogos vb.
+     SiteLogos, ReferenceLogos, AboutSectionContents, ReferenceSectionContents,
+     CorporatePageContents vb.
 
 
 --------------------------------------------------
@@ -88,9 +89,12 @@ Bu dosya, projeyi kendi sunucunuzda / bilgisayarınızda çalıştırmanız içi
    - Ürünler ve kategoriler
    - Blog yazıları
    - PDF kataloglar
-   - Anasayfa slider görselleri ve metinleri
-   - Hakkımızda bölümündeki görseller
-   - İletişim bilgileri (telefon, e‑posta, adres, WhatsApp)
+   - Anasayfa slider görselleri, metinleri ve butonları
+   - Anasayfa "Hakkımızda" bölümünün metni ve görselleri
+   - Anasayfa "Referanslarımız" bölümünün metni ve referans logoları
+   - Kurumsal sayfası metni (tarihçe, misyon, vizyon, değerler)
+   - İletişim bilgileri (telefon, e‑posta, adres, sosyal medya linkleri)
+   - Footer sosyal alanı (Instagram, Facebook, WhatsApp butonları)
    - Firma logosu (header logosu)
    gibi içerikleri yönetebilirsiniz.
 
