@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using InsaatFirmasi.Data;
 using InsaatFirmasi.Models;
+using InsaatFirmasi.ViewModels;
 
 namespace InsaatFirmasi.Controllers;
 
@@ -31,7 +32,16 @@ public class AdminReferenceController : Controller
             .ThenByDescending(r => r.CreatedDate)
             .ToListAsync();
 
-        return View(logos);
+        var content = await _context.ReferenceSectionContents.FirstOrDefaultAsync()
+                      ?? new ReferenceSectionContent { Id = 1 };
+
+        var vm = new AdminReferenceViewModel
+        {
+            Logos = logos,
+            Content = content
+        };
+
+        return View(vm);
     }
 
     [HttpPost]
@@ -46,8 +56,15 @@ public class AdminReferenceController : Controller
                 .OrderBy(r => r.SortOrder)
                 .ThenByDescending(r => r.CreatedDate)
                 .ToListAsync();
+            var contentForError = await _context.ReferenceSectionContents.FirstOrDefaultAsync()
+                                  ?? new ReferenceSectionContent { Id = 1 };
+            var vmError = new AdminReferenceViewModel
+            {
+                Logos = logosForError,
+                Content = contentForError
+            };
 
-            return View("Index", logosForError);
+            return View("Index", vmError);
         }
 
         try
@@ -86,8 +103,15 @@ public class AdminReferenceController : Controller
                 .OrderBy(r => r.SortOrder)
                 .ThenByDescending(r => r.CreatedDate)
                 .ToListAsync();
+            var contentForError = await _context.ReferenceSectionContents.FirstOrDefaultAsync()
+                                  ?? new ReferenceSectionContent { Id = 1 };
+            var vmError = new AdminReferenceViewModel
+            {
+                Logos = logosForError,
+                Content = contentForError
+            };
 
-            return View("Index", logosForError);
+            return View("Index", vmError);
         }
     }
 
@@ -122,6 +146,36 @@ public class AdminReferenceController : Controller
             await _context.SaveChangesAsync();
         }
 
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateContent(ReferenceSectionContent content)
+    {
+        var existing = await _context.ReferenceSectionContents.FirstOrDefaultAsync();
+
+        if (existing == null)
+        {
+            content.Id = 1;
+            content.UpdatedDate = DateTime.Now;
+            _context.ReferenceSectionContents.Add(content);
+        }
+        else
+        {
+            existing.Title = content.Title;
+            existing.Subtitle = content.Subtitle;
+            existing.Item1Title = content.Item1Title;
+            existing.Item1Text = content.Item1Text;
+            existing.Item2Title = content.Item2Title;
+            existing.Item2Text = content.Item2Text;
+            existing.Item3Title = content.Item3Title;
+            existing.Item3Text = content.Item3Text;
+            existing.UpdatedDate = DateTime.Now;
+        }
+
+        await _context.SaveChangesAsync();
+        TempData["SuccessMessage"] = "Referans metni başarıyla güncellendi.";
         return RedirectToAction(nameof(Index));
     }
 }

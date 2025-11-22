@@ -68,14 +68,89 @@
                                                 {
                                                     <p class="lead text-white-50 mb-4">@slider.Subtitle</p>
                                                 }
-                                                <div class="hero-buttons d-flex flex-wrap gap-3 mt-3">
-                                                    <a href="@Url.Action("Index", "Product")" class="btn btn-danger btn-lg px-4">
-                                                        <i class="fas fa-box-open me-2"></i> Ürünleri Keşfet
-                                                    </a>
-                                                    <a href="@Url.Action("Index", "Catalog")" class="btn btn-outline-light btn-lg px-4">
-                                                        <i class="fas fa-file-pdf me-2"></i> Online Katalog
-                                                    </a>
-                                                </div>
+
+                                                @if (!string.IsNullOrEmpty(slider.Button1Type) || !string.IsNullOrEmpty(slider.Button2Type))
+                                                {
+                                                    <div class="hero-buttons d-flex flex-wrap gap-3 mt-3">
+                                                        @if (!string.IsNullOrEmpty(slider.Button1Type))
+                                                        {
+                                                            var type1 = slider.Button1Type;
+                                                            string? url1 = null;
+                                                            string text1 = "";
+                                                            string icon1 = "fas fa-arrow-right";
+                                                            if (type1 == "products")
+                                                            {
+                                                                url1 = Url.Action("Index", "Product");
+                                                                text1 = currentLang == "en" ? "Explore Products" : "Ürünleri Keşfet";
+                                                                icon1 = "fas fa-box-open";
+                                                            }
+                                                            else if (type1 == "contact")
+                                                            {
+                                                                url1 = Url.Action("Index", "Contact");
+                                                                text1 = currentLang == "en" ? "Contact" : "İletişim";
+                                                                icon1 = "fas fa-phone-alt";
+                                                            }
+                                                            else if (type1 == "catalog")
+                                                            {
+                                                                url1 = Url.Action("Index", "Catalog");
+                                                                text1 = currentLang == "en" ? "Online Catalog" : "Online Katalog";
+                                                                icon1 = "fas fa-file-pdf";
+                                                            }
+                                                            else if (type1 == "blog")
+                                                            {
+                                                                url1 = Url.Action("Index", "Blog");
+                                                                text1 = "Blog";
+                                                                icon1 = "fas fa-newspaper";
+                                                            }
+
+                                                            if (!string.IsNullOrEmpty(url1))
+                                                            {
+                                                                <a href="@url1" class="btn btn-danger btn-lg px-4">
+                                                                    <i class="@icon1 me-2"></i> @text1
+                                                                </a>
+                                                            }
+                                                        }
+
+                                                        @if (!string.IsNullOrEmpty(slider.Button2Type))
+                                                        {
+                                                            var type2 = slider.Button2Type;
+                                                            string? url2 = null;
+                                                            string text2 = "";
+                                                            string icon2 = "fas fa-arrow-right";
+                                                            if (type2 == "products")
+                                                            {
+                                                                url2 = Url.Action("Index", "Product");
+                                                                text2 = currentLang == "en" ? "Explore Products" : "Ürünleri Keşfet";
+                                                                icon2 = "fas fa-box-open";
+                                                            }
+                                                            else if (type2 == "contact")
+                                                            {
+                                                                url2 = Url.Action("Index", "Contact");
+                                                                text2 = currentLang == "en" ? "Contact" : "İletişim";
+                                                                icon2 = "fas fa-phone-alt";
+                                                            }
+                                                            else if (type2 == "catalog")
+                                                            {
+                                                                url2 = Url.Action("Index", "Catalog");
+                                                                text2 = currentLang == "en" ? "Online Catalog" : "Online Katalog";
+                                                                icon2 = "fas fa-file-pdf";
+                                                            }
+                                                            else if (type2 == "blog")
+                                                            {
+                                                                url2 = Url.Action("Index", "Blog");
+                                                                text2 = "Blog";
+                                                                icon2 = "fas fa-newspaper";
+                                                            }
+
+                                                            if (!string.IsNullOrEmpty(url2))
+                                                            {
+                                                                <a href="@url2" class="btn btn-outline-light btn-lg px-4">
+                                                                    <i class="@icon2 me-2"></i> @text2
+                                                                </a>
+                                                            }
+                                                        }
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                         <div class="col-lg-6 d-none d-lg-block"></div>
@@ -341,6 +416,10 @@
             </div>
         }
     </div>
+@{
+    var aboutContent = ViewBag.AboutContent as AboutSectionContent;
+}
+
 <!-- HAKKIMIZDA -->
 <section class="home-section about-section">
     <div class="container-xl">
@@ -351,26 +430,44 @@
                         @(currentLang == "en" ? "About Us" : "Hakkımızda")
                     </span>
                     <h2 class="home-section-title">
-                        @(currentLang == "en"
-                            ? "A reliable manufacturer in plastic construction solutions"
-                            : "Plastik inşaat çözümlerinde güvenilir üretici")
+                        @(
+                            aboutContent != null && currentLang == "tr" && !string.IsNullOrEmpty(aboutContent.Title)
+                                ? aboutContent.Title
+                                : currentLang == "en"
+                                    ? "A reliable manufacturer in plastic construction solutions"
+                                    : "Plastik inşaat çözümlerinde güvenilir üretici"
+                        )
                     </h2>
                     <p class="home-section-text">
-                        @(currentLang == "en"
-                            ? "Since 1995, we have been producing drainage channels, manhole chambers and wet area products to provide long-lasting solutions for your infrastructure and superstructure projects. With our modern production line and design-oriented approach, we take plastic construction materials to the next level."
-                            : "1995 yılından bugüne drenaj kanalları, rögar menhol kutuları ve ıslak zemin ürünleri üreterek altyapı ve üstyapı projelerine uzun ömürlü çözümler sunuyoruz. Modern üretim hattımız ve tasarım odaklı yaklaşımımızla plastik inşaat malzemelerini bir üst seviyeye taşıyoruz.")
+                        @(
+                            aboutContent != null && currentLang == "tr" && !string.IsNullOrEmpty(aboutContent.Subtitle)
+                                ? aboutContent.Subtitle
+                                : currentLang == "en"
+                                    ? "Since 1995, we have been producing drainage channels, manhole chambers and wet area products to provide long-lasting solutions for your infrastructure and superstructure projects. With our modern production line and design-oriented approach, we take plastic construction materials to the next level."
+                                    : "1995 yılından bugüne drenaj kanalları, rögar menhol kutuları ve ıslak zemin ürünleri üreterek altyapı ve üstyapı projelerine uzun ömürlü çözümler sunuyoruz. Modern üretim hattımız ve tasarım odaklı yaklaşımımızla plastik inşaat malzemelerini bir üst seviyeye taşıyoruz."
+                        )
                     </p>
                     <div class="about-highlights">
                         <div class="about-highlight-item">
                             <i class="fas fa-check-circle"></i>
                             <div>
                                 <strong>
-                                    @(currentLang == "en" ? "25+ years of experience" : "25+ yıllık tecrübe")
+                                    @(
+                                        aboutContent != null && currentLang == "tr" && !string.IsNullOrEmpty(aboutContent.Item1Title)
+                                            ? aboutContent.Item1Title
+                                            : currentLang == "en"
+                                                ? "25+ years of experience"
+                                                : "25+ yıllık tecrübe"
+                                    )
                                 </strong>
                                 <span>
-                                    @(currentLang == "en"
-                                        ? "A trusted brand in infrastructure and wet area projects."
-                                        : "Altyapı ve ıslak zemin projelerinde güvenilen marka.")
+                                    @(
+                                        aboutContent != null && currentLang == "tr" && !string.IsNullOrEmpty(aboutContent.Item1Text)
+                                            ? aboutContent.Item1Text
+                                            : currentLang == "en"
+                                                ? "A trusted brand in infrastructure and wet area projects."
+                                                : "Altyapı ve ıslak zemin projelerinde güvenilen marka."
+                                    )
                                 </span>
                             </div>
                         </div>
@@ -378,12 +475,22 @@
                             <i class="fas fa-industry"></i>
                             <div>
                                 <strong>
-                                    @(currentLang == "en" ? "Strong production infrastructure" : "Güçlü üretim altyapısı")
+                                    @(
+                                        aboutContent != null && currentLang == "tr" && !string.IsNullOrEmpty(aboutContent.Item2Title)
+                                            ? aboutContent.Item2Title
+                                            : currentLang == "en"
+                                                ? "Strong production infrastructure"
+                                                : "Güçlü üretim altyapısı"
+                                    )
                                 </strong>
                                 <span>
-                                    @(currentLang == "en"
-                                        ? "High-capacity injection line and modern mould shop."
-                                        : "Yüksek kapasiteli enjeksiyon hattı ve modern kalıphane.")
+                                    @(
+                                        aboutContent != null && currentLang == "tr" && !string.IsNullOrEmpty(aboutContent.Item2Text)
+                                            ? aboutContent.Item2Text
+                                            : currentLang == "en"
+                                                ? "High-capacity injection line and modern mould shop."
+                                                : "Yüksek kapasiteli enjeksiyon hattı ve modern kalıphane."
+                                    )
                                 </span>
                             </div>
                         </div>
@@ -391,12 +498,22 @@
                             <i class="fas fa-handshake-angle"></i>
                             <div>
                                 <strong>
-                                    @(currentLang == "en" ? "Project-specific solutions" : "Projeye özel çözümler")
+                                    @(
+                                        aboutContent != null && currentLang == "tr" && !string.IsNullOrEmpty(aboutContent.Item3Title)
+                                            ? aboutContent.Item3Title
+                                            : currentLang == "en"
+                                                ? "Project-specific solutions"
+                                                : "Projeye özel çözümler"
+                                    )
                                 </strong>
                                 <span>
-                                    @(currentLang == "en"
-                                        ? "Custom products and project support for your needs."
-                                        : "Müşteriye özel ürün ve proje desteği.")
+                                    @(
+                                        aboutContent != null && currentLang == "tr" && !string.IsNullOrEmpty(aboutContent.Item3Text)
+                                            ? aboutContent.Item3Text
+                                            : currentLang == "en"
+                                                ? "Custom products and project support for your needs."
+                                                : "Müşteriye özel ürün ve proje desteği."
+                                    )
                                 </span>
                             </div>
                         </div>
@@ -450,6 +567,7 @@
 
 @{
     var referenceLogos = ViewBag.ReferenceLogos as List<ReferenceLogo> ?? new List<ReferenceLogo>();
+    var referenceContent = ViewBag.ReferenceContent as ReferenceSectionContent;
 }
 @if (referenceLogos.Any())
 {
@@ -463,40 +581,68 @@
                             @(currentLang == "en" ? "References" : "Referanslarımız")
                         </span>
                         <h2 class="home-section-title">
-                            @(currentLang == "en"
-                                ? "Brands that trust our plastic construction solutions"
-                                : "Plastik inşaat çözümlerimize güvenen markalar")
+                            @(
+                                referenceContent != null && currentLang == "tr" && !string.IsNullOrEmpty(referenceContent.Title)
+                                    ? referenceContent.Title
+                                    : currentLang == "en"
+                                        ? "Brands that trust our plastic construction solutions"
+                                        : "Plastik inşaat çözümlerimize güvenen markalar"
+                            )
                         </h2>
                         <p class="home-section-text">
-                            @(currentLang == "en"
-                                ? "We work with many brands and projects in infrastructure, drainage channels, manhole chambers and wet area applications."
-                                : "Altyapı, drenaj kanalları, rögar menhol kutuları ve ıslak zemin uygulamalarında birçok marka ve projeyle birlikte çalışıyoruz.")
+                            @(
+                                referenceContent != null && currentLang == "tr" && !string.IsNullOrEmpty(referenceContent.Subtitle)
+                                    ? referenceContent.Subtitle
+                                    : currentLang == "en"
+                                        ? "We work with many brands and projects in infrastructure, drainage channels, manhole chambers and wet area applications."
+                                        : "Altyapı, drenaj kanalları, rögar menhol kutuları ve ıslak zemin uygulamalarında birçok marka ve projeyle birlikte çalışıyoruz."
+                            )
                         </p>
                         <div class="about-highlights">
                             <div class="about-highlight-item">
                                 <i class="fas fa-check-circle"></i>
                                 <div>
-                                    <strong>
-                                        @(currentLang == "en" ? "Long-term collaborations" : "Uzun soluklu iş birlikleri")
-                                    </strong>
-                                    <span>
-                                        @(currentLang == "en"
-                                            ? "We establish long-term partnerships with our references based on trust and continuity."
-                                            : "Referanslarımızla güven ve sürdürülebilirlik esaslı uzun vadeli iş ortaklıkları kuruyoruz.")
-                                    </span>
+                                <strong>
+                                    @(
+                                        referenceContent != null && currentLang == "tr" && !string.IsNullOrEmpty(referenceContent.Item1Title)
+                                            ? referenceContent.Item1Title
+                                            : currentLang == "en"
+                                                ? "Long-term collaborations"
+                                                : "Uzun soluklu iş birlikleri"
+                                    )
+                                </strong>
+                                <span>
+                                    @(
+                                        referenceContent != null && currentLang == "tr" && !string.IsNullOrEmpty(referenceContent.Item1Text)
+                                            ? referenceContent.Item1Text
+                                            : currentLang == "en"
+                                                ? "We establish long-term partnerships with our references based on trust and continuity."
+                                                : "Referanslarımızla güven ve sürdürülebilirlik esaslı uzun vadeli iş ortaklıkları kuruyoruz."
+                                    )
+                                </span>
                                 </div>
                             </div>
                             <div class="about-highlight-item">
                                 <i class="fas fa-industry"></i>
                                 <div>
-                                    <strong>
-                                        @(currentLang == "en" ? "Different sectors" : "Farklı sektörler")
-                                    </strong>
-                                    <span>
-                                        @(currentLang == "en"
-                                            ? "From industrial facilities to public projects, we are involved in many different fields."
-                                            : "Endüstriyel tesislerden kamu projelerine kadar birçok farklı alanda yer alıyoruz.")
-                                    </span>
+                                <strong>
+                                    @(
+                                        referenceContent != null && currentLang == "tr" && !string.IsNullOrEmpty(referenceContent.Item2Title)
+                                            ? referenceContent.Item2Title
+                                            : currentLang == "en"
+                                                ? "Different sectors"
+                                                : "Farklı sektörler"
+                                    )
+                                </strong>
+                                <span>
+                                    @(
+                                        referenceContent != null && currentLang == "tr" && !string.IsNullOrEmpty(referenceContent.Item2Text)
+                                            ? referenceContent.Item2Text
+                                            : currentLang == "en"
+                                                ? "From industrial facilities to public projects, we are involved in many different fields."
+                                                : "Endüstriyel tesislerden kamu projelerine kadar birçok farklı alanda yer alıyoruz."
+                                    )
+                                </span>
                                 </div>
                             </div>
                         </div>

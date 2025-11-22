@@ -1,4 +1,4 @@
-@model IEnumerable<InsaatFirmasi.Models.ReferenceLogo>
+@model InsaatFirmasi.ViewModels.AdminReferenceViewModel
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Referans Yönetimi";
@@ -12,6 +12,66 @@
 
 <section class="home-section admin-dashboard-section">
     <div class="container-xl">
+        <div class="row g-4 mb-4">
+            <div class="col-lg-8">
+                <div class="home-card admin-card">
+                    <span class="home-section-kicker d-block mb-1">Referans Metni</span>
+                    <h3>Referanslar Bölümünü Güncelle</h3>
+                    <p class="home-section-text mb-3">
+                        Anasayfadaki "Referanslarımız" bölümünde gösterilecek başlık, alt başlık ve maddeleri buradan güncelleyebilirsiniz.
+                    </p>
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="UpdateContent" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Başlık</label>
+                            <input name="Title" class="form-control" value="@Model.Content.Title" placeholder="Örn: Çözümlerimizi tercih eden markalar" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Alt Başlık / Açıklama</label>
+                            <textarea name="Subtitle" class="form-control" rows="3" placeholder="Kısa açıklama">@Model.Content.Subtitle</textarea>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">1. Madde Başlığı</label>
+                                <input name="Item1Title" class="form-control" value="@Model.Content.Item1Title" placeholder="Örn: Uzun soluklu iş birlikleri" />
+                                <label class="form-label mt-2">1. Madde Yazısı</label>
+                                <textarea name="Item1Text" class="form-control" rows="2" placeholder="Kısa açıklama">@Model.Content.Item1Text</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">2. Madde Başlığı</label>
+                                <input name="Item2Title" class="form-control" value="@Model.Content.Item2Title" placeholder="Örn: Farklı sektörler" />
+                                <label class="form-label mt-2">2. Madde Yazısı</label>
+                                <textarea name="Item2Text" class="form-control" rows="2" placeholder="Kısa açıklama">@Model.Content.Item2Text</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">3. Madde Başlığı</label>
+                                <input name="Item3Title" class="form-control" value="@Model.Content.Item3Title" placeholder="Örn: Güvenilir çözüm ortağı" />
+                                <label class="form-label mt-2">3. Madde Yazısı</label>
+                                <textarea name="Item3Text" class="form-control" rows="2" placeholder="Kısa açıklama">@Model.Content.Item3Text</textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger btn-lg px-4 mt-3">
+                            <i class="fas fa-save me-2"></i>Metni Kaydet
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="row g-4">
             <div class="col-lg-4">
                 <div class="home-card admin-card">
@@ -48,10 +108,10 @@
                     <span class="home-section-kicker d-block mb-1">Mevcut Referanslar</span>
                     <h3>Referans Logo Listesi</h3>
 
-                    @if (Model != null && Model.Any())
+                    @if (Model.Logos != null && Model.Logos.Any())
                     {
                         <div class="row g-3 mt-3">
-                            @foreach (var logo in Model)
+                            @foreach (var logo in Model.Logos)
                             {
                                 <div class="col-md-4 col-sm-6">
                                     <div class="reference-admin-card border rounded-3 p-3 bg-dark text-center position-relative">

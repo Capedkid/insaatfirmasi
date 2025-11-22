@@ -41,6 +41,7 @@
                         </div>
                     </li>
                     <li><a class="main-nav-link" asp-route="blog">Blog</a></li>
+                    <li><a class="main-nav-link" asp-controller="Catalog" asp-action="Index">@(currentLang == "en" ? "Online Catalog" : "Online Katalog")</a></li>
                     <li><a class="main-nav-link" asp-route="iletisim">@(currentLang == "en" ? "Contact" : "İletişim")</a></li>
                 </ul>
 

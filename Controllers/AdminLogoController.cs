@@ -87,6 +87,40 @@ public class AdminLogoController : Controller
             return View("Index", logosForError);
         }
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var logo = await _context.SiteLogos.FindAsync(id);
+        if (logo != null)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(logo.ImagePath))
+                {
+                    var physicalPath = Path.Combine(
+                        _env.WebRootPath,
+                        logo.ImagePath.Replace("/", Path.DirectorySeparatorChar.ToString())
+                    );
+
+                    if (System.IO.File.Exists(physicalPath))
+                    {
+                        System.IO.File.Delete(physicalPath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Firma logosu silinirken dosya silinemedi.");
+            }
+
+            _context.SiteLogos.Remove(logo);
+            await _context.SaveChangesAsync();
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
 }
 
 

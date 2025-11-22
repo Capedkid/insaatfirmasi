@@ -59,12 +59,18 @@ public class HomeController : Controller
             .ThenByDescending(r => r.CreatedDate)
             .ToListAsync();
 
+        // Bölüm metinleri
+        var aboutContent = await _context.AboutSectionContents.FirstOrDefaultAsync();
+        var referenceContent = await _context.ReferenceSectionContents.FirstOrDefaultAsync();
+
         ViewBag.FeaturedProducts = featuredProducts;
         ViewBag.Categories = categories;
         ViewBag.RecentBlogPosts = recentBlogPosts;
         ViewBag.Sliders = sliders;
         ViewBag.AboutImages = aboutImages;
         ViewBag.ReferenceLogos = referenceLogos;
+        ViewBag.AboutContent = aboutContent;
+        ViewBag.ReferenceContent = referenceContent;
 
         return View();
     }

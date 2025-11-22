@@ -25,6 +25,12 @@ namespace InsaatFirmasi.Models
         [StringLength(100, ErrorMessage = "WhatsApp numarası en fazla 100 karakter olabilir")]
         public string? WhatsApp { get; set; }
 
+        [StringLength(200, ErrorMessage = "Instagram adresi en fazla 200 karakter olabilir")]
+        public string? InstagramUrl { get; set; }
+
+        [StringLength(200, ErrorMessage = "Facebook adresi en fazla 200 karakter olabilir")]
+        public string? FacebookUrl { get; set; }
+
         public DateTime? UpdatedDate { get; set; }
     }
 }

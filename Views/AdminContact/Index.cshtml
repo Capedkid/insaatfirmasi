@@ -17,7 +17,7 @@
                 <div class="home-card admin-card">
                     <span class="home-section-kicker d-block mb-1">İletişim Bilgileri</span>
                     <h3>İletişim Bilgilerini Güncelle</h3>
-                    <p>Telefon, e-posta ve adres bilgilerini buradan güncelleyebilirsiniz.</p>
+                    <p>Telefon, e-posta, adres ve sosyal medya bilgilerini buradan güncelleyebilirsiniz.</p>
 
                     @if (TempData["SuccessMessage"] != null)
                     {
@@ -53,6 +53,18 @@
                             <label asp-for="WhatsApp" class="form-label">WhatsApp Numarası</label>
                             <input asp-for="WhatsApp" class="form-control" placeholder="Örn: +905551234567" />
                             <small class="form-text text-muted">Footer'daki WhatsApp butonuna yönlendirme için numara (ülke kodu ile birlikte).</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="InstagramUrl" class="form-label">Instagram Adresi</label>
+                            <input asp-for="InstagramUrl" class="form-control" placeholder="Örn: https://instagram.com/firmaniz" />
+                            <small class="form-text text-muted">Footer'daki sosyal bölümünde gösterilecek Instagram profili. Boş bırakılırsa Instagram butonu görünmez.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="FacebookUrl" class="form-label">Facebook Adresi</label>
+                            <input asp-for="FacebookUrl" class="form-control" placeholder="Örn: https://facebook.com/firmaniz" />
+                            <small class="form-text text-muted">Footer'daki sosyal bölümünde gösterilecek Facebook sayfası. Boş bırakılırsa Facebook butonu görünmez.</small>
                         </div>
 
                         <button type="submit" class="btn btn-danger btn-lg px-4">

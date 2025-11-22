@@ -58,9 +58,9 @@ public class AdminContactController : Controller
                 existing.Phone = contactInfo.Phone;
                 existing.Email = contactInfo.Email;
                 existing.Address = contactInfo.Address;
-                existing.Latitude = contactInfo.Latitude;
-                existing.Longitude = contactInfo.Longitude;
                 existing.WhatsApp = contactInfo.WhatsApp;
+                existing.InstagramUrl = contactInfo.InstagramUrl;
+                existing.FacebookUrl = contactInfo.FacebookUrl;
                 existing.UpdatedDate = DateTime.Now;
             }
 

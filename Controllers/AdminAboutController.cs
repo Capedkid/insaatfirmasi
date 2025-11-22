@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using InsaatFirmasi.Data;
 using InsaatFirmasi.Models;
+using InsaatFirmasi.ViewModels;
 
 namespace InsaatFirmasi.Controllers;
 
@@ -33,7 +34,16 @@ public class AdminAboutController : Controller
             .ThenByDescending(a => a.CreatedDate)
             .ToListAsync();
 
-        return View(images);
+        var content = await _context.AboutSectionContents.FirstOrDefaultAsync()
+                      ?? new AboutSectionContent { Id = 1 };
+
+        var vm = new AdminAboutViewModel
+        {
+            Images = images,
+            Content = content
+        };
+
+        return View(vm);
     }
 
     [HttpPost]
@@ -47,7 +57,14 @@ public class AdminAboutController : Controller
                 .OrderBy(a => a.SortOrder)
                 .ThenByDescending(a => a.CreatedDate)
                 .ToListAsync();
-            return View("Index", imagesForError);
+            var contentForError = await _context.AboutSectionContents.FirstOrDefaultAsync()
+                                  ?? new AboutSectionContent { Id = 1 };
+            var vmError = new AdminAboutViewModel
+            {
+                Images = imagesForError,
+                Content = contentForError
+            };
+            return View("Index", vmError);
         }
 
         try
@@ -87,8 +104,15 @@ public class AdminAboutController : Controller
                 .OrderBy(a => a.SortOrder)
                 .ThenByDescending(a => a.CreatedDate)
                 .ToListAsync();
+            var contentForError = await _context.AboutSectionContents.FirstOrDefaultAsync()
+                                  ?? new AboutSectionContent { Id = 1 };
+            var vmError = new AdminAboutViewModel
+            {
+                Images = imagesForError,
+                Content = contentForError
+            };
 
-            return View("Index", imagesForError);
+            return View("Index", vmError);
         }
     }
 
@@ -123,6 +147,36 @@ public class AdminAboutController : Controller
             await _context.SaveChangesAsync();
         }
 
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateContent(AboutSectionContent content)
+    {
+        var existing = await _context.AboutSectionContents.FirstOrDefaultAsync();
+
+        if (existing == null)
+        {
+            content.Id = 1;
+            content.UpdatedDate = DateTime.Now;
+            _context.AboutSectionContents.Add(content);
+        }
+        else
+        {
+            existing.Title = content.Title;
+            existing.Subtitle = content.Subtitle;
+            existing.Item1Title = content.Item1Title;
+            existing.Item1Text = content.Item1Text;
+            existing.Item2Title = content.Item2Title;
+            existing.Item2Text = content.Item2Text;
+            existing.Item3Title = content.Item3Title;
+            existing.Item3Text = content.Item3Text;
+            existing.UpdatedDate = DateTime.Now;
+        }
+
+        await _context.SaveChangesAsync();
+        TempData["SuccessMessage"] = "Hakkımızda metni başarıyla güncellendi.";
         return RedirectToAction(nameof(Index));
     }
 }

@@ -21,6 +21,13 @@ namespace InsaatFirmasi.Models
         [StringLength(300, ErrorMessage = "Bağlantı URL'i en fazla 300 karakter olabilir")]
         public string? LinkUrl { get; set; }
 
+        // Opsiyonel buton tipleri (products, contact, catalog, blog)
+        [StringLength(50)]
+        public string? Button1Type { get; set; }
+
+        [StringLength(50)]
+        public string? Button2Type { get; set; }
+
         public bool IsActive { get; set; } = true;
 
         public int SortOrder { get; set; } = 0;

@@ -17,15 +17,35 @@
         }
     </ul>
 </div>
-<div class="col-md-2">
-    <h6 class="footer-heading">Sosyal</h6>
-    <div class="footer-social">
-        @if (!string.IsNullOrEmpty(Model?.WhatsApp))
-        {
-            <a href="https://wa.me/@Model.WhatsApp.Replace("+", "").Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "")" target="_blank" title="WhatsApp">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-        }
+@{
+    var hasWhatsApp = !string.IsNullOrEmpty(Model?.WhatsApp);
+    var hasInstagram = !string.IsNullOrEmpty(Model?.InstagramUrl);
+    var hasFacebook = !string.IsNullOrEmpty(Model?.FacebookUrl);
+}
+@if (hasWhatsApp || hasInstagram || hasFacebook)
+{
+    <div class="col-md-2">
+        <h6 class="footer-heading">Sosyal</h6>
+        <div class="footer-social">
+            @if (hasInstagram)
+            {
+                <a href="@Model!.InstagramUrl" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            }
+            @if (hasFacebook)
+            {
+                <a href="@Model!.FacebookUrl" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            }
+            @if (hasWhatsApp)
+            {
+                <a href="https://wa.me/@Model!.WhatsApp!.Replace("+", "").Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "")" target="_blank" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            }
+        </div>
     </div>
-</div>
+}
 
