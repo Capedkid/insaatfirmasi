@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using InsaatFirmasi.Data;
 using InsaatFirmasi.Models;
 
 namespace InsaatFirmasi.Controllers;
 
+[Authorize]
 public class AdminContactController : Controller
 {
     private readonly ApplicationDbContext _context;

@@ -566,15 +566,15 @@ body {
 
 /* Product groups on home */
 .product-groups-section {
-  background: #020617;
+  background: #f9fafb;
 }
 
 .product-groups-section .home-section-title {
-  color: #f9fafb;
+  color: #111827;
 }
 
 .product-groups-section .home-section-text {
-  color: #e5e7eb;
+  color: #4b5563;
 }
 
 .product-groups-grid {
@@ -836,15 +836,15 @@ body {
 
 /* About section on home */
 .about-section {
-  background: radial-gradient(circle at top, #020617, #020617 60%, #000000);
+  background: #ffffff;
 }
 
 .about-section .home-section-title {
-  color: #f9fafb;
+  color: #111827;
 }
 
 .about-section .home-section-text {
-  color: #e5e7eb;
+  color: #4b5563;
 }
 
 .about-text-block {
@@ -1052,15 +1052,15 @@ body {
 }
 
 .about-history-section {
-  background: #020617;
+  background: #ffffff;
 }
 
 .about-history-section .home-section-title {
-  color: #f9fafb;
+  color: #111827;
 }
 
 .about-history-section .home-section-text {
-  color: #e5e7eb;
+  color: #4b5563;
 }
 
 .about-grid-cards {
@@ -1096,7 +1096,7 @@ body {
 }
 
 .about-mission-vision {
-  background: radial-gradient(circle at top, #020617, #020617 60%, #000000);
+  background: #ffffff;
 }
 
 .about-pill-card {
@@ -1132,23 +1132,23 @@ body {
 }
 
 .about-values-section {
-  background: #020617;
+  background: #ffffff;
 }
 
 .about-values-section .home-section-title {
-  color: #f9fafb;
+  color: #111827;
 }
 
 .about-values-section .home-section-text {
-  color: #e5e7eb;
+  color: #4b5563;
 }
 
 .about-value-card {
   border-radius: 1.2rem;
   padding: 1.5rem 1.35rem;
-  background: radial-gradient(circle at top, #020617, #020617 55%, #000000);
-  border: 1px solid #1f2937;
-  color: #e5e7eb;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #111827;
   text-align: left;
 }
 
@@ -1172,34 +1172,34 @@ body {
 
 /* Contact section */
 .contact-section {
-  background: radial-gradient(circle at top, #020617, #020617 60%, #000000);
+  background: #ffffff;
 }
 
 .contact-section .home-card {
-  background: rgba(15, 23, 42, 0.96);
-  border-color: #1f2937;
-  color: #e5e7eb;
+  background: #ffffff;
+  border-color: #e5e7eb;
+  color: #111827;
 }
 
 .contact-section .home-section-title {
-  color: #f9fafb;
+  color: #111827;
 }
 
 .contact-section .home-section-text {
-  color: #e5e7eb;
+  color: #4b5563;
 }
 
 .contact-section .form-label {
-  color: #e5e7eb;
+  color: #374151;
   font-size: 0.9rem;
 }
 
 .contact-section .form-control,
 .contact-section .form-select,
 .contact-section textarea {
-  background-color: #020617;
-  border-color: #374151;
-  color: #e5e7eb;
+  background-color: #ffffff;
+  border-color: #d1d5db;
+  color: #111827;
 }
 
 .contact-section .form-control::placeholder,
@@ -1210,10 +1210,10 @@ body {
 .contact-section .form-control:focus,
 .contact-section .form-select:focus,
 .contact-section textarea:focus {
-  background-color: #020617;
+  background-color: #ffffff;
   border-color: #f97373;
   box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.5);
-  color: #f9fafb;
+  color: #111827;
 }
 
 .contact-section .btn-danger {
@@ -1231,24 +1231,24 @@ body {
 .contact-map-box {
   height: 300px;
   border-radius: 1.2rem;
-  background: radial-gradient(circle at top, #020617, #111827);
-  border: 1px dashed #374151;
-  color: #9ca3af;
+  background: #ffffff;
+  border: 1px dashed #d1d5db;
+  color: #4b5563;
 }
 
 /* Admin dashboard */
 .admin-dashboard-section {
-  background: #020617;
+  background: #f3f4f6;
 }
 
 .admin-dashboard-section .admin-card {
-  background: rgba(15, 23, 42, 0.96);
-  border-color: #1f2937;
-  color: #e5e7eb;
+  background: #ffffff;
+  border-color: #e5e7eb;
+  color: #111827;
 }
 
 .admin-dashboard-section .admin-card h3 {
-  color: #f9fafb;
+  color: #111827;
 }
 
 /* =======================
@@ -1256,8 +1256,8 @@ body {
    ======================= */
 
 .site-body {
-  background-color: #020617;
-  color: #e5e7eb;
+  background-color: #f9fafb;
+  color: #111827;
 }
 
 .site-main {
@@ -1290,6 +1290,12 @@ body {
   align-items: center;
   gap: 0.7rem;
   text-decoration: none;
+}
+
+.header-logo-image {
+  max-height: 34px;
+  width: auto;
+  object-fit: contain;
 }
 
 .brand-mark {

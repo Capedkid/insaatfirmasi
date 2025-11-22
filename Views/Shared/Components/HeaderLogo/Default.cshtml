@@ -1,0 +1,17 @@
+@model InsaatFirmasi.Models.SiteLogo
+
+@if (Model != null && !string.IsNullOrEmpty(Model.ImagePath))
+{
+    <img src="~/@Model.ImagePath"
+         alt="Firma Logosu"
+         class="header-logo-image" />
+}
+else
+{
+    <span class="brand-text">
+        <span class="brand-title">İNŞAAT</span>
+        <span class="brand-subtitle">PLASTİK ÇÖZÜMLER</span>
+    </span>
+}
+
+

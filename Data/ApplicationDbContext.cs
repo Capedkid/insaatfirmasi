@@ -20,6 +20,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Slider> Sliders => Set<Slider>();
     public DbSet<AboutImage> AboutImages => Set<AboutImage>();
     public DbSet<ContactInfo> ContactInfos => Set<ContactInfo>();
+    public DbSet<SiteLogo> SiteLogos => Set<SiteLogo>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

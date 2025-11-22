@@ -18,9 +18,12 @@
                 </a>
             </div>
             <div>
-                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light btn-sm">
-                    <i class="fas fa-sign-out-alt me-1"></i> Çıkış Yap
-                </a>
+                <form asp-controller="Admin" asp-action="Logout" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-sign-out-alt me-1"></i> Çıkış Yap
+                    </button>
+                </form>
             </div>
         </div>
     </header>

@@ -1,0 +1,81 @@
+@model IEnumerable<InsaatFirmasi.Models.SiteLogo>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Firma Logosu Yönetimi";
+}
+
+<section class="page-hero page-hero-simple">
+    <div class="container-xl text-center">
+        <h1 class="page-hero-title">Firma Logosu Yönetimi</h1>
+    </div>
+</section>
+
+<section class="home-section admin-dashboard-section">
+    <div class="container-xl">
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <div class="home-card admin-card">
+                    <h3 class="mb-3">Logo Ekle</h3>
+                    <p class="home-section-text mb-3">
+                        Header'da gösterilecek firma logosunu buradan yükleyebilirsiniz. En son eklenen logo kullanılacaktır.
+                    </p>
+                    <p class="small text-muted mb-3">
+                        Önerilen boyut: 160x40 piksel civarı, yatay logo. PNG veya SVG formatı idealdir. Arka planı şeffaf logo tercih edilir.
+                    </p>
+
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="text-danger small mb-2"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Logo Görseli</label>
+                            <input type="file" name="imageFile" class="form-control" accept="image/*" required />
+                            <small class="form-text text-muted">
+                                Önerilen boyut: yaklaşık 160x40 piksel (yatay logo). PNG formatında, tercihen şeffaf arkaplanlı bir logo yüklemeniz önerilir.
+                            </small>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-upload me-2"></i>Logoyu Yükle
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="home-card admin-card">
+                    <h3 class="mb-3">Yüklü Logolar</h3>
+                    @if (Model != null && Model.Any())
+                    {
+                        <p class="home-section-text mb-3">
+                            En üstteki logo header'da kullanılan logodur. En son yüklenen logo otomatik olarak kullanılacaktır.
+                        </p>
+                        <div class="row g-3">
+                            @foreach (var logo in Model)
+                            {
+                                <div class="col-md-6">
+                                    <div class="border rounded p-2 bg-light d-flex flex-column align-items-center justify-content-center" style="min-height:120px;">
+                                        <div class="mb-2">
+                                            <img src="~/@logo.ImagePath" alt="Site Logosu" style="max-height:50px; max-width:100%; object-fit:contain;" />
+                                        </div>
+                                        <div class="small text-muted">
+                                            @logo.CreatedDate.ToString("dd.MM.yyyy HH:mm")
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="home-section-text mb-0">
+                            Henüz logo yüklenmemiş. İlk logoyu eklediğinizde header'daki marka alanında bu logo görünecektir.
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

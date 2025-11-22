@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using InsaatFirmasi.Models;
 
 namespace InsaatFirmasi.Controllers;
 
+[Authorize]
 public class AdminCatalogController : Controller
 {
     private readonly ApplicationDbContext _context;
