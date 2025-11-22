@@ -20,9 +20,6 @@
 <div class="col-md-2">
     <h6 class="footer-heading">Sosyal</h6>
     <div class="footer-social">
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
         @if (!string.IsNullOrEmpty(Model?.WhatsApp))
         {
             <a href="https://wa.me/@Model.WhatsApp.Replace("+", "").Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "")" target="_blank" title="WhatsApp">

@@ -453,35 +453,68 @@
 }
 @if (referenceLogos.Any())
 {
-    <!-- REFERANSLARIMIZ -->
-    <section class="home-section references-section">
+    <!-- REFERANSLARIMIZ (Hakkımızda bölümü ile aynı tasarım) -->
+    <section class="home-section about-section">
         <div class="container-xl">
-            <div class="home-section-header">
-                <span class="home-section-kicker">
-                    @(currentLang == "en" ? "References" : "Referanslarımız")
-                </span>
-                <h2 class="home-section-title">
-                    @(currentLang == "en"
-                        ? "Brands that prefer our solutions"
-                        : "Çözümlerimizi tercih eden markalar")
-                </h2>
-                <p class="home-section-text">
-                    @(currentLang == "en"
-                        ? "Some of the brands and projects we have worked with in infrastructure, wet area and industrial applications."
-                        : "Altyapı, ıslak zemin ve endüstriyel uygulamalarda birlikte çalıştığımız marka ve projelerden bazıları.")
-                </p>
-            </div>
-
-            <div class="references-logos-wrapper">
-                <div class="references-logos-row">
-                    @foreach (var logo in referenceLogos)
-                    {
-                        <div class="reference-logo-card">
-                            <div class="reference-logo-inner">
-                                <img src="~/@logo.ImagePath" alt="Referans Logosu" />
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <div class="about-text-block">
+                        <span class="home-section-kicker">
+                            @(currentLang == "en" ? "References" : "Referanslarımız")
+                        </span>
+                        <h2 class="home-section-title">
+                            @(currentLang == "en"
+                                ? "Brands that trust our plastic construction solutions"
+                                : "Plastik inşaat çözümlerimize güvenen markalar")
+                        </h2>
+                        <p class="home-section-text">
+                            @(currentLang == "en"
+                                ? "We work with many brands and projects in infrastructure, drainage channels, manhole chambers and wet area applications."
+                                : "Altyapı, drenaj kanalları, rögar menhol kutuları ve ıslak zemin uygulamalarında birçok marka ve projeyle birlikte çalışıyoruz.")
+                        </p>
+                        <div class="about-highlights">
+                            <div class="about-highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>
+                                        @(currentLang == "en" ? "Long-term collaborations" : "Uzun soluklu iş birlikleri")
+                                    </strong>
+                                    <span>
+                                        @(currentLang == "en"
+                                            ? "We establish long-term partnerships with our references based on trust and continuity."
+                                            : "Referanslarımızla güven ve sürdürülebilirlik esaslı uzun vadeli iş ortaklıkları kuruyoruz.")
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="about-highlight-item">
+                                <i class="fas fa-industry"></i>
+                                <div>
+                                    <strong>
+                                        @(currentLang == "en" ? "Different sectors" : "Farklı sektörler")
+                                    </strong>
+                                    <span>
+                                        @(currentLang == "en"
+                                            ? "From industrial facilities to public projects, we are involved in many different fields."
+                                            : "Endüstriyel tesislerden kamu projelerine kadar birçok farklı alanda yer alıyoruz.")
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    }
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div id="referencesCarousel" class="carousel slide about-carousel" data-bs-ride="carousel" data-bs-interval="2500">
+                        <div class="carousel-inner">
+                            @for (var i = 0; i < referenceLogos.Count; i++)
+                            {
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <img src="~/@referenceLogos[i].ImagePath"
+                                         class="d-block w-100"
+                                         alt="Referans logosu @(i + 1)" />
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
