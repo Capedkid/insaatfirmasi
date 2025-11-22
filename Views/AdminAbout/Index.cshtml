@@ -30,11 +30,6 @@
                             <small class="form-text text-muted">Önerilen boyut: 1200x800 piksel (16:9 oran). JPG veya PNG formatında bir görsel yükleyin.</small>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Sıralama (küçükten büyüğe)</label>
-                            <input type="number" name="sortOrder" class="form-control" value="0" />
-                        </div>
-
                         <button type="submit" class="btn btn-danger btn-lg px-4">
                             <i class="fas fa-plus me-2"></i>Görsel Ekle
                         </button>
@@ -57,7 +52,6 @@
                                     <div class="card border-0 bg-dark">
                                         <img src="~/@image.ImagePath" alt="Hakkımızda görseli" class="card-img-top" style="height: 200px; object-fit: cover;" />
                                         <div class="card-body">
-                                            <p class="text-muted small mb-2">Sıra: @image.SortOrder</p>
                                             <form asp-action="Delete" method="post" class="d-inline">
                                                 @Html.AntiForgeryToken()
                                                 <input type="hidden" name="id" value="@image.Id" />

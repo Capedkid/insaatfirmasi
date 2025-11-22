@@ -17,7 +17,7 @@
                 <div class="home-card admin-card">
                     <span class="home-section-kicker d-block mb-1">İletişim Bilgileri</span>
                     <h3>İletişim Bilgilerini Güncelle</h3>
-                    <p>Telefon, e-posta, adres ve harita konum bilgilerini buradan güncelleyebilirsiniz.</p>
+                    <p>Telefon, e-posta ve adres bilgilerini buradan güncelleyebilirsiniz.</p>
 
                     @if (TempData["SuccessMessage"] != null)
                     {
@@ -55,19 +55,6 @@
                             <small class="form-text text-muted">Footer'daki WhatsApp butonuna yönlendirme için numara (ülke kodu ile birlikte).</small>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="Latitude" class="form-label">Enlem (Latitude)</label>
-                                <input asp-for="Latitude" class="form-control" placeholder="Örn: 37.8746" />
-                                <small class="form-text text-muted">Google Maps için enlem koordinatı.</small>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="Longitude" class="form-label">Boylam (Longitude)</label>
-                                <input asp-for="Longitude" class="form-control" placeholder="Örn: 32.4932" />
-                                <small class="form-text text-muted">Google Maps için boylam koordinatı.</small>
-                            </div>
-                        </div>
-
                         <button type="submit" class="btn btn-danger btn-lg px-4">
                             <i class="fas fa-save me-2"></i>Bilgileri Güncelle
                         </button>
@@ -78,3 +65,192 @@
     </div>
 </section>
 
+@section Scripts {
+    <script>
+        // Google Maps API key'inizi buraya ekleyin
+        // API key almak için: https://console.cloud.google.com/google/maps-apis
+        const GOOGLE_MAPS_API_KEY = ''; // Buraya kendi API key'inizi ekleyin
+        
+        if (GOOGLE_MAPS_API_KEY) {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&language=tr&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+    <script>
+        let map;
+        let marker;
+        let geocoder;
+
+        function initMap() {
+            const lat = parseFloat(document.getElementById('latitude').value) || 39.9334;
+            const lng = parseFloat(document.getElementById('longitude').value) || 32.8597;
+            
+            map = new google.maps.Map(document.getElementById('mapContainer'), {
+                center: { lat: lat, lng: lng },
+                zoom: 13
+            });
+
+            geocoder = new google.maps.Geocoder();
+
+            if (lat && lng) {
+                marker = new google.maps.Marker({
+                    position: { lat: lat, lng: lng },
+                    map: map,
+                    draggable: true
+                });
+
+                marker.addListener('dragend', function() {
+                    const position = marker.getPosition();
+                    document.getElementById('latitude').value = position.lat().toFixed(6);
+                    document.getElementById('longitude').value = position.lng().toFixed(6);
+                });
+            }
+
+            map.addListener('click', function(event) {
+                const lat = event.latLng.lat();
+                const lng = event.latLng.lng();
+                
+                document.getElementById('latitude').value = lat.toFixed(6);
+                document.getElementById('longitude').value = lng.toFixed(6);
+
+                if (marker) {
+                    marker.setPosition({ lat: lat, lng: lng });
+                } else {
+                    marker = new google.maps.Marker({
+                        position: { lat: lat, lng: lng },
+                        map: map,
+                        draggable: true
+                    });
+
+                    marker.addListener('dragend', function() {
+                        const position = marker.getPosition();
+                        document.getElementById('latitude').value = position.lat().toFixed(6);
+                        document.getElementById('longitude').value = position.lng().toFixed(6);
+                    });
+                }
+            });
+
+            // Autocomplete for location search
+            const autocomplete = new google.maps.places.Autocomplete(document.getElementById('locationSearch'));
+            autocomplete.bindTo('bounds', map);
+            autocomplete.addListener('place_changed', function() {
+                const place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    return;
+                }
+
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
+                }
+
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+                
+                document.getElementById('latitude').value = lat.toFixed(6);
+                document.getElementById('longitude').value = lng.toFixed(6);
+
+                if (marker) {
+                    marker.setPosition({ lat: lat, lng: lng });
+                } else {
+                    marker = new google.maps.Marker({
+                        position: { lat: lat, lng: lng },
+                        map: map,
+                        draggable: true
+                    });
+
+                    marker.addListener('dragend', function() {
+                        const position = marker.getPosition();
+                        document.getElementById('latitude').value = position.lat().toFixed(6);
+                        document.getElementById('longitude').value = position.lng().toFixed(6);
+                    });
+                }
+
+                document.getElementById('mapContainer').style.display = 'block';
+            });
+        }
+
+        function searchLocation() {
+            const query = document.getElementById('locationSearch').value;
+            if (!query) return;
+
+            if (!geocoder) {
+                geocoder = new google.maps.Geocoder();
+            }
+
+            geocoder.geocode({ address: query }, function(results, status) {
+                if (status === 'OK' && results[0]) {
+                    const location = results[0].geometry.location;
+                    const lat = location.lat();
+                    const lng = location.lng();
+
+                    document.getElementById('latitude').value = lat.toFixed(6);
+                    document.getElementById('longitude').value = lng.toFixed(6);
+
+                    if (!map) {
+                        document.getElementById('mapContainer').style.display = 'block';
+                        initMap();
+                    } else {
+                        map.setCenter({ lat: lat, lng: lng });
+                        map.setZoom(15);
+
+                        if (marker) {
+                            marker.setPosition({ lat: lat, lng: lng });
+                        } else {
+                            marker = new google.maps.Marker({
+                                position: { lat: lat, lng: lng },
+                                map: map,
+                                draggable: true
+                            });
+
+                            marker.addListener('dragend', function() {
+                                const position = marker.getPosition();
+                                document.getElementById('latitude').value = position.lat().toFixed(6);
+                                document.getElementById('longitude').value = position.lng().toFixed(6);
+                            });
+                        }
+                    }
+                } else {
+                    alert('Konum bulunamadı. Lütfen farklı bir arama terimi deneyin.');
+                }
+            });
+        }
+
+        function openGoogleMaps() {
+            const lat = document.getElementById('latitude').value;
+            const lng = document.getElementById('longitude').value;
+            let url = 'https://www.google.com/maps';
+            
+            if (lat && lng) {
+                url = `https://www.google.com/maps?q=${lat},${lng}`;
+            }
+            
+            window.open(url, '_blank');
+        }
+
+        // Initialize map when page loads if coordinates exist
+        window.addEventListener('load', function() {
+            const lat = document.getElementById('latitude').value;
+            const lng = document.getElementById('longitude').value;
+            
+            if (lat && lng) {
+                document.getElementById('mapContainer').style.display = 'block';
+                if (typeof google !== 'undefined' && google.maps) {
+                    initMap();
+                } else {
+                    // Wait for Google Maps API to load
+                    const checkGoogle = setInterval(function() {
+                        if (typeof google !== 'undefined' && google.maps) {
+                            clearInterval(checkGoogle);
+                            initMap();
+                        }
+                    }, 100);
+                }
+            }
+        });
+    </script>
+}
