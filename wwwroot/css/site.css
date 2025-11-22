@@ -1236,6 +1236,56 @@ body {
   color: #4b5563;
 }
 
+/* References section */
+.references-section {
+  background: #f9fafb;
+}
+
+.references-logos-wrapper {
+  margin-top: 2.5rem;
+  overflow: hidden;
+}
+
+.references-logos-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.reference-logo-card {
+  flex: 0 0 auto;
+  min-width: 160px;
+  max-width: 230px;
+}
+
+.reference-logo-inner {
+  height: 100px;
+  border-radius: 0.9rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+}
+
+.reference-logo-inner img {
+  max-height: 72px;
+  max-width: 100%;
+  object-fit: contain;
+  filter: grayscale(0.2);
+  opacity: 0.9;
+  transition: transform 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+}
+
+.reference-logo-inner:hover img {
+  transform: translateY(-2px);
+  opacity: 1;
+  filter: grayscale(0);
+}
+
 /* Admin dashboard */
 .admin-dashboard-section {
   background: #f3f4f6;

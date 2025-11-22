@@ -53,11 +53,18 @@ public class HomeController : Controller
             .ThenByDescending(a => a.CreatedDate)
             .ToListAsync();
 
+        // Referans logoları
+        var referenceLogos = await _context.ReferenceLogos
+            .OrderBy(r => r.SortOrder)
+            .ThenByDescending(r => r.CreatedDate)
+            .ToListAsync();
+
         ViewBag.FeaturedProducts = featuredProducts;
         ViewBag.Categories = categories;
         ViewBag.RecentBlogPosts = recentBlogPosts;
         ViewBag.Sliders = sliders;
         ViewBag.AboutImages = aboutImages;
+        ViewBag.ReferenceLogos = referenceLogos;
 
         return View();
     }

@@ -1,0 +1,92 @@
+@model IEnumerable<InsaatFirmasi.Models.ReferenceLogo>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Referans Yönetimi";
+}
+
+<section class="page-hero page-hero-simple">
+    <div class="container-xl text-center">
+        <h1 class="page-hero-title">Referans Yönetimi</h1>
+    </div>
+</section>
+
+<section class="home-section admin-dashboard-section">
+    <div class="container-xl">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="home-card admin-card">
+                    <span class="home-section-kicker d-block mb-1">Yeni Referans</span>
+                    <h3>Logo Ekle</h3>
+                    <p class="home-section-text mb-3">
+                        Anasayfada gösterilecek referans firma logolarını buradan ekleyebilirsiniz.
+                    </p>
+                    <p class="small text-muted mb-3">
+                        Önerilen boyut: yaklaşık 140x60 piksel (yatay logo). PNG formatında, tercihen şeffaf arkaplanlı bir logo yükleyin.
+                    </p>
+
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="text-danger small mb-2"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Referans Logo</label>
+                            <input type="file" name="imageFile" class="form-control" accept="image/*" required />
+                            <small class="form-text text-muted">
+                                Önerilen boyut: yaklaşık 140x60 piksel (yatay logo). PNG formatında, tercihen şeffaf arkaplanlı bir logo yüklemeniz önerilir.
+                            </small>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger btn-lg px-4">
+                            <i class="fas fa-plus me-2"></i>Logo Ekle
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="home-card admin-card">
+                    <span class="home-section-kicker d-block mb-1">Mevcut Referanslar</span>
+                    <h3>Referans Logo Listesi</h3>
+
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="row g-3 mt-3">
+                            @foreach (var logo in Model)
+                            {
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="reference-admin-card border rounded-3 p-3 bg-dark text-center position-relative">
+                                        <div class="mb-2">
+                                            <img src="~/@logo.ImagePath"
+                                                 alt="Referans Logosu"
+                                                 style="max-height:60px; max-width:100%; object-fit:contain;" />
+                                        </div>
+                                        <div class="small text-muted">
+                                            @logo.CreatedDate.ToString("dd.MM.yyyy HH:mm")
+                                        </div>
+                                        <form asp-action="Delete" method="post" class="mt-2">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@logo.Id" />
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    onclick="return confirm('Bu referans logosunu silmek istediğinize emin misiniz?');">
+                                                <i class="fas fa-trash-alt me-1"></i>Sil
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="mt-3 mb-0 text-muted">
+                            Henüz referans logosu eklenmemiş. Logo eklediğinizde anasayfadaki "Referanslarımız" bölümü otomatik olarak aktif olacaktır.
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

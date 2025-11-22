@@ -38,6 +38,9 @@
                     var bgImage = !string.IsNullOrEmpty(slider.ImagePath)
                         ? Url.Content("~/" + slider.ImagePath)
                         : "";
+                    var hasAnyText = !string.IsNullOrEmpty(slider.Kicker)
+                                     || !string.IsNullOrEmpty(slider.Title)
+                                     || !string.IsNullOrEmpty(slider.Subtitle);
                     <div class="carousel-item @(i == 0 ? "active" : "")">
                         <div class="hero-slide text-white"
                              style="@(string.IsNullOrEmpty(bgImage)
@@ -45,36 +48,43 @@
                                  : $"background-image: linear-gradient(120deg, rgba(15,23,42,0.78), rgba(15,23,42,0.55), rgba(185,28,28,0.5)), url('{bgImage}'); background-size: cover; background-position: center; background-repeat: no-repeat;")">
                             <div class="container-xl">
                                 <div class="row align-items-center min-vh-75">
-                                    <div class="col-lg-6">
-                                        <div class="hero-content">
-                                            <span class="hero-badge badge bg-danger-subtle text-uppercase">
+                                    @if (hasAnyText)
+                                    {
+                                        <div class="col-lg-6">
+                                            <div class="hero-content">
                                                 @if (!string.IsNullOrEmpty(slider.Kicker))
                                                 {
-                                                    @slider.Kicker
+                                                    <span class="hero-badge badge bg-danger-subtle text-uppercase">
+                                                        @slider.Kicker
+                                                    </span>
                                                 }
-                                                else
+                                                @if (!string.IsNullOrEmpty(slider.Title))
                                                 {
-                                                    <text>Drenaj Sistemleri</text>
+                                                    <h1 class="display-4 fw-bold mb-3">
+                                                        @slider.Title
+                                                    </h1>
                                                 }
-                                            </span>
-                                            <h1 class="display-4 fw-bold mb-3">
-                                                @slider.Title
-                                            </h1>
-                                            @if (!string.IsNullOrEmpty(slider.Subtitle))
-                                            {
-                                                <p class="lead text-white-50 mb-4">@slider.Subtitle</p>
-                                            }
-                                            <div class="hero-buttons d-flex flex-wrap gap-3 mt-3">
-                                                <a href="@Url.Action("Index", "Product")" class="btn btn-danger btn-lg px-4">
-                                                    <i class="fas fa-box-open me-2"></i> Ürünleri Keşfet
-                                                </a>
-                                                <a href="@Url.Action("Index", "Catalog")" class="btn btn-outline-light btn-lg px-4">
-                                                    <i class="fas fa-file-pdf me-2"></i> Online Katalog
-                                                </a>
+                                                @if (!string.IsNullOrEmpty(slider.Subtitle))
+                                                {
+                                                    <p class="lead text-white-50 mb-4">@slider.Subtitle</p>
+                                                }
+                                                <div class="hero-buttons d-flex flex-wrap gap-3 mt-3">
+                                                    <a href="@Url.Action("Index", "Product")" class="btn btn-danger btn-lg px-4">
+                                                        <i class="fas fa-box-open me-2"></i> Ürünleri Keşfet
+                                                    </a>
+                                                    <a href="@Url.Action("Index", "Catalog")" class="btn btn-outline-light btn-lg px-4">
+                                                        <i class="fas fa-file-pdf me-2"></i> Online Katalog
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6 d-none d-lg-block"></div>
+                                        <div class="col-lg-6 d-none d-lg-block"></div>
+                                    }
+                                    else
+                                    {
+                                        <!-- Sadece görsel: metin ve buton yok -->
+                                        <div class="col-12"></div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -437,4 +447,43 @@
         </div>
     </div>
 </section>
-</section>
+
+@{
+    var referenceLogos = ViewBag.ReferenceLogos as List<ReferenceLogo> ?? new List<ReferenceLogo>();
+}
+@if (referenceLogos.Any())
+{
+    <!-- REFERANSLARIMIZ -->
+    <section class="home-section references-section">
+        <div class="container-xl">
+            <div class="home-section-header">
+                <span class="home-section-kicker">
+                    @(currentLang == "en" ? "References" : "Referanslarımız")
+                </span>
+                <h2 class="home-section-title">
+                    @(currentLang == "en"
+                        ? "Brands that prefer our solutions"
+                        : "Çözümlerimizi tercih eden markalar")
+                </h2>
+                <p class="home-section-text">
+                    @(currentLang == "en"
+                        ? "Some of the brands and projects we have worked with in infrastructure, wet area and industrial applications."
+                        : "Altyapı, ıslak zemin ve endüstriyel uygulamalarda birlikte çalıştığımız marka ve projelerden bazıları.")
+                </p>
+            </div>
+
+            <div class="references-logos-wrapper">
+                <div class="references-logos-row">
+                    @foreach (var logo in referenceLogos)
+                    {
+                        <div class="reference-logo-card">
+                            <div class="reference-logo-inner">
+                                <img src="~/@logo.ImagePath" alt="Referans Logosu" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}
