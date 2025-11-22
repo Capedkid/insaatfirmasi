@@ -1,11 +1,21 @@
-﻿<!DOCTYPE html>
-<html lang="tr">
+﻿@{
+    var currentLang = Context.Request.Cookies["lang"] as string ?? "tr";
+    var request = Context.Request;
+    var currentUrl = request != null ? $"{request.Scheme}://{request.Host}{request.Path}{request.QueryString}" : "";
+}
+<!DOCTYPE html>
+<html lang="@currentLang">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - İnşaat Firması</title>
-    <meta name="description" content="@ViewData["Description"]" />
-    <meta name="keywords" content="@ViewData["Keywords"]" />
+    <meta name="description" content="@(ViewData["Description"] ?? "Plastik drenaj, rögar ve ıslak zemin çözümleri")" />
+    <meta name="keywords" content="@(ViewData["Keywords"] ?? "inşaat plastik, drenaj, rögar, ıslak zemin")" />
+    <link rel="canonical" href="@currentUrl" />
+    <meta property="og:title" content="@(ViewData["OgTitle"] ?? ViewData["Title"] ?? "İnşaat Firması")" />
+    <meta property="og:description" content="@(ViewData["OgDescription"] ?? ViewData["Description"] ?? "Plastik inşaat çözümleri")" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@currentUrl" />
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -25,30 +35,54 @@
 
             <nav class="main-nav">
                 <ul class="main-nav-list">
-                    <li><a class="main-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
-                    <li><a class="main-nav-link" asp-route="kurumsal">Kurumsal</a></li>
+                    <li><a class="main-nav-link" asp-area="" asp-controller="Home" asp-action="Index">@(currentLang == "en" ? "Home" : "Anasayfa")</a></li>
+                    <li><a class="main-nav-link" asp-route="kurumsal">@(currentLang == "en" ? "About" : "Kurumsal")</a></li>
                     <li class="nav-item-products">
-                        <a class="main-nav-link" asp-route="urunler">Ürünler</a>
+                        <a class="main-nav-link" asp-route="urunler">@(currentLang == "en" ? "Products" : "Ürünler")</a>
                         <div class="nav-dropdown">
                             @await Component.InvokeAsync("HeaderCategories")
                         </div>
                     </li>
                     <li><a class="main-nav-link" asp-route="blog">Blog</a></li>
-                    <li><a class="main-nav-link" asp-route="iletisim">İletişim</a></li>
+                    <li><a class="main-nav-link" asp-route="iletisim">@(currentLang == "en" ? "Contact" : "İletişim")</a></li>
                 </ul>
 
                 <div class="main-nav-right">
-                    <div class="lang-switch" aria-label="Dil seçimi">
-                        <button type="button" class="lang-btn active">TR</button>
-                        <button type="button" class="lang-btn">EN</button>
-                    </div>
-                    <button type="button" class="nav-icon-btn" aria-label="Ürün ara">
+                    <form asp-controller="Language" asp-action="Set" method="post" class="lang-switch" aria-label="Dil seçimi">
+                        @Html.AntiForgeryToken()
+                <input type="hidden" name="returnUrl" value="@((request?.Path ?? PathString.Empty).ToString() + (request?.QueryString.ToString() ?? string.Empty))" />
+                        <button type="submit" name="lang" value="tr" class="lang-btn @(currentLang == "tr" ? "active" : "")">TR</button>
+                        <button type="submit" name="lang" value="en" class="lang-btn @(currentLang == "en" ? "active" : "")">EN</button>
+                    </form>
+                    <button type="button" class="nav-icon-btn" id="headerSearchButton" aria-label="Ürün ara">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
             </nav>
         </div>
     </header>
+
+    <!-- HEADER SEARCH OVERLAY -->
+    <div id="headerSearchOverlay" class="header-search-overlay" aria-hidden="true">
+        <div class="header-search-backdrop"></div>
+        <div class="header-search-panel">
+            <div class="header-search-header">
+                <input type="text"
+                       id="headerSearchInput"
+                       class="header-search-input"
+                       placeholder='@(currentLang == "en" ? "Search products or categories..." : "Ürün veya kategori ara...")'
+                       autocomplete="off" />
+                <button type="button" class="header-search-close" id="headerSearchClose" aria-label="Kapat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="headerSearchResults" class="header-search-results">
+                <div class="header-search-empty">
+                    @(currentLang == "en" ? "Type at least 2 characters to search." : "Arama yapmak için en az 2 karakter yazın.")
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- MAIN -->
     <main class="site-main">
@@ -63,31 +97,44 @@
                     <div class="footer-brand">
                         <span class="brand-mark small"></span>
                         <div>
-                            <div class="footer-brand-title">İnşaat Plastik Çözümler</div>
-                            <div class="footer-brand-subtitle">Drenaj, rögar ve ıslak zemin ürünleri</div>
+                            <div class="footer-brand-title">
+                                @(currentLang == "en" ? "Construction Plastic Solutions" : "İnşaat Plastik Çözümler")
+                            </div>
+                            <div class="footer-brand-subtitle">
+                                @(currentLang == "en"
+                                    ? "Drainage, manhole and wet area products"
+                                    : "Drenaj, rögar ve ıslak zemin ürünleri")
+                            </div>
                         </div>
                     </div>
                     <p class="footer-text">
-                        Modern plastik inşaat malzemeleri ile altyapı ve üstyapı projelerinize uzun ömürlü çözümler sunuyoruz.
+                        @(currentLang == "en"
+                            ? "We provide long-lasting solutions for your infrastructure and superstructure projects with modern plastic construction materials."
+                            : "Modern plastik inşaat malzemeleri ile altyapı ve üstyapı projelerinize uzun ömürlü çözümler sunuyoruz.")
                     </p>
                 </div>
                 <div class="col-md-3">
-                    <h6 class="footer-heading">Site Haritası</h6>
+                    <h6 class="footer-heading">
+                        @(currentLang == "en" ? "Sitemap" : "Site Haritası")
+                    </h6>
                     <ul class="footer-links">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
-                        <li><a asp-route="kurumsal">Hakkımızda</a></li>
-                        <li><a asp-route="urunler">Ürünler</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">@(currentLang == "en" ? "Home" : "Anasayfa")</a></li>
+                        <li><a asp-route="kurumsal">@(currentLang == "en" ? "About" : "Hakkımızda")</a></li>
+                        <li><a asp-route="urunler">@(currentLang == "en" ? "Products" : "Ürünler")</a></li>
                         <li><a asp-route="blog">Blog</a></li>
-                        <li><a asp-route="iletisim">İletişim</a></li>
+                        <li><a asp-route="iletisim">@(currentLang == "en" ? "Contact" : "İletişim")</a></li>
                     </ul>
                 </div>
                 @await Component.InvokeAsync("ContactInfo")
             </div>
 
             <div class="footer-bottom">
-                <span>© @DateTime.Now.Year İnşaat Plastik Çözümler</span>
+                <span>
+                    © @DateTime.Now.Year @(currentLang == "en" ? "Construction Plastic Solutions" : "İnşaat Plastik Çözümler")
+                </span>
                 <span class="footer-bottom-right">
-                    Tasarım & Geliştirme <span class="text-accent">InsaatFirmasi</span>
+                    @(currentLang == "en" ? "Design & Development" : "Tasarım & Geliştirme")
+                    <span class="text-accent">InsaatFirmasi</span>
                 </span>
             </div>
         </div>

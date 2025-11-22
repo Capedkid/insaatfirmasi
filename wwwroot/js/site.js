@@ -130,4 +130,114 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('load', function() {
         document.body.classList.add('loaded');
     });
+
+    // HEADER SEARCH
+    const searchButton = document.getElementById('headerSearchButton');
+    const searchOverlay = document.getElementById('headerSearchOverlay');
+    const searchInput = document.getElementById('headerSearchInput');
+    const searchClose = document.getElementById('headerSearchClose');
+    const searchResults = document.getElementById('headerSearchResults');
+
+    let searchTimeout;
+
+    function openSearch() {
+        if (!searchOverlay || !searchInput) return;
+        searchOverlay.classList.add('open');
+        searchOverlay.setAttribute('aria-hidden', 'false');
+        setTimeout(() => searchInput.focus(), 50);
+    }
+
+    function closeSearch() {
+        if (!searchOverlay || !searchInput) return;
+        searchOverlay.classList.remove('open');
+        searchOverlay.setAttribute('aria-hidden', 'true');
+        searchInput.value = '';
+        if (searchResults) {
+            searchResults.innerHTML = '<div class=\"header-search-empty\">Arama yapmak için en az 2 karakter yazın.</div>';
+        }
+    }
+
+    if (searchButton && searchOverlay && searchInput && searchResults) {
+        searchButton.addEventListener('click', openSearch);
+        if (searchClose) {
+            searchClose.addEventListener('click', closeSearch);
+        }
+        const backdrop = searchOverlay.querySelector('.header-search-backdrop');
+        if (backdrop) {
+            backdrop.addEventListener('click', closeSearch);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('open')) {
+                closeSearch();
+            }
+        });
+
+        searchInput.addEventListener('input', function() {
+            const term = this.value.trim();
+            if (searchTimeout) {
+                clearTimeout(searchTimeout);
+            }
+
+            if (term.length < 2) {
+                searchResults.innerHTML = '<div class=\"header-search-empty\">Arama yapmak için en az 2 karakter yazın.</div>';
+                return;
+            }
+
+            searchTimeout = setTimeout(function() {
+                fetch('/Search/Global?term=' + encodeURIComponent(term))
+                    .then(r => r.json())
+                    .then(data => {
+                        if (!Array.isArray(data) || data.length === 0) {
+                            searchResults.innerHTML = '<div class=\"header-search-empty\">Sonuç bulunamadı.</div>';
+                            return;
+                        }
+                        const fragment = document.createDocumentFragment();
+                        data.forEach(item => {
+                            const btn = document.createElement('button');
+                            btn.type = 'button';
+                            btn.className = 'header-search-result';
+                            btn.dataset.url = item.url;
+
+                            const main = document.createElement('div');
+                            main.className = 'header-search-result-main';
+
+                            const name = document.createElement('div');
+                            name.className = 'header-search-result-name';
+                            name.textContent = item.name;
+                            main.appendChild(name);
+
+                            if (item.category) {
+                                const meta = document.createElement('div');
+                                meta.className = 'header-search-result-meta';
+                                meta.textContent = item.category;
+                                main.appendChild(meta);
+                            }
+
+                            const type = document.createElement('div');
+                            type.className = 'header-search-result-type';
+                            type.textContent = item.type === 'product' ? 'Ürün' : 'Kategori';
+
+                            btn.appendChild(main);
+                            btn.appendChild(type);
+
+                            btn.addEventListener('click', function() {
+                                const url = this.dataset.url;
+                                if (url) {
+                                    window.location.href = url;
+                                }
+                            });
+
+                            fragment.appendChild(btn);
+                        });
+
+                        searchResults.innerHTML = '';
+                        searchResults.appendChild(fragment);
+                    })
+                    .catch(() => {
+                        searchResults.innerHTML = '<div class=\"header-search-empty\">Arama sırasında bir hata oluştu.</div>';
+                    });
+            }, 250);
+        });
+    }
 });

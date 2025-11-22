@@ -1,8 +1,19 @@
 @model InsaatFirmasi.Models.Product
 @{
-    ViewData["Title"] = Model.Name;
-    ViewData["Description"] = Model.Description?.Length > 160 ? Model.Description.Substring(0, 160) + "..." : Model.Description;
-    ViewData["Keywords"] = $"{Model.Name}, {Model.Category?.Name}, inşaat malzemeleri, {Model.Tags}";
+    var seoTitle = !string.IsNullOrEmpty(Model.SeoTitle) ? Model.SeoTitle : Model.Name;
+    var baseDescription = Model.SeoDescription ?? Model.Description;
+    var description = baseDescription != null && baseDescription.Length > 160
+        ? baseDescription.Substring(0, 160) + "..."
+        : baseDescription;
+    var keywords = !string.IsNullOrEmpty(Model.SeoKeywords)
+        ? Model.SeoKeywords
+        : $"{Model.Name}, {Model.Category?.Name}, inşaat malzemeleri, {Model.Tags}";
+
+    ViewData["Title"] = seoTitle;
+    ViewData["Description"] = description;
+    ViewData["Keywords"] = keywords;
+    ViewData["OgTitle"] = seoTitle;
+    ViewData["OgDescription"] = description;
 }
 
 <!-- SAYFA HERO (site tasarımı ile uyumlu) -->

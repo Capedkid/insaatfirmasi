@@ -1,8 +1,19 @@
 @model InsaatFirmasi.Models.BlogPost
 @{
-    ViewData["Title"] = Model.Title;
-    ViewData["Description"] = Model.Summary?.Length > 160 ? Model.Summary.Substring(0, 160) + "..." : Model.Summary;
-    ViewData["Keywords"] = $"{Model.Title}, {Model.Tags}, blog, inşaat malzemeleri";
+    var seoTitle = !string.IsNullOrEmpty(Model.SeoTitle) ? Model.SeoTitle : Model.Title;
+    var baseDescription = Model.SeoDescription ?? Model.Summary ?? Model.Content;
+    var description = baseDescription != null && baseDescription.Length > 160
+        ? baseDescription.Substring(0, 160) + "..."
+        : baseDescription;
+    var keywords = !string.IsNullOrEmpty(Model.SeoKeywords)
+        ? Model.SeoKeywords
+        : $"{Model.Title}, {Model.Tags}, blog, inşaat malzemeleri";
+
+    ViewData["Title"] = seoTitle;
+    ViewData["Description"] = description;
+    ViewData["Keywords"] = keywords;
+    ViewData["OgTitle"] = seoTitle;
+    ViewData["OgDescription"] = description;
 }
 
 <!-- SAYFA HERO (diğer sayfalarla aynı yapı) -->

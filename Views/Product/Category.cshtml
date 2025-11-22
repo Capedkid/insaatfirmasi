@@ -2,7 +2,17 @@
 @model IEnumerable<Product>
 @{
     var category = ViewBag.Category as Category;
-    ViewData["Title"] = category != null ? category.Name + " Ürünleri" : "Ürünler";
+    var seoTitle = category != null && !string.IsNullOrEmpty(category.SeoTitle)
+        ? category.SeoTitle
+        : category != null ? category.Name + " Ürünleri" : "Ürünler";
+    var description = category?.SeoDescription ?? $"Kategori: {category?.Name} ürünleri";
+    var keywords = category?.SeoKeywords ?? $"{category?.Name}, ürünler, inşaat, plastik çözümler";
+
+    ViewData["Title"] = seoTitle;
+    ViewData["Description"] = description;
+    ViewData["Keywords"] = keywords;
+    ViewData["OgTitle"] = seoTitle;
+    ViewData["OgDescription"] = description;
 }
 
 <!-- SAYFA HERO -->

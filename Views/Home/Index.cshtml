@@ -1,8 +1,14 @@
 ﻿@using InsaatFirmasi.Models
 @{
-    ViewData["Title"] = "Ana Sayfa";
-    ViewData["Description"] = "Kırmızı-siyah renk paleti ile modern plastik inşaat çözümleri anasayfası.";
-    ViewData["Keywords"] = "inşaat, plastik drenaj, rögar, ıslak zemin, modern tasarım";
+    var currentLang = Context.Request.Cookies["lang"] as string ?? "tr";
+
+    ViewData["Title"] = currentLang == "en" ? "Home" : "Ana Sayfa";
+    ViewData["Description"] = currentLang == "en"
+        ? "Homepage for modern plastic construction solutions with a red-black palette."
+        : "Kırmızı-siyah renk paleti ile modern plastik inşaat çözümleri anasayfası.";
+    ViewData["Keywords"] = currentLang == "en"
+        ? "construction, plastic drainage, manhole, wet area, modern design"
+        : "inşaat, plastik drenaj, rögar, ıslak zemin, modern tasarım";
 
     var sliders = ViewBag.Sliders as List<Slider> ?? new List<Slider>();
     var homeCategories = ViewBag.Categories as List<Category> ?? new List<Category>();
@@ -94,36 +100,43 @@
                                 <div class="col-lg-6">
                                     <div class="hero-content">
                                         <span class="hero-badge badge bg-danger-subtle text-uppercase">
-                                            <i class="fas fa-water me-2"></i> Drenaj Sistemleri
+                                            <i class="fas fa-water me-2"></i>
+                                            @(currentLang == "en" ? "Drainage Systems" : "Drenaj Sistemleri")
                                         </span>
                                         <h1 class="display-4 fw-bold mb-3">
-                                            Kırmızı & siyah tonlarda <span class="text-accent">modern drenaj çözümleri</span>
+                                            @Html.Raw(currentLang == "en"
+                                                ? "Modern <span class=\"text-accent\">drainage solutions</span> in red & black tones"
+                                                : "Kırmızı & siyah tonlarda <span class=\"text-accent\">modern drenaj çözümleri</span>")
                                         </h1>
                                         <p class="lead text-white-50 mb-4">
-                                            Endüstriyel plastik drenaj kanalları ile altyapı projelerinize uzun ömürlü ve estetik çözümler sunuyoruz.
+                                            @(currentLang == "en"
+                                                ? "We provide long-lasting and aesthetic solutions for your infrastructure projects with industrial plastic drainage channels."
+                                                : "Endüstriyel plastik drenaj kanalları ile altyapı projelerinize uzun ömürlü ve estetik çözümler sunuyoruz.")
                                         </p>
                                         <div class="hero-features mb-4">
                                             <div class="row g-3">
                                                 <div class="col-6">
                                                     <div class="d-flex align-items-center small">
                                                         <i class="fas fa-check-circle text-accent me-2"></i>
-                                                        UV dayanımlı malzeme
+                                                        @(currentLang == "en" ? "UV-resistant material" : "UV dayanımlı malzeme")
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="d-flex align-items-center small">
                                                         <i class="fas fa-check-circle text-accent me-2"></i>
-                                                        Hızlı ve kolay montaj
+                                                        @(currentLang == "en" ? "Fast and easy installation" : "Hızlı ve kolay montaj")
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="hero-buttons d-flex flex-wrap gap-3">
                                             <a href="@Url.Action("Index", "Product")" class="btn btn-danger btn-lg px-4">
-                                                <i class="fas fa-box-open me-2"></i> Ürünleri Keşfet
+                                                <i class="fas fa-box-open me-2"></i>
+                                                @(currentLang == "en" ? "Explore Products" : "Ürünleri Keşfet")
                                             </a>
                                             <a href="@Url.Action("Index", "Catalog")" class="btn btn-outline-light btn-lg px-4">
-                                                <i class="fas fa-file-pdf me-2"></i> Online Katalog
+                                                <i class="fas fa-file-pdf me-2"></i>
+                                                @(currentLang == "en" ? "Online Catalog" : "Online Katalog")
                                             </a>
                                         </div>
                                     </div>
@@ -142,36 +155,43 @@
                                 <div class="col-lg-6">
                                     <div class="hero-content">
                                         <span class="hero-badge badge bg-danger-subtle text-uppercase">
-                                            <i class="fas fa-cubes me-2"></i> Rögar & Menhol
+                                            <i class="fas fa-cubes me-2"></i>
+                                            @(currentLang == "en" ? "Manhole & Inspection Chambers" : "Rögar & Menhol")
                                         </span>
                                         <h1 class="display-4 fw-bold mb-3">
-                                            Güvenli <span class="text-accent">altyapı çözümleri</span> için plastik rögar kutuları
+                                            @Html.Raw(currentLang == "en"
+                                                ? "Plastic manhole chambers for <span class=\"text-accent\">safe infrastructure solutions</span>"
+                                                : "Güvenli <span class=\"text-accent\">altyapı çözümleri</span> için plastik rögar kutuları")
                                         </h1>
                                         <p class="lead text-white-50 mb-4">
-                                            Farklı ebat ve yük sınıflarındaki plastik rögar ve menhol kutuları ile altyapınızı güvenle tasarlayın.
+                                            @(currentLang == "en"
+                                                ? "Design your infrastructure safely with plastic manhole and inspection chambers in different sizes and load classes."
+                                                : "Farklı ebat ve yük sınıflarındaki plastik rögar ve menhol kutuları ile altyapınızı güvenle tasarlayın.")
                                         </p>
                                         <div class="hero-features mb-4">
                                             <div class="row g-3">
                                                 <div class="col-6">
                                                     <div class="d-flex align-items-center small">
                                                         <i class="fas fa-check-circle text-accent me-2"></i>
-                                                        Hafif ve dayanıklı yapı
+                                                        @(currentLang == "en" ? "Lightweight and durable structure" : "Hafif ve dayanıklı yapı")
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="d-flex align-items-center small">
                                                         <i class="fas fa-check-circle text-accent me-2"></i>
-                                                        Farklı bağlantı seçenekleri
+                                                        @(currentLang == "en" ? "Multiple connection options" : "Farklı bağlantı seçenekleri")
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="hero-buttons d-flex flex-wrap gap-3">
                                             <a href="@Url.Action("Index", "Product")" class="btn btn-danger btn-lg px-4">
-                                                <i class="fas fa-layer-group me-2"></i> Tüm Ürünler
+                                                <i class="fas fa-layer-group me-2"></i>
+                                                @(currentLang == "en" ? "All Products" : "Tüm Ürünler")
                                             </a>
                                             <a href="@Url.Action("Index", "Contact")" class="btn btn-outline-light btn-lg px-4">
-                                                <i class="fas fa-phone-alt me-2"></i> Projenizi Konuşalım
+                                                <i class="fas fa-phone-alt me-2"></i>
+                                                @(currentLang == "en" ? "Let's Talk About Your Project" : "Projenizi Konuşalım")
                                             </a>
                                         </div>
                                     </div>
@@ -190,36 +210,42 @@
                                 <div class="col-lg-6">
                                     <div class="hero-content">
                                         <span class="hero-badge badge bg-danger-subtle text-uppercase">
-                                            <i class="fas fa-shower me-2"></i> Islak Zemin
+                                            <i class="fas fa-shower me-2"></i>
+                                            @(currentLang == "en" ? "Wet Areas" : "Islak Zemin")
                                         </span>
                                         <h1 class="display-4 fw-bold mb-3">
-                                            Estetik <span class="text-accent">banyo ve ıslak zemin</span> çözümleri
+                                            @Html.Raw(currentLang == "en"
+                                                ? "Aesthetic <span class=\"text-accent\">bathroom and wet area</span> solutions"
+                                                : "Estetik <span class=\"text-accent\">banyo ve ıslak zemin</span> çözümleri")
                                         </h1>
                                         <p class="lead text-white-50 mb-4">
-                                            Modern çizgilere sahip plastik ıslak zemin ürünlerimizle mimari projelerinize değer katın.
+                                            @(currentLang == "en"
+                                                ? "Add value to your architectural projects with our modern plastic wet area products."
+                                                : "Modern çizgilere sahip plastik ıslak zemin ürünlerimizle mimari projelerinize değer katın.")
                                         </p>
                                         <div class="hero-features mb-4">
                                             <div class="row g-3">
                                                 <div class="col-6">
                                                     <div class="d-flex align-items-center small">
                                                         <i class="fas fa-check-circle text-accent me-2"></i>
-                                                        Hijyenik ve bakımı kolay
+                                                        @(currentLang == "en" ? "Hygienic and easy to maintain" : "Hijyenik ve bakımı kolay")
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="d-flex align-items-center small">
                                                         <i class="fas fa-check-circle text-accent me-2"></i>
-                                                        Zengin ürün çeşitliliği
+                                                        @(currentLang == "en" ? "Wide product range" : "Zengin ürün çeşitliliği")
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="hero-buttons d-flex flex-wrap gap-3">
                                             <a href="@Url.Action("Index", "Product")" class="btn btn-danger btn-lg px-4">
-                                                <i class="fas fa-bath me-2"></i> Islak Zemin Ürünleri
+                                                <i class="fas fa-bath me-2"></i>
+                                                @(currentLang == "en" ? "Wet Area Products" : "Islak Zemin Ürünleri")
                                             </a>
                                             <a href="#neden-biz" class="btn btn-outline-light btn-lg px-4">
-                                                Neden Biz?
+                                                @(currentLang == "en" ? "Why Us?" : "Neden Biz?")
                                             </a>
                                         </div>
                                     </div>
@@ -234,11 +260,11 @@
 
         <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Önceki</span>
+            <span class="visually-hidden">@(currentLang == "en" ? "Previous" : "Önceki")</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Sonraki</span>
+            <span class="visually-hidden">@(currentLang == "en" ? "Next" : "Sonraki")</span>
         </button>
     </div>
 </section>
@@ -247,11 +273,18 @@
 <section class="home-section product-groups-section">
     <div class="container-xl">
         <div class="home-section-header">
-            <span class="home-section-kicker">Ürün Gruplarımız</span>
-            <h2 class="home-section-title">Farklı proje tipleri için geniş ürün grupları</h2>
+            <span class="home-section-kicker">
+                @(currentLang == "en" ? "Product Groups" : "Ürün Gruplarımız")
+            </span>
+            <h2 class="home-section-title">
+                @(currentLang == "en"
+                    ? "Wide product groups for different project types"
+                    : "Farklı proje tipleri için geniş ürün grupları")
+            </h2>
             <p class="home-section-text">
-                Drenajdan ıslak zemine, endüstriyel alanlardan özel üretime kadar farklı ihtiyaçlara yönelik ürün gruplarımızı
-                veritabanından dinamik olarak görüntüleyebilirsiniz.
+                @(currentLang == "en"
+                    ? "From drainage to wet areas, from industrial spaces to custom production, you can view our product groups dynamically from the database."
+                    : "Drenajdan ıslak zemine, endüstriyel alanlardan özel üretime kadar farklı ihtiyaçlara yönelik ürün gruplarımızı veritabanından dinamik olarak görüntüleyebilirsiniz.")
             </p>
         </div>
 
@@ -290,7 +323,11 @@
         {
             <div class="text-center text-muted py-4">
                 <i class="fas fa-layer-group fa-2x mb-2"></i>
-                <p>Henüz ürün grubu eklenmemiş. Admin panelden kategori eklediğinizde burada görünecektir.</p>
+                <p>
+                    @(currentLang == "en"
+                        ? "No product group has been added yet. Once you add categories from the admin panel, they will appear here."
+                        : "Henüz ürün grubu eklenmemiş. Admin panelden kategori eklediğinizde burada görünecektir.")
+                </p>
             </div>
         }
     </div>
@@ -300,38 +337,62 @@
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
                 <div class="about-text-block">
-                    <span class="home-section-kicker">Hakkımızda</span>
-                    <h2 class="home-section-title">Plastik inşaat çözümlerinde güvenilir üretici</h2>
+                    <span class="home-section-kicker">
+                        @(currentLang == "en" ? "About Us" : "Hakkımızda")
+                    </span>
+                    <h2 class="home-section-title">
+                        @(currentLang == "en"
+                            ? "A reliable manufacturer in plastic construction solutions"
+                            : "Plastik inşaat çözümlerinde güvenilir üretici")
+                    </h2>
                     <p class="home-section-text">
-                        1995 yılından bugüne drenaj kanalları, rögar menhol kutuları ve ıslak zemin ürünleri üreterek
-                        altyapı ve üstyapı projelerine uzun ömürlü çözümler sunuyoruz. Modern üretim hattımız ve
-                        tasarım odaklı yaklaşımımızla plastik inşaat malzemelerini bir üst seviyeye taşıyoruz.
+                        @(currentLang == "en"
+                            ? "Since 1995, we have been producing drainage channels, manhole chambers and wet area products to provide long-lasting solutions for your infrastructure and superstructure projects. With our modern production line and design-oriented approach, we take plastic construction materials to the next level."
+                            : "1995 yılından bugüne drenaj kanalları, rögar menhol kutuları ve ıslak zemin ürünleri üreterek altyapı ve üstyapı projelerine uzun ömürlü çözümler sunuyoruz. Modern üretim hattımız ve tasarım odaklı yaklaşımımızla plastik inşaat malzemelerini bir üst seviyeye taşıyoruz.")
                     </p>
                     <div class="about-highlights">
                         <div class="about-highlight-item">
                             <i class="fas fa-check-circle"></i>
                             <div>
-                                <strong>25+ yıllık tecrübe</strong>
-                                <span>Altyapı ve ıslak zemin projelerinde güvenilen marka.</span>
+                                <strong>
+                                    @(currentLang == "en" ? "25+ years of experience" : "25+ yıllık tecrübe")
+                                </strong>
+                                <span>
+                                    @(currentLang == "en"
+                                        ? "A trusted brand in infrastructure and wet area projects."
+                                        : "Altyapı ve ıslak zemin projelerinde güvenilen marka.")
+                                </span>
                             </div>
                         </div>
                         <div class="about-highlight-item">
                             <i class="fas fa-industry"></i>
                             <div>
-                                <strong>Güçlü üretim altyapısı</strong>
-                                <span>Yüksek kapasiteli enjeksiyon hattı ve modern kalıphane.</span>
+                                <strong>
+                                    @(currentLang == "en" ? "Strong production infrastructure" : "Güçlü üretim altyapısı")
+                                </strong>
+                                <span>
+                                    @(currentLang == "en"
+                                        ? "High-capacity injection line and modern mould shop."
+                                        : "Yüksek kapasiteli enjeksiyon hattı ve modern kalıphane.")
+                                </span>
                             </div>
                         </div>
                         <div class="about-highlight-item">
                             <i class="fas fa-handshake-angle"></i>
                             <div>
-                                <strong>Projeye özel çözümler</strong>
-                                <span>Müşteriye özel ürün ve proje desteği.</span>
+                                <strong>
+                                    @(currentLang == "en" ? "Project-specific solutions" : "Projeye özel çözümler")
+                                </strong>
+                                <span>
+                                    @(currentLang == "en"
+                                        ? "Custom products and project support for your needs."
+                                        : "Müşteriye özel ürün ve proje desteği.")
+                                </span>
                             </div>
                         </div>
                     </div>
                     <a asp-controller="Home" asp-action="About" class="btn btn-danger btn-lg about-more-btn mt-3">
-                        Daha Fazla Bilgi
+                        @(currentLang == "en" ? "Learn More" : "Daha Fazla Bilgi")
                     </a>
                 </div>
             </div>
