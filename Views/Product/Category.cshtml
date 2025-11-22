@@ -29,21 +29,26 @@
                 @foreach (var product in Model)
                 {
                     <div class="col-lg-4 col-md-6">
-                        <div class="product-group-card">
-                            <div class="product-group-image">
-                                @if (!string.IsNullOrEmpty(product.MainImagePath))
-                                {
-                                    <img src="~/@product.MainImagePath" alt="@product.Name" />
-                                }
-                                else
-                                {
-                                    <div class="d-flex align-items-center justify-content-center h-100 text-muted">
-                                        <i class="fas fa-box-open fa-2x"></i>
-                                    </div>
-                                }
+                        <a asp-controller="Product"
+                           asp-action="Details"
+                           asp-route-id="@product.Id"
+                           class="text-decoration-none text-reset">
+                            <div class="product-group-card">
+                                <div class="product-group-image">
+                                    @if (!string.IsNullOrEmpty(product.MainImagePath))
+                                    {
+                                        <img src="~/@product.MainImagePath" alt="@product.Name" />
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                                            <i class="fas fa-box-open fa-2x"></i>
+                                        </div>
+                                    }
+                                </div>
+                                <h3>@product.Name</h3>
                             </div>
-                            <h3>@product.Name</h3>
-                        </div>
+                        </a>
                     </div>
                 }
             </div>

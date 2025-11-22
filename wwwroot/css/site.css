@@ -640,6 +640,67 @@ body {
   text-transform: uppercase;
 }
 
+/* Blog cards (use product-group-card base) */
+.blog-card .blog-card-body {
+  padding: 1rem 1.25rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 190px;
+}
+
+.blog-card .blog-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+  margin-bottom: 0.3rem;
+}
+
+.blog-card .blog-card-meta i {
+  font-size: 0.7rem;
+}
+
+.blog-card .blog-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f9fafb;
+  margin: 0 0 0.4rem 0;
+}
+
+.blog-card .blog-card-excerpt {
+  font-size: 0.9rem;
+  color: #e5e7eb;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.blog-card .blog-card-footer {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+.blog-card .blog-card-button {
+  border-radius: 999px;
+  padding-inline: 0.9rem;
+  padding-block: 0.3rem;
+  font-size: 0.78rem;
+  border-color: rgba(248, 113, 113, 0.8);
+  color: #fee2e2;
+  background: rgba(248, 113, 113, 0.08);
+}
+
+.blog-card .blog-card-button i {
+  font-size: 0.7rem;
+}
+
 .home-card {
   height: 100%;
   border-radius: 1.2rem;

@@ -5,31 +5,30 @@
     ViewData["Keywords"] = $"{Model.Title}, {Model.Tags}, blog, inşaat malzemeleri";
 }
 
-<!-- Breadcrumb -->
-<section class="bg-light py-3">
-    <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Anasayfa</a></li>
-                <li class="breadcrumb-item"><a href="@Url.Action("Index", "Blog")">Blog</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
-            </ol>
-        </nav>
+<!-- SAYFA HERO (diğer sayfalarla aynı yapı) -->
+<section class="page-hero page-hero-simple">
+    <div class="container-xl text-center">
+        <h1 class="page-hero-title">@Model.Title</h1>
     </div>
 </section>
 
 <!-- Blog Yazısı Header -->
-<section class="py-5">
-    <div class="container">
+<section class="home-section">
+    <div class="container-xl">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <!-- Kategori ve Tarih -->
                 <div class="text-center mb-4">
-                    <span class="badge bg-danger fs-6 mb-3">@Model.Category</span>
-                    <h1 class="display-4 fw-bold text-dark mb-3">@Model.Title</h1>
+                    @if (!string.IsNullOrWhiteSpace(Model.Category))
+                    {
+                        <span class="badge bg-danger fs-6 mb-3">@Model.Category</span>
+                    }
                     <div class="d-flex justify-content-center align-items-center text-muted">
                         <i class="fas fa-calendar me-2"></i>
-                        <span>@Model.CreatedDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"))</span>
+                        <span>
+                            @(Model.PublishedDate?.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR")) 
+                              ?? Model.CreatedDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR")))
+                        </span>
                         <i class="fas fa-eye ms-4 me-2"></i>
                         <span>@Model.ViewCount görüntülenme</span>
                         <i class="fas fa-clock ms-4 me-2"></i>
@@ -37,23 +36,24 @@
                     </div>
                 </div>
                 
-                <!-- Özet -->
-                @if (!string.IsNullOrEmpty(Model.Summary))
-                {
-                    <div class="alert alert-light border-start border-danger border-4 mb-4">
-                        <h5 class="fw-bold text-dark mb-2">Özet</h5>
-                        <p class="mb-0 text-muted">@Model.Summary</p>
-                    </div>
-                }
-                
                 <!-- Ana Görsel -->
-                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                @if (!string.IsNullOrEmpty(Model.ImagePath) || !string.IsNullOrEmpty(Model.ImageUrl))
                 {
                     <div class="text-center mb-5">
-                        <img src="~/uploads/blog/@Model.ImageUrl" 
+                        @if (!string.IsNullOrEmpty(Model.ImagePath))
+                        {
+                            <img src="~/@Model.ImagePath"
+                                 class="img-fluid rounded shadow-lg"
+                                 alt="@Model.Title"
+                                 style="max-height: 400px; width: 100%; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <img src="@Model.ImageUrl"
                              class="img-fluid rounded shadow-lg" 
                              alt="@Model.Title"
                              style="max-height: 400px; width: 100%; object-fit: cover;">
+                        }
                     </div>
                 }
             </div>
@@ -63,7 +63,7 @@
 
 <!-- Blog İçeriği -->
 <section class="pb-5">
-    <div class="container">
+    <div class="container-xl">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <div class="blog-content">
@@ -83,166 +83,15 @@
                         </div>
                     </div>
                 }
-                
-                <!-- Paylaşım Butonları -->
-                <div class="mt-5 pt-4 border-top">
-                    <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <h6 class="fw-bold text-dark mb-3">Bu yazıyı paylaşın</h6>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-outline-primary btn-sm" onclick="shareOnFacebook()">
-                                    <i class="fab fa-facebook-f me-1"></i>Facebook
-                                </button>
-                                <button class="btn btn-outline-info btn-sm" onclick="shareOnTwitter()">
-                                    <i class="fab fa-twitter me-1"></i>Twitter
-                                </button>
-                                <button class="btn btn-outline-success btn-sm" onclick="shareOnLinkedIn()">
-                                    <i class="fab fa-linkedin-in me-1"></i>LinkedIn
-                                </button>
-                                <button class="btn btn-outline-secondary btn-sm" onclick="copyLink()">
-                                    <i class="fas fa-link me-1"></i>Kopyala
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-6 text-end">
-                            <div class="text-muted small">
-                                <i class="fas fa-eye me-1"></i>@Model.ViewCount görüntülenme
-                                <i class="fas fa-clock ms-3 me-1"></i>@Model.ReadTime dakika okuma
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- İlgili Yazılar -->
-@if (ViewBag.RelatedPosts != null)
-{
-    <section class="bg-light py-5">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="display-5 fw-bold text-dark">İlgili Yazılar</h2>
-                <p class="text-muted">Bu konuyla ilgili diğer yazılarımız</p>
-            </div>
-            
-            <div class="row g-4">
-                @foreach (var post in ViewBag.RelatedPosts as IEnumerable<InsaatFirmasi.Models.BlogPost>)
-                {
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="position-relative">
-                                @if (!string.IsNullOrEmpty(post.ImageUrl))
-                                {
-                                    <img src="~/uploads/blog/@post.ImageUrl" 
-                                         class="card-img-top" 
-                                         alt="@post.Title"
-                                         style="height: 200px; object-fit: cover;">
-                                }
-                                else
-                                {
-                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
-                                         style="height: 200px;">
-                                        <i class="fas fa-newspaper fa-2x text-muted"></i>
-                                    </div>
-                                }
-                                
-                                <span class="position-absolute top-0 end-0 p-2">
-                                    <span class="badge bg-danger">@post.Category</span>
-                                </span>
-                            </div>
-                            
-                            <div class="card-body">
-                                <h6 class="card-title fw-bold">@post.Title</h6>
-                                <p class="card-text text-muted small">
-                                    @(post.Summary?.Length > 80 ? post.Summary.Substring(0, 80) + "..." : post.Summary)
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <small class="text-muted">
-                                        <i class="fas fa-calendar me-1"></i>
-                                        @post.CreatedDate.ToString("dd.MM.yyyy")
-                                    </small>
-                                    <a href="@Url.Action("Details", "Blog", new { id = post.Id })" 
-                                       class="btn btn-danger btn-sm">
-                                        Oku
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </section>
-}
-
-<!-- Yorumlar Bölümü (Gelecekte eklenebilir) -->
-<section class="py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white border-0 py-4">
-                        <h4 class="fw-bold text-dark mb-0">Yorumlar</h4>
-                        <p class="text-muted mb-0">Bu özellik yakında eklenecek</p>
-                    </div>
-                    <div class="card-body p-4 text-center">
-                        <i class="fas fa-comments fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">Yorum sistemi yakında aktif olacak</h5>
-                        <p class="text-muted">Bu yazı hakkındaki görüşlerinizi paylaşabileceksiniz.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- İletişim CTA -->
-<section class="py-5 bg-danger text-white">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h2 class="display-6 fw-bold mb-3">Bu Konu Hakkında Sorularınız mı Var?</h2>
-                <p class="lead mb-0">
-                    Blog yazımız hakkında detaylı bilgi almak veya teknik destek için bizimle iletişime geçin.
-                </p>
-            </div>
-            <div class="col-lg-4 text-end">
-                <a href="@Url.Action("Index", "Contact")" class="btn btn-light btn-lg px-4">
-                    <i class="fas fa-phone me-2"></i>İletişime Geçin
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
+<!-- İlgili Yazılar ve iletişim CTA bölümleri kaldırıldı -->
 
 @section Scripts {
     <script>
-        function shareOnFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            const title = encodeURIComponent('@Model.Title');
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${title}`, '_blank');
-        }
-        
-        function shareOnTwitter() {
-            const url = encodeURIComponent(window.location.href);
-            const title = encodeURIComponent('@Model.Title');
-            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`, '_blank');
-        }
-        
-        function shareOnLinkedIn() {
-            const url = encodeURIComponent(window.location.href);
-            const title = encodeURIComponent('@Model.Title');
-            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
-        }
-        
-        function copyLink() {
-            navigator.clipboard.writeText(window.location.href).then(function() {
-                alert('Link kopyalandı!');
-            });
-        }
-        
         // Yazı okunduğunda görüntülenme sayısını artır
         document.addEventListener('DOMContentLoaded', function() {
             // Sayfa yüklendiğinde görüntülenme sayısını artır

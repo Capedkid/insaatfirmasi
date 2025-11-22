@@ -65,22 +65,37 @@ public class BlogController : Controller
             .Take(3)
             .ToListAsync();
 
-        // Etiketlere göre ilgili yazılar
+        // Etiketlere göre ilgili yazılar (LINQ to Objects, EF'e çevrilmeyen kısmı hafızada çalıştırıyoruz)
         var relatedPosts = new List<BlogPost>();
         if (!string.IsNullOrEmpty(blogPost.Tags))
         {
             var tags = blogPost.Tags
                 .Split(',', StringSplitOptions.RemoveEmptyEntries)
                 .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrWhiteSpace(t))
                 .ToList();
 
-            relatedPosts = await _context.BlogPosts
-                .Where(b => b.IsActive && b.PublishedDate.HasValue && b.Id != id &&
-                            b.Tags != null &&
-                            tags.Any(tag => b.Tags!.Contains(tag)))
-                .OrderByDescending(b => b.PublishedDate)
-                .Take(3)
-                .ToListAsync();
+            if (tags.Count > 0)
+            {
+                var lowerTags = tags.Select(t => t.ToLowerInvariant()).ToList();
+
+                var candidatePosts = await _context.BlogPosts
+                    .Where(b => b.IsActive && b.PublishedDate.HasValue && b.Id != id && b.Tags != null)
+                    .ToListAsync();
+
+                relatedPosts = candidatePosts
+                    .Where(b =>
+                    {
+                        if (string.IsNullOrEmpty(b.Tags))
+                            return false;
+
+                        var bTagsLower = b.Tags!.ToLowerInvariant();
+                        return lowerTags.Any(tag => bTagsLower.Contains(tag));
+                    })
+                    .OrderByDescending(b => b.PublishedDate)
+                    .Take(3)
+                    .ToList();
+            }
         }
 
         ViewBag.RecentPosts = recentPosts;
