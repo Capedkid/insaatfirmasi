@@ -1,0 +1,144 @@
+@model InsaatFirmasi.Models.CorporatePageContent
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Kurumsal Sayfası Yönetimi";
+}
+
+<section class="page-hero page-hero-simple">
+    <div class="container-xl text-center">
+        <h1 class="page-hero-title">Kurumsal Sayfası Yönetimi</h1>
+    </div>
+</section>
+
+<section class="home-section admin-dashboard-section">
+    <div class="container-xl">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="home-card admin-card">
+                    <span class="home-section-kicker d-block mb-1">Kurumsal Metni</span>
+                    <h3>Kurumsal Sayfa İçeriğini Güncelle</h3>
+                    <p class="home-section-text mb-3">
+                        Kurumsal sayfasındaki tarihçemiz, yan kartlar, misyon / vizyon ve değerler bölümlerini buradan dinamik olarak güncelleyebilirsiniz.
+                    </p>
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="Update" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+
+                        <h4 class="mb-3">Tarihçemiz Bölümü</h4>
+                        <div class="mb-3">
+                            <label class="form-label">Tarihçe Başlığı</label>
+                            <input name="HistoryTitle" class="form-control" value="@Model.HistoryTitle" placeholder="Örn: 1995'ten bugüne plastik inşaat çözümleri" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tarihçe Metni 1</label>
+                            <textarea name="HistoryText1" class="form-control" rows="3" placeholder="İlk paragraf">@Model.HistoryText1</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tarihçe Metni 2</label>
+                            <textarea name="HistoryText2" class="form-control" rows="3" placeholder="İkinci paragraf (opsiyonel)">@Model.HistoryText2</textarea>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3">
+                                <label class="form-label">1. Kart Başlığı</label>
+                                <input name="HistoryItem1Title" class="form-control" value="@Model.HistoryItem1Title" placeholder="Örn: Modern üretim teknolojisi" />
+                                <label class="form-label mt-2">1. Kart Yazısı</label>
+                                <textarea name="HistoryItem1Text" class="form-control" rows="2">@Model.HistoryItem1Text</textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">2. Kart Başlığı</label>
+                                <input name="HistoryItem2Title" class="form-control" value="@Model.HistoryItem2Title" placeholder="Örn: Kalite odaklı yaklaşım" />
+                                <label class="form-label mt-2">2. Kart Yazısı</label>
+                                <textarea name="HistoryItem2Text" class="form-control" rows="2">@Model.HistoryItem2Text</textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">3. Kart Başlığı</label>
+                                <input name="HistoryItem3Title" class="form-control" value="@Model.HistoryItem3Title" placeholder="Örn: İnovasyon ve tasarım" />
+                                <label class="form-label mt-2">3. Kart Yazısı</label>
+                                <textarea name="HistoryItem3Text" class="form-control" rows="2">@Model.HistoryItem3Text</textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">4. Kart Başlığı</label>
+                                <input name="HistoryItem4Title" class="form-control" value="@Model.HistoryItem4Title" placeholder="Örn: Uzun soluklu iş birlikleri" />
+                                <label class="form-label mt-2">4. Kart Yazısı</label>
+                                <textarea name="HistoryItem4Text" class="form-control" rows="2">@Model.HistoryItem4Text</textarea>
+                            </div>
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <h4 class="mb-3">Misyon / Vizyon</h4>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Misyon Başlığı</label>
+                                <input name="MissionTitle" class="form-control" value="@Model.MissionTitle" placeholder="Örn: Misyonumuz" />
+                                <label class="form-label mt-2">Misyon Metni</label>
+                                <textarea name="MissionText" class="form-control" rows="4">@Model.MissionText</textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Vizyon Başlığı</label>
+                                <input name="VisionTitle" class="form-control" value="@Model.VisionTitle" placeholder="Örn: Vizyonumuz" />
+                                <label class="form-label mt-2">Vizyon Metni</label>
+                                <textarea name="VisionText" class="form-control" rows="4">@Model.VisionText</textarea>
+                            </div>
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <h4 class="mb-3">Değerlerimiz Bölümü</h4>
+                        <div class="mb-3">
+                            <label class="form-label">Değerler Başlığı</label>
+                            <input name="ValuesTitle" class="form-control" value="@Model.ValuesTitle" placeholder="Örn: Çalışma kültürümüzü şekillendiren prensipler" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Değerler Alt Başlığı</label>
+                            <textarea name="ValuesSubtitle" class="form-control" rows="3">@Model.ValuesSubtitle</textarea>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">1. Değer Başlığı</label>
+                                <input name="Value1Title" class="form-control" value="@Model.Value1Title" placeholder="Örn: Kalite" />
+                                <label class="form-label mt-2">1. Değer Metni</label>
+                                <textarea name="Value1Text" class="form-control" rows="3">@Model.Value1Text</textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">2. Değer Başlığı</label>
+                                <input name="Value2Title" class="form-control" value="@Model.Value2Title" placeholder="Örn: Müşteri odaklılık" />
+                                <label class="form-label mt-2">2. Değer Metni</label>
+                                <textarea name="Value2Text" class="form-control" rows="3">@Model.Value2Text</textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">3. Değer Başlığı</label>
+                                <input name="Value3Title" class="form-control" value="@Model.Value3Title" placeholder="Örn: İnovasyon" />
+                                <label class="form-label mt-2">3. Değer Metni</label>
+                                <textarea name="Value3Text" class="form-control" rows="3">@Model.Value3Text</textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">4. Değer Başlığı</label>
+                                <input name="Value4Title" class="form-control" value="@Model.Value4Title" placeholder="Örn: Güvenilirlik" />
+                                <label class="form-label mt-2">4. Değer Metni</label>
+                                <textarea name="Value4Text" class="form-control" rows="3">@Model.Value4Text</textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger btn-lg px-4 mt-3">
+                            <i class="fas fa-save me-2"></i>Kurumsal Metni Kaydet
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

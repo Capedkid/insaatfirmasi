@@ -75,9 +75,10 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult About()
+    public async Task<IActionResult> About()
     {
-        return View();
+        var content = await _context.CorporatePageContents.FirstOrDefaultAsync();
+        return View(content);
     }
 
     public async Task<IActionResult> Contact()

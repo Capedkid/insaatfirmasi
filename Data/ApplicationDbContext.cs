@@ -24,6 +24,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<ReferenceLogo> ReferenceLogos => Set<ReferenceLogo>();
     public DbSet<AboutSectionContent> AboutSectionContents => Set<AboutSectionContent>();
     public DbSet<ReferenceSectionContent> ReferenceSectionContents => Set<ReferenceSectionContent>();
+    public DbSet<CorporatePageContent> CorporatePageContents => Set<CorporatePageContent>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
