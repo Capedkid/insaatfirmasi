@@ -128,7 +128,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add loading animation
     window.addEventListener('load', function() {
-        document.body.classList.add('loaded');
+        const loader = document.getElementById('pageLoader');
+        if (loader) {
+            loader.classList.add('hidden');
+        }
     });
 
     // HEADER SEARCH
