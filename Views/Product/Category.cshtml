@@ -1,12 +1,23 @@
 @using InsaatFirmasi.Models
 @model IEnumerable<Product>
 @{
+    var currentLang = Context.Request.Cookies["lang"] as string ?? "tr";
+
     var category = ViewBag.Category as Category;
+    var defaultTitle = category != null
+        ? (currentLang == "en" ? category.Name + " Products" : category.Name + " Ürünleri")
+        : (currentLang == "en" ? "Products" : "Ürünler");
     var seoTitle = category != null && !string.IsNullOrEmpty(category.SeoTitle)
         ? category.SeoTitle
-        : category != null ? category.Name + " Ürünleri" : "Ürünler";
-    var description = category?.SeoDescription ?? $"Kategori: {category?.Name} ürünleri";
-    var keywords = category?.SeoKeywords ?? $"{category?.Name}, ürünler, inşaat, plastik çözümler";
+        : defaultTitle;
+    var description = category?.SeoDescription
+        ?? (currentLang == "en"
+            ? $"Category: {category?.Name} products"
+            : $"Kategori: {category?.Name} ürünleri");
+    var keywords = category?.SeoKeywords
+        ?? (currentLang == "en"
+            ? $"{category?.Name}, products, construction, plastic solutions"
+            : $"{category?.Name}, ürünler, inşaat, plastik çözümler");
 
     ViewData["Title"] = seoTitle;
     ViewData["Description"] = description;
@@ -19,7 +30,14 @@
 <section class="page-hero page-hero-simple">
     <div class="container-xl text-center">
         <h1 class="page-hero-title">
-            @(category != null ? category.Name + " Ürünleri" : "Ürünler")
+            @if (category != null)
+            {
+                @(currentLang == "en" ? category.Name + " Products" : category.Name + " Ürünleri")
+            }
+            else
+            {
+                @(currentLang == "en" ? "Products" : "Ürünler")
+            }
         </h1>
     </div>
 </section>
@@ -27,9 +45,22 @@
 <section class="home-section product-list-section">
     <div class="container-xl">
         <div class="home-section-header">
-            <span class="home-section-kicker">Ürünler</span>
+            <span class="home-section-kicker">
+                @(currentLang == "en" ? "Products" : "Ürünler")
+            </span>
             <h2 class="home-section-title">
-                @(category != null ? category.Name + " kategorisindeki ürünler" : "Seçili kategorideki ürünler")
+                @if (category != null)
+                {
+                    @(currentLang == "en"
+                        ? $"Products in {category.Name} category"
+                        : category.Name + " kategorisindeki ürünler")
+                }
+                else
+                {
+                    @(currentLang == "en"
+                        ? "Products in the selected category"
+                        : "Seçili kategorideki ürünler")
+                }
             </h2>
         </div>
 

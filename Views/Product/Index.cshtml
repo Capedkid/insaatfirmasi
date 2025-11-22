@@ -1,9 +1,15 @@
 @using InsaatFirmasi.Models
 @model IEnumerable<Product>
 @{
-    ViewData["Title"] = "Ürün Gruplarımız";
-    ViewData["Description"] = "Plastik drenaj kanalları, rögar menhol kutuları ve ıslak zemin ürünleri için modern ürün grupları.";
-    ViewData["Keywords"] = "ürün grupları, drenaj, rögar, ıslak zemin, plastik inşaat ürünleri";
+    var currentLang = Context.Request.Cookies["lang"] as string ?? "tr";
+
+    ViewData["Title"] = currentLang == "en" ? "Product Groups" : "Ürün Gruplarımız";
+    ViewData["Description"] = currentLang == "en"
+        ? "Modern product groups for plastic drainage channels, manhole chambers and wet area products."
+        : "Plastik drenaj kanalları, rögar menhol kutuları ve ıslak zemin ürünleri için modern ürün grupları.";
+    ViewData["Keywords"] = currentLang == "en"
+        ? "product groups, drainage, manhole, wet areas, plastic construction products"
+        : "ürün grupları, drenaj, rögar, ıslak zemin, plastik inşaat ürünleri";
 
     var categories = ViewBag.Categories as List<Category> ?? new List<Category>();
 }
@@ -11,7 +17,9 @@
 <!-- SAYFA HERO -->
 <section class="page-hero page-hero-simple">
     <div class="container-xl text-center">
-        <h1 class="page-hero-title">Ürün Gruplarımız</h1>
+        <h1 class="page-hero-title">
+            @(currentLang == "en" ? "Product Groups" : "Ürün Gruplarımız")
+        </h1>
     </div>
 </section>
 
@@ -19,11 +27,18 @@
 <section class="home-section product-list-section">
     <div class="container-xl">
         <div class="home-section-header">
-            <span class="home-section-kicker">Ürün Gruplarımız</span>
-            <h2 class="home-section-title">Veritabanından gelen ürün grupları</h2>
+            <span class="home-section-kicker">
+                @(currentLang == "en" ? "Product Groups" : "Ürün Gruplarımız")
+            </span>
+            <h2 class="home-section-title">
+                @(currentLang == "en"
+                    ? "Product groups coming from the database"
+                    : "Veritabanından gelen ürün grupları")
+            </h2>
             <p class="home-section-text">
-                Aşağıdaki kartlar MySQL veritabanındaki aktif kategoriler üzerinden oluşturulmaktadır. Admin panelde yeni kategori
-                eklediğinizde burada otomatik olarak görünecektir.
+                @(currentLang == "en"
+                    ? "The cards below are generated from active categories in the MySQL database. When you add a new category from the admin panel, it will automatically appear here."
+                    : "Aşağıdaki kartlar MySQL veritabanındaki aktif kategoriler üzerinden oluşturulmaktadır. Admin panelde yeni kategori eklediğinizde burada otomatik olarak görünecektir.")
             </p>
         </div>
 
@@ -62,8 +77,14 @@
         {
             <div class="text-center text-muted py-5">
                 <i class="fas fa-layer-group fa-3x mb-3"></i>
-                <h4>Henüz kategori eklenmemiş</h4>
-                <p>Admin panel üzerinden yeni kategori eklediğinizde ürün gruplarınız burada listelenecektir.</p>
+                <h4>
+                    @(currentLang == "en" ? "No category has been added yet" : "Henüz kategori eklenmemiş")
+                </h4>
+                <p>
+                    @(currentLang == "en"
+                        ? "When you add new categories from the admin panel, your product groups will be listed here."
+                        : "Admin panel üzerinden yeni kategori eklediğinizde ürün gruplarınız burada listelenecektir.")
+                </p>
             </div>
         }
     </div>

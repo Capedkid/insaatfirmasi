@@ -1,14 +1,22 @@
 @model InsaatFirmasi.Models.ContactInfo
 @{
-    ViewData["Title"] = "İletişim";
-    ViewData["Description"] = "Plastik inşaat çözümleri için bizimle iletişime geçin. Projelerinize uygun ürün ve teknik destek sunuyoruz.";
-    ViewData["Keywords"] = "iletişim, drenaj, rögar, ıslak zemin, proje desteği";
+    var currentLang = Context.Request.Cookies["lang"] as string ?? "tr";
+
+    ViewData["Title"] = currentLang == "en" ? "Contact" : "İletişim";
+    ViewData["Description"] = currentLang == "en"
+        ? "Contact us for plastic construction solutions. We provide suitable products and technical support for your projects."
+        : "Plastik inşaat çözümleri için bizimle iletişime geçin. Projelerinize uygun ürün ve teknik destek sunuyoruz.";
+    ViewData["Keywords"] = currentLang == "en"
+        ? "contact, drainage, manhole, wet areas, project support"
+        : "iletişim, drenaj, rögar, ıslak zemin, proje desteği";
 }
 
 <!-- SAYFA HERO -->
 <section class="page-hero page-hero-simple">
     <div class="container-xl text-center">
-        <h1 class="page-hero-title">İletişim</h1>
+        <h1 class="page-hero-title">
+            @(currentLang == "en" ? "Contact" : "İletişim")
+        </h1>
     </div>
 </section>
 
@@ -19,42 +27,54 @@
             <div class="col-lg-4 col-md-6">
                 <div class="about-value-card">
                     <i class="fas fa-phone-alt"></i>
-                    <h3>Telefon</h3>
+                    <h3>@(currentLang == "en" ? "Phone" : "Telefon")</h3>
                     @if (!string.IsNullOrEmpty(Model?.Phone))
                     {
                         <p>@Model.Phone</p>
                     }
                     else
                     {
-                        <p>Henüz telefon numarası eklenmemiş</p>
+                        <p>
+                            @(currentLang == "en"
+                                ? "No phone number has been added yet"
+                                : "Henüz telefon numarası eklenmemiş")
+                        </p>
                     }
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="about-value-card">
                     <i class="fas fa-envelope"></i>
-                    <h3>E-posta</h3>
+                    <h3>@(currentLang == "en" ? "E-mail" : "E-posta")</h3>
                     @if (!string.IsNullOrEmpty(Model?.Email))
                     {
                         <p>@Model.Email</p>
                     }
                     else
                     {
-                        <p>Henüz e-posta adresi eklenmemiş</p>
+                        <p>
+                            @(currentLang == "en"
+                                ? "No e-mail address has been added yet"
+                                : "Henüz e-posta adresi eklenmemiş")
+                        </p>
                     }
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="about-value-card">
                     <i class="fas fa-map-marker-alt"></i>
-                    <h3>Adres</h3>
+                    <h3>@(currentLang == "en" ? "Address" : "Adres")</h3>
                     @if (!string.IsNullOrEmpty(Model?.Address))
                     {
                         <p>@Html.Raw(Model.Address.Replace("\n", "<br />"))</p>
                     }
                     else
                     {
-                        <p>Henüz adres bilgisi eklenmemiş</p>
+                        <p>
+                            @(currentLang == "en"
+                                ? "No address information has been added yet"
+                                : "Henüz adres bilgisi eklenmemiş")
+                        </p>
                     }
                 </div>
             </div>
@@ -68,10 +88,18 @@
         <div class="row g-5">
             <div class="col-lg-12">
                 <div class="home-card">
-                    <span class="home-section-kicker d-block mb-1">Konum</span>
-                    <h2 class="home-section-title">Fabrikamız ve ofisimiz</h2>
+                    <span class="home-section-kicker d-block mb-1">
+                        @(currentLang == "en" ? "Location" : "Konum")
+                    </span>
+                    <h2 class="home-section-title">
+                        @(currentLang == "en"
+                            ? "Our factory and office"
+                            : "Fabrikamız ve ofisimiz")
+                    </h2>
                     <p class="home-section-text mb-4">
-                        Aşağıdaki harita üzerinden fabrikamızın konumunu görebilirsiniz.
+                        @(currentLang == "en"
+                            ? "You can see the location of our factory on the map below."
+                            : "Aşağıdaki harita üzerinden fabrikamızın konumunu görebilirsiniz.")
                     </p>
                     <div class="contact-map-box">
                         <iframe

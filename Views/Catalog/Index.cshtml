@@ -1,14 +1,22 @@
 @model IEnumerable<InsaatFirmasi.Models.Catalog>
 @{
-    ViewData["Title"] = "Online Katalog";
-    ViewData["Description"] = "İnşaat malzemeleri ve enjeksiyon imalatları online katalogları. Ürün kataloglarını indirin ve inceleyin.";
-    ViewData["Keywords"] = "online katalog, ürün katalogları, inşaat malzemeleri katalog, drenaj kanalları katalog";
+    var currentLang = Context.Request.Cookies["lang"] as string ?? "tr";
+
+    ViewData["Title"] = currentLang == "en" ? "Online Catalog" : "Online Katalog";
+    ViewData["Description"] = currentLang == "en"
+        ? "Online catalogs for construction materials and injection manufacturing. Download and review product catalogs."
+        : "İnşaat malzemeleri ve enjeksiyon imalatları online katalogları. Ürün kataloglarını indirin ve inceleyin.";
+    ViewData["Keywords"] = currentLang == "en"
+        ? "online catalog, product catalogs, construction materials catalog, drainage channel catalog"
+        : "online katalog, ürün katalogları, inşaat malzemeleri katalog, drenaj kanalları katalog";
 }
 
 <!-- SAYFA HERO -->
 <section class="page-hero page-hero-simple">
     <div class="container-xl text-center">
-        <h1 class="page-hero-title">Online Katalog</h1>
+        <h1 class="page-hero-title">
+            @(currentLang == "en" ? "Online Catalog" : "Online Katalog")
+        </h1>
     </div>
 </section>
 
@@ -16,11 +24,18 @@
 <section class="home-section product-groups-section">
     <div class="container-xl">
         <div class="home-section-header">
-            <span class="home-section-kicker">Kataloglar</span>
-            <h2 class="home-section-title">Ürün ve çözüm kataloglarımız</h2>
+            <span class="home-section-kicker">
+                @(currentLang == "en" ? "Catalogs" : "Kataloglar")
+            </span>
+            <h2 class="home-section-title">
+                @(currentLang == "en"
+                    ? "Our product and solution catalogs"
+                    : "Ürün ve çözüm kataloglarımız")
+            </h2>
             <p class="home-section-text">
-                Drenaj sistemleri, rögar menhol kutuları ve ıslak zemin ürünlerimiz için güncel PDF katalogları buradan
-                inceleyebilir ve indirebilirsiniz.
+                @(currentLang == "en"
+                    ? "You can view and download up-to-date PDF catalogs for our drainage systems, manhole chambers and wet area products here."
+                    : "Drenaj sistemleri, rögar menhol kutuları ve ıslak zemin ürünlerimiz için güncel PDF katalogları buradan inceleyebilir ve indirebilirsiniz.")
             </p>
         </div>
 

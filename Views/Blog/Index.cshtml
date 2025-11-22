@@ -1,14 +1,22 @@
 @model IEnumerable<InsaatFirmasi.Models.BlogPost>
 @{
+    var currentLang = Context.Request.Cookies["lang"] as string ?? "tr";
+
     ViewData["Title"] = "Blog";
-    ViewData["Description"] = "Plastik inşaat çözümleri, drenaj ve ıslak zemin ürünleri hakkında güncel yazılar ve içerikler.";
-    ViewData["Keywords"] = "blog, drenaj, rögar, ıslak zemin, plastik inşaat çözümleri";
+    ViewData["Description"] = currentLang == "en"
+        ? "Latest articles and content about plastic construction solutions, drainage and wet area products."
+        : "Plastik inşaat çözümleri, drenaj ve ıslak zemin ürünleri hakkında güncel yazılar ve içerikler.";
+    ViewData["Keywords"] = currentLang == "en"
+        ? "blog, drainage, manhole, wet areas, plastic construction solutions"
+        : "blog, drenaj, rögar, ıslak zemin, plastik inşaat çözümleri";
 }
 
 <!-- SAYFA HERO -->
 <section class="page-hero page-hero-simple">
     <div class="container-xl text-center">
-        <h1 class="page-hero-title">Blog</h1>
+        <h1 class="page-hero-title">
+            @(currentLang == "en" ? "Blog" : "Blog")
+        </h1>
     </div>
 </section>
 
@@ -16,11 +24,18 @@
 <section class="home-section product-groups-section">
     <div class="container-xl">
         <div class="home-section-header">
-            <span class="home-section-kicker">Blog Yazıları</span>
-            <h2 class="home-section-title">Veritabanından gelen yazılar</h2>
+            <span class="home-section-kicker">
+                @(currentLang == "en" ? "Blog Posts" : "Blog Yazıları")
+            </span>
+            <h2 class="home-section-title">
+                @(currentLang == "en"
+                    ? "Articles coming from the database"
+                    : "Veritabanından gelen yazılar")
+            </h2>
             <p class="home-section-text">
-                Aşağıdaki liste MySQL veritabanındaki blog yazıları üzerinden oluşturulmaktadır. Yeni yazılar eklendikçe
-                burada otomatik olarak görünecek.
+                @(currentLang == "en"
+                    ? "The list below is generated from blog posts in the MySQL database. As you add new posts, they will automatically appear here."
+                    : "Aşağıdaki liste MySQL veritabanındaki blog yazıları üzerinden oluşturulmaktadır. Yeni yazılar eklendikçe burada otomatik olarak görünecek.")
             </p>
         </div>
 
@@ -71,10 +86,19 @@
                                     <div class="blog-card-footer">
                                         <span class="blog-card-readtime">
                                             <i class="fas fa-clock me-1"></i>
-                                            @(post.ReadTime > 0 ? $"{post.ReadTime} dk okuma" : "Kısa okuma")
+                                            @if (post.ReadTime > 0)
+                                            {
+                                                @(currentLang == "en"
+                                                    ? $"{post.ReadTime} min read"
+                                                    : $"{post.ReadTime} dk okuma")
+                                            }
+                                            else
+                                            {
+                                                @(currentLang == "en" ? "Short read" : "Kısa okuma")
+                                            }
                                         </span>
                                         <span class="btn btn-outline-light btn-sm blog-card-button">
-                                            Devamını Oku <i class="fas fa-arrow-right ms-1"></i>
+                                            @(currentLang == "en" ? "Read More" : "Devamını Oku") <i class="fas fa-arrow-right ms-1"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -88,8 +112,14 @@
         {
             <div class="text-center text-muted py-5">
                 <i class="fas fa-newspaper fa-3x mb-3"></i>
-                <h4>Henüz blog yazısı eklenmemiş</h4>
-                <p>Admin panel üzerinden blog yazıları eklediğinizde burada listelenecektir.</p>
+                <h4>
+                    @(currentLang == "en" ? "No blog posts have been added yet" : "Henüz blog yazısı eklenmemiş")
+                </h4>
+                <p>
+                    @(currentLang == "en"
+                        ? "When you add blog posts from the admin panel, they will be listed here."
+                        : "Admin panel üzerinden blog yazıları eklediğinizde burada listelenecektir.")
+                </p>
             </div>
         }
     </div>
