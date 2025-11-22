@@ -63,10 +63,19 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="home-card admin-card">
-                    <h3>Kullanıcı Yönetimi</h3>
-                    <p>Admin hesapları ve yetkileri yönetebileceğiniz bölüm.</p>
-                    <a href="#" class="home-card-link">
-                        Kullanıcı yönetimine git <i class="fas fa-arrow-right ms-1"></i>
+                    <h3>Hakkımızda Yönetimi</h3>
+                    <p>Anasayfadaki hakkımızda bölümünde gösterilecek görselleri yönetin.</p>
+                    <a asp-controller="AdminAbout" asp-action="Index" class="home-card-link">
+                        Hakkımızda yönetimine git <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="home-card admin-card">
+                    <h3>İletişim Yönetimi</h3>
+                    <p>Telefon, e-posta, adres ve harita konum bilgilerini güncelleyin.</p>
+                    <a asp-controller="AdminContact" asp-action="Index" class="home-card-link">
+                        İletişim yönetimine git <i class="fas fa-arrow-right ms-1"></i>
                     </a>
                 </div>
             </div>

@@ -1,0 +1,127 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using InsaatFirmasi.Data;
+using InsaatFirmasi.Models;
+
+namespace InsaatFirmasi.Controllers;
+
+public class AdminAboutController : Controller
+{
+    private readonly ApplicationDbContext _context;
+    private readonly ILogger<AdminAboutController> _logger;
+    private readonly IWebHostEnvironment _env;
+
+    public AdminAboutController(
+        ApplicationDbContext context,
+        ILogger<AdminAboutController> logger,
+        IWebHostEnvironment env)
+    {
+        _context = context;
+        _logger = logger;
+        _env = env;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var images = await _context.AboutImages
+            .OrderBy(a => a.SortOrder)
+            .ThenByDescending(a => a.CreatedDate)
+            .ToListAsync();
+
+        return View(images);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(IFormFile? imageFile, int? sortOrder)
+    {
+        if (imageFile == null || imageFile.Length == 0)
+        {
+            ModelState.AddModelError(string.Empty, "Görsel dosyası seçilmelidir.");
+            var imagesForError = await _context.AboutImages
+                .OrderBy(a => a.SortOrder)
+                .ThenByDescending(a => a.CreatedDate)
+                .ToListAsync();
+            return View("Index", imagesForError);
+        }
+
+        try
+        {
+            var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "about");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(stream);
+            }
+
+            var aboutImage = new AboutImage
+            {
+                ImagePath = Path.Combine("uploads", "about", uniqueFileName).Replace("\\", "/"),
+                SortOrder = sortOrder ?? 0,
+                CreatedDate = DateTime.Now
+            };
+
+            _context.AboutImages.Add(aboutImage);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Hakkımızda görseli yüklenirken bir hata oluştu.");
+            ModelState.AddModelError(string.Empty, "Görsel yüklenirken bir hata oluştu. Lütfen tekrar deneyin.");
+
+            var imagesForError = await _context.AboutImages
+                .OrderBy(a => a.SortOrder)
+                .ThenByDescending(a => a.CreatedDate)
+                .ToListAsync();
+
+            return View("Index", imagesForError);
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var image = await _context.AboutImages.FindAsync(id);
+        if (image != null)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(image.ImagePath))
+                {
+                    var physicalPath = Path.Combine(
+                        _env.WebRootPath,
+                        image.ImagePath.Replace("/", Path.DirectorySeparatorChar.ToString())
+                    );
+
+                    if (System.IO.File.Exists(physicalPath))
+                    {
+                        System.IO.File.Delete(physicalPath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Hakkımızda görseli silinirken dosya silinemedi.");
+            }
+
+            _context.AboutImages.Remove(image);
+            await _context.SaveChangesAsync();
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+}
+

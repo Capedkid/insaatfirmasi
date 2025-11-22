@@ -27,8 +27,7 @@ public class AdminSliderController : Controller
     public async Task<IActionResult> Index()
     {
         var sliders = await _context.Sliders
-            .OrderBy(s => s.SortOrder)
-            .ThenByDescending(s => s.CreatedDate)
+            .OrderByDescending(s => s.CreatedDate)
             .ToListAsync();
 
         return View(sliders);
@@ -41,8 +40,7 @@ public class AdminSliderController : Controller
         if (!ModelState.IsValid)
         {
             var slidersInvalid = await _context.Sliders
-                .OrderBy(s => s.SortOrder)
-                .ThenByDescending(s => s.CreatedDate)
+                .OrderByDescending(s => s.CreatedDate)
                 .ToListAsync();
 
             return View("Index", slidersInvalid);
@@ -69,6 +67,7 @@ public class AdminSliderController : Controller
                 slider.ImagePath = Path.Combine("uploads", "sliders", uniqueFileName).Replace("\\", "/");
             }
 
+            slider.IsActive = true;
             slider.CreatedDate = DateTime.Now;
             _context.Sliders.Add(slider);
             await _context.SaveChangesAsync();
@@ -80,8 +79,7 @@ public class AdminSliderController : Controller
             ModelState.AddModelError(string.Empty, "Slider kaydedilirken bir hata oluştu. Lütfen tekrar deneyin.");
 
             var slidersError = await _context.Sliders
-                .OrderBy(s => s.SortOrder)
-                .ThenByDescending(s => s.CreatedDate)
+                .OrderByDescending(s => s.CreatedDate)
                 .ToListAsync();
 
             return View("Index", slidersError);

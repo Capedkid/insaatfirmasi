@@ -1,0 +1,34 @@
+@model InsaatFirmasi.Models.ContactInfo
+
+<div class="col-md-3">
+    <h6 class="footer-heading">İletişim</h6>
+    <ul class="footer-contact">
+        @if (!string.IsNullOrEmpty(Model?.Phone))
+        {
+            <li><i class="fas fa-phone-alt me-2"></i> @Model.Phone</li>
+        }
+        @if (!string.IsNullOrEmpty(Model?.Email))
+        {
+            <li><i class="fas fa-envelope me-2"></i> @Model.Email</li>
+        }
+        @if (!string.IsNullOrEmpty(Model?.Address))
+        {
+            <li><i class="fas fa-map-marker-alt me-2"></i> @Model.Address</li>
+        }
+    </ul>
+</div>
+<div class="col-md-2">
+    <h6 class="footer-heading">Sosyal</h6>
+    <div class="footer-social">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        @if (!string.IsNullOrEmpty(Model?.WhatsApp))
+        {
+            <a href="https://wa.me/@Model.WhatsApp.Replace("+", "").Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "")" target="_blank" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        }
+    </div>
+</div>
+

@@ -41,9 +41,23 @@ public class HomeController : Controller
             .Take(3)
             .ToListAsync();
 
+        // Slider kayıtları
+        var sliders = await _context.Sliders
+            .Where(s => s.IsActive)
+            .OrderByDescending(s => s.CreatedDate)
+            .ToListAsync();
+
+        // Hakkımızda görselleri
+        var aboutImages = await _context.AboutImages
+            .OrderBy(a => a.SortOrder)
+            .ThenByDescending(a => a.CreatedDate)
+            .ToListAsync();
+
         ViewBag.FeaturedProducts = featuredProducts;
         ViewBag.Categories = categories;
         ViewBag.RecentBlogPosts = recentBlogPosts;
+        ViewBag.Sliders = sliders;
+        ViewBag.AboutImages = aboutImages;
 
         return View();
     }
@@ -53,8 +67,10 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Contact()
+    public async Task<IActionResult> Contact()
     {
+        var contactInfo = await _context.ContactInfos.FirstOrDefaultAsync();
+        ViewBag.ContactInfo = contactInfo;
         return View();
     }
 

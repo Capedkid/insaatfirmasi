@@ -26,6 +26,11 @@
                         <div asp-validation-summary="All" class="text-danger small mb-2"></div>
 
                         <div class="mb-3">
+                            <label class="form-label">Üst Başlık (küçük etiket)</label>
+                            <input name="Kicker" class="form-control" placeholder="Örn: Drenaj Sistemleri, Rögar & Menhol" />
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Başlık</label>
                             <input name="Title" class="form-control" placeholder="Örn: Modern drenaj çözümleri" required />
                         </div>
@@ -37,23 +42,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Görsel</label>
-                            <input type="file" name="imageFile" class="form-control" accept="image/*" />
-                            <small class="form-text text-muted">En az 1200x600 piksel bir görsel yüklemeniz önerilir.</small>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Bağlantı URL (isteğe bağlı)</label>
-                            <input name="LinkUrl" class="form-control" placeholder="Örn: /urunler veya https://..." />
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Sıra</label>
-                            <input type="number" name="SortOrder" class="form-control" value="0" />
-                        </div>
-
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" value="true" checked />
-                            <label class="form-check-label" for="IsActive">Aktif</label>
+                            <input type="file" name="imageFile" class="form-control" accept="image/*" required />
+                            <small class="form-text text-muted">Önerilen boyut: 1920x800 piksel (hero slider tam ekran). Minimum: 1200x600 piksel. JPG veya PNG formatında bir görsel yükleyin. Maksimum dosya boyutu: 10MB.</small>
                         </div>
 
                         <button type="submit" class="btn btn-danger btn-lg px-4">
@@ -76,8 +66,7 @@
                                 <tr>
                                     <th>Görsel</th>
                                     <th>Başlık</th>
-                                    <th>Durum</th>
-                                    <th>Sıra</th>
+                                    <th>Eklenme</th>
                                     <th style="width: 130px;"></th>
                                 </tr>
                             </thead>
@@ -98,17 +87,7 @@
                                             }
                                         </td>
                                         <td>@slider.Title</td>
-                                        <td>
-                                            @if (slider.IsActive)
-                                            {
-                                                <span class="badge bg-success">Aktif</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="badge bg-secondary">Pasif</span>
-                                            }
-                                        </td>
-                                        <td>@slider.SortOrder</td>
+                                        <td>@slider.CreatedDate.ToString("dd.MM.yyyy")</td>
                                         <td class="text-end">
                                             <form asp-action="Delete" method="post" class="d-inline">
                                                 @Html.AntiForgeryToken()

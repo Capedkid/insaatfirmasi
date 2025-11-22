@@ -1,0 +1,80 @@
+@model InsaatFirmasi.Models.ContactInfo
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "İletişim Yönetimi";
+}
+
+<section class="page-hero page-hero-simple">
+    <div class="container-xl text-center">
+        <h1 class="page-hero-title">İletişim Yönetimi</h1>
+    </div>
+</section>
+
+<section class="home-section admin-dashboard-section">
+    <div class="container-xl">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="home-card admin-card">
+                    <span class="home-section-kicker d-block mb-1">İletişim Bilgileri</span>
+                    <h3>İletişim Bilgilerini Güncelle</h3>
+                    <p>Telefon, e-posta, adres ve harita konum bilgilerini buradan güncelleyebilirsiniz.</p>
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="Update" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Phone" class="form-label">Telefon</label>
+                            <input asp-for="Phone" class="form-control" placeholder="Örn: +90 (332) 123 45 67" />
+                            <small class="form-text text-muted">İletişim sayfası ve footer'da gösterilecek telefon numarası.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">E-posta</label>
+                            <input asp-for="Email" type="email" class="form-control" placeholder="Örn: info@insaatfirmasi.com" />
+                            <small class="form-text text-muted">İletişim sayfası ve footer'da gösterilecek e-posta adresi.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Address" class="form-label">Adres</label>
+                            <textarea asp-for="Address" class="form-control" rows="3" placeholder="Örn: Organize Sanayi Bölgesi, No: 123, Konya, Türkiye"></textarea>
+                            <small class="form-text text-muted">İletişim sayfası ve footer'da gösterilecek adres bilgisi.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="WhatsApp" class="form-label">WhatsApp Numarası</label>
+                            <input asp-for="WhatsApp" class="form-control" placeholder="Örn: +905551234567" />
+                            <small class="form-text text-muted">Footer'daki WhatsApp butonuna yönlendirme için numara (ülke kodu ile birlikte).</small>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Latitude" class="form-label">Enlem (Latitude)</label>
+                                <input asp-for="Latitude" class="form-control" placeholder="Örn: 37.8746" />
+                                <small class="form-text text-muted">Google Maps için enlem koordinatı.</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Longitude" class="form-label">Boylam (Longitude)</label>
+                                <input asp-for="Longitude" class="form-control" placeholder="Örn: 32.4932" />
+                                <small class="form-text text-muted">Google Maps için boylam koordinatı.</small>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger btn-lg px-4">
+                            <i class="fas fa-save me-2"></i>Bilgileri Güncelle
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

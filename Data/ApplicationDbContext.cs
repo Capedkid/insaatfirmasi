@@ -18,6 +18,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<ContactMessage> ContactMessages => Set<ContactMessage>();
     public DbSet<User> Users => Set<User>();
     public DbSet<Slider> Sliders => Set<Slider>();
+    public DbSet<AboutImage> AboutImages => Set<AboutImage>();
+    public DbSet<ContactInfo> ContactInfos => Set<ContactInfo>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

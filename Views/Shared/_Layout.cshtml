@@ -81,22 +81,7 @@
                         <li><a asp-route="iletisim">İletişim</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3">
-                    <h6 class="footer-heading">İletişim</h6>
-                    <ul class="footer-contact">
-                        <li><i class="fas fa-phone-alt me-2"></i> +90 (332) 123 45 67</li>
-                        <li><i class="fas fa-envelope me-2"></i> info@insaatfirmasi.com</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i> Konya, Türkiye</li>
-                    </ul>
-                </div>
-                <div class="col-md-2">
-                    <h6 class="footer-heading">Sosyal</h6>
-                    <div class="footer-social">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    </div>
-                </div>
+                @await Component.InvokeAsync("ContactInfo")
             </div>
 
             <div class="footer-bottom">

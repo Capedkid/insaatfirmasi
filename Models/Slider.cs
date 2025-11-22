@@ -6,6 +6,9 @@ namespace InsaatFirmasi.Models
     {
         public int Id { get; set; }
 
+        [StringLength(100, ErrorMessage = "Üst başlık en fazla 100 karakter olabilir")]
+        public string? Kicker { get; set; }
+
         [Required(ErrorMessage = "Başlık zorunludur")]
         [StringLength(150, ErrorMessage = "Başlık en fazla 150 karakter olabilir")]
         public string Title { get; set; } = string.Empty;

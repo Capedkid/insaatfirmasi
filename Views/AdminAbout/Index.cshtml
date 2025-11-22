@@ -1,0 +1,84 @@
+@model IEnumerable<InsaatFirmasi.Models.AboutImage>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Hakkımızda Yönetimi";
+}
+
+<section class="page-hero page-hero-simple">
+    <div class="container-xl text-center">
+        <h1 class="page-hero-title">Hakkımızda Yönetimi</h1>
+    </div>
+</section>
+
+<section class="home-section admin-dashboard-section">
+    <div class="container-xl">
+        <div class="row g-4">
+            <!-- Yeni Görsel Ekle -->
+            <div class="col-lg-4">
+                <div class="home-card admin-card">
+                    <span class="home-section-kicker d-block mb-1">Yeni Görsel</span>
+                    <h3>Görsel Ekle</h3>
+                    <p>Anasayfadaki hakkımızda bölümünde gösterilecek görselleri ekleyin.</p>
+
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="text-danger small mb-2"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Görsel</label>
+                            <input type="file" name="imageFile" class="form-control" accept="image/*" required />
+                            <small class="form-text text-muted">Önerilen boyut: 1200x800 piksel (16:9 oran). JPG veya PNG formatında bir görsel yükleyin.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Sıralama (küçükten büyüğe)</label>
+                            <input type="number" name="sortOrder" class="form-control" value="0" />
+                        </div>
+
+                        <button type="submit" class="btn btn-danger btn-lg px-4">
+                            <i class="fas fa-plus me-2"></i>Görsel Ekle
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Görsel Listesi -->
+            <div class="col-lg-8">
+                <div class="home-card admin-card">
+                    <span class="home-section-kicker d-block mb-1">Mevcut Görseller</span>
+                    <h3>Görsel Listesi</h3>
+
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="row g-3 mt-3">
+                            @foreach (var image in Model)
+                            {
+                                <div class="col-md-6">
+                                    <div class="card border-0 bg-dark">
+                                        <img src="~/@image.ImagePath" alt="Hakkımızda görseli" class="card-img-top" style="height: 200px; object-fit: cover;" />
+                                        <div class="card-body">
+                                            <p class="text-muted small mb-2">Sıra: @image.SortOrder</p>
+                                            <form asp-action="Delete" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@image.Id" />
+                                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                        onclick="return confirm('Bu görseli silmek istediğinize emin misiniz?');">
+                                                    <i class="fas fa-trash-alt me-1"></i>Sil
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="mt-3 mb-0 text-muted">Henüz hiç görsel eklenmemiş.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

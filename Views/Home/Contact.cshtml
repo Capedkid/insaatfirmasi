@@ -16,309 +16,88 @@
     </div>
 </section>
 
+@using InsaatFirmasi.Models
+@{
+    var contactInfo = ViewBag.ContactInfo as ContactInfo;
+}
+
 <!-- İletişim Bilgileri -->
 <section class="py-5">
     <div class="container">
         <div class="row g-4">
-            <div class="col-lg-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body p-4 text-center">
-                        <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                            <i class="fas fa-phone fa-2x"></i>
+            @if (contactInfo != null && !string.IsNullOrEmpty(contactInfo.Phone))
+            {
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4 text-center">
+                            <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                <i class="fas fa-phone fa-2x"></i>
+                            </div>
+                            <h5 class="fw-bold text-dark mb-3">Telefon</h5>
+                            <p class="text-muted mb-0">@contactInfo.Phone</p>
+                            <small class="text-muted">Pazartesi - Cuma: 08:00 - 18:00</small>
                         </div>
-                        <h5 class="fw-bold text-dark mb-3">Telefon</h5>
-                        <p class="text-muted mb-2">+90 (332) 123 45 67</p>
-                        <p class="text-muted mb-0">+90 (332) 123 45 68</p>
-                        <small class="text-muted">Pazartesi - Cuma: 08:00 - 18:00</small>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body p-4 text-center">
-                        <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                            <i class="fas fa-envelope fa-2x"></i>
+            }
+            @if (contactInfo != null && !string.IsNullOrEmpty(contactInfo.Email))
+            {
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4 text-center">
+                            <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                <i class="fas fa-envelope fa-2x"></i>
+                            </div>
+                            <h5 class="fw-bold text-dark mb-3">E-posta</h5>
+                            <p class="text-muted mb-0">@contactInfo.Email</p>
+                            <small class="text-muted">24 saat içinde yanıt</small>
                         </div>
-                        <h5 class="fw-bold text-dark mb-3">E-posta</h5>
-                        <p class="text-muted mb-2">info@insaatfirmasi.com</p>
-                        <p class="text-muted mb-0">satis@insaatfirmasi.com</p>
-                        <small class="text-muted">24 saat içinde yanıt</small>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body p-4 text-center">
-                        <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                            <i class="fas fa-map-marker-alt fa-2x"></i>
+            }
+            @if (contactInfo != null && !string.IsNullOrEmpty(contactInfo.Address))
+            {
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4 text-center">
+                            <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                <i class="fas fa-map-marker-alt fa-2x"></i>
+                            </div>
+                            <h5 class="fw-bold text-dark mb-3">Adres</h5>
+                            <p class="text-muted mb-0">@Html.Raw(contactInfo.Address.Replace("\n", "<br>"))</p>
                         </div>
-                        <h5 class="fw-bold text-dark mb-3">Adres</h5>
-                        <p class="text-muted mb-0">Organize Sanayi Bölgesi<br>No: 123, Konya, Türkiye</p>
-                        <small class="text-muted">50.000 m² fabrika alanı</small>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </section>
 
-<!-- İletişim Formu ve Harita -->
-<section class="bg-light py-5">
-    <div class="container">
-        <div class="row g-5">
-            <!-- İletişim Formu -->
-            <div class="col-lg-6">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white border-0 py-4">
-                        <h3 class="fw-bold text-dark mb-0">Bize Mesaj Gönderin</h3>
-                        <p class="text-muted mb-0">Sorularınız için formu doldurun, en kısa sürede size dönüş yapalım.</p>
-                    </div>
-                    <div class="card-body p-4">
-                        <form asp-action="Contact" method="post">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label for="name" class="form-label fw-semibold">Ad Soyad *</label>
-                                    <input type="text" class="form-control" id="name" name="name" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="email" class="form-label fw-semibold">E-posta *</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="phone" class="form-label fw-semibold">Telefon</label>
-                                    <input type="tel" class="form-control" id="phone" name="phone">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="company" class="form-label fw-semibold">Şirket</label>
-                                    <input type="text" class="form-control" id="company" name="company">
-                                </div>
-                                <div class="col-12">
-                                    <label for="subject" class="form-label fw-semibold">Konu *</label>
-                                    <select class="form-select" id="subject" name="subject" required>
-                                        <option value="">Konu seçiniz</option>
-                                        <option value="Ürün Bilgisi">Ürün Bilgisi</option>
-                                        <option value="Fiyat Teklifi">Fiyat Teklifi</option>
-                                        <option value="Teknik Destek">Teknik Destek</option>
-                                        <option value="Satış">Satış</option>
-                                        <option value="Diğer">Diğer</option>
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label for="message" class="form-label fw-semibold">Mesaj *</label>
-                                    <textarea class="form-control" id="message" name="message" rows="5" required placeholder="Mesajınızı buraya yazın..."></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="privacy" name="privacy" required>
-                                        <label class="form-check-label" for="privacy">
-                                            <a href="#" class="text-danger">Gizlilik Politikası</a>'nı okudum ve kabul ediyorum. *
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-danger btn-lg px-5">
-                                        <i class="fas fa-paper-plane me-2"></i>Mesaj Gönder
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Harita ve Ek Bilgiler -->
-            <div class="col-lg-6">
-                <!-- Harita -->
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-header bg-white border-0 py-3">
-                        <h5 class="fw-bold text-dark mb-0">Konumumuz</h5>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 300px;">
-                            <div class="text-center text-muted">
-                                <i class="fas fa-map fa-3x mb-3"></i>
-                                <p class="mb-0">Google Maps entegrasyonu</p>
-                                <small>Organize Sanayi Bölgesi, Konya</small>
-                            </div>
+<!-- Harita -->
+@if (contactInfo != null && !string.IsNullOrEmpty(contactInfo.Latitude) && !string.IsNullOrEmpty(contactInfo.Longitude))
+{
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white border-0 py-3">
+                            <h5 class="fw-bold text-dark mb-0">Konumumuz</h5>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Çalışma Saatleri -->
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white border-0 py-3">
-                        <h5 class="fw-bold text-dark mb-0">Çalışma Saatleri</h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="row g-3">
-                            <div class="col-6">
-                                <div class="d-flex justify-content-between">
-                                    <span class="fw-semibold">Pazartesi - Cuma:</span>
-                                    <span class="text-muted">08:00 - 18:00</span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="d-flex justify-content-between">
-                                    <span class="fw-semibold">Cumartesi:</span>
-                                    <span class="text-muted">09:00 - 15:00</span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="d-flex justify-content-between">
-                                    <span class="fw-semibold">Pazar:</span>
-                                    <span class="text-muted">Kapalı</span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="d-flex justify-content-between">
-                                    <span class="fw-semibold">Acil Durum:</span>
-                                    <span class="text-danger fw-semibold">7/24</span>
-                                </div>
-                            </div>
+                        <div class="card-body p-0">
+                            <iframe 
+                                src="https://www.google.com/maps?q=@contactInfo.Latitude,@contactInfo.Longitude&hl=tr&z=14&output=embed"
+                                width="100%" 
+                                height="400" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- Hızlı İletişim -->
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold text-dark">Hızlı İletişim</h2>
-            <p class="text-muted">Acil durumlar için hızlı iletişim kanallarımız</p>
-        </div>
-        
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="text-center p-4 bg-light rounded shadow-sm">
-                    <i class="fas fa-phone-alt fa-2x text-danger mb-3"></i>
-                    <h6 class="fw-bold">Acil Hat</h6>
-                    <p class="text-muted small mb-2">+90 (332) 123 45 69</p>
-                    <small class="text-muted">7/24 Acil Destek</small>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="text-center p-4 bg-light rounded shadow-sm">
-                    <i class="fab fa-whatsapp fa-2x text-success mb-3"></i>
-                    <h6 class="fw-bold">WhatsApp</h6>
-                    <p class="text-muted small mb-2">+90 (332) 123 45 67</p>
-                    <small class="text-muted">Hızlı Mesajlaşma</small>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="text-center p-4 bg-light rounded shadow-sm">
-                    <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
-                    <h6 class="fw-bold">E-posta</h6>
-                    <p class="text-muted small mb-2">info@insaatfirmasi.com</p>
-                    <small class="text-muted">24 Saat İçinde Yanıt</small>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="text-center p-4 bg-light rounded shadow-sm">
-                    <i class="fas fa-comments fa-2x text-info mb-3"></i>
-                    <h6 class="fw-bold">Canlı Destek</h6>
-                    <p class="text-muted small mb-2">Online Chat</p>
-                    <small class="text-muted">Anında Yardım</small>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- SSS -->
-<section class="bg-light py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold text-dark">Sıkça Sorulan Sorular</h2>
-            <p class="text-muted">En çok merak edilen konular hakkında bilgi alın</p>
-        </div>
-        
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="accordion" id="faqAccordion">
-                    <div class="accordion-item border-0 shadow-sm mb-3">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                Ürünleriniz hakkında detaylı bilgi alabilir miyim?
-                            </button>
-                        </h2>
-                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body text-muted">
-                                Elbette! Ürünlerimiz hakkında detaylı bilgi almak için katalog sayfamızı inceleyebilir, 
-                                ürün detay sayfalarını ziyaret edebilir veya doğrudan bizimle iletişime geçebilirsiniz.
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item border-0 shadow-sm mb-3">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                Fiyat teklifi nasıl alabilirim?
-                            </button>
-                        </h2>
-                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body text-muted">
-                                Fiyat teklifi almak için iletişim formumuzu doldurarak veya doğrudan telefon ile 
-                                bizimle iletişime geçebilirsiniz. Projenizin detaylarına göre size özel teklif hazırlarız.
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item border-0 shadow-sm mb-3">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                Teslimat süreleri ne kadar?
-                            </button>
-                        </h2>
-                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body text-muted">
-                                Teslimat süreleri sipariş miktarına ve ürün türüne göre değişiklik gösterir. 
-                                Genellikle 3-7 iş günü içinde teslimat yapılmaktadır. Detaylı bilgi için iletişime geçin.
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-item border-0 shadow-sm mb-3">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                                Teknik destek alabilir miyim?
-                            </button>
-                        </h2>
-                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body text-muted">
-                                Evet, uzman teknik ekibimiz size ürünlerimiz hakkında detaylı teknik destek sağlar. 
-                                Montaj, kullanım ve bakım konularında yardımcı oluruz.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- İletişim CTA -->
-<section class="py-5 bg-danger text-white">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h2 class="display-6 fw-bold mb-3">Hemen İletişime Geçin</h2>
-                <p class="lead mb-0">
-                    Projeleriniz için kaliteli inşaat malzemeleri ve profesyonel hizmet almak istiyorsanız, 
-                    bugün bizimle iletişime geçin.
-                </p>
-            </div>
-            <div class="col-lg-4 text-end">
-                <a href="tel:+903321234567" class="btn btn-light btn-lg px-4 me-2">
-                    <i class="fas fa-phone me-2"></i>Hemen Ara
-                </a>
-                <a href="mailto:info@insaatfirmasi.com" class="btn btn-outline-light btn-lg px-4">
-                    <i class="fas fa-envelope me-2"></i>E-posta Gönder
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
+}
